@@ -1,0 +1,9 @@
+# Editor
+./idea
+
+# Mac files
+.DS_Store
+
+# General files
+node_modules/
+package-lock.json
