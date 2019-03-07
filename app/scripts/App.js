@@ -5,11 +5,19 @@
 // Libs
 import 'three/examples/js/controls/OrbitControls';
 
-// Files
+// Modules
+
+import SimplexNoise from 'simplex-noise';
+import dat from 'dat.gui';
+
+// Utilities files
 
 import * as Helpers from './helpers';
-import Character from './Character';
-import Ground from './Ground';
+import './Utilities/stats';
+
+// Game files
+import Character from './Player/Character';
+import Ground from './World/Ground';
 
 // Declare class
 
@@ -21,11 +29,15 @@ export default class App {
 
 	constructor() {
 
-		this.camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 5);
+		this.camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 50);
 		this.camera.position.z = 0;
-		this.camera.position.y = 0.6;
+		this.camera.position.y = 2;
+		this.camera.rotation.x = Math.PI / 180 * - 22.5;
 
 		this.init();
+
+		// Noise
+		this.noise = new SimplexNoise(Math.random());
 
 		// Floor
 		this.character = new Character();
@@ -36,17 +48,11 @@ export default class App {
 		this.scene.add(this.floor.mesh);
 
 		// Light
-		var light = new THREE.DirectionalLight(0xFFFFFF, 1);
-		light.castShadow = true;
-		var helper = new THREE.DirectionalLightHelper(light, 1);
-		this.scene.add(helper);
-		light.position.y = 4;
-		light.position.x = 0;
-		light.position.z = 0;
-		this.scene.add(light);
+		let ambientLight = new THREE.AmbientLight(0x404040, 4);
+		this.scene.add(ambientLight);
 
-		let axesHelper = new THREE.AxesHelper(5);
-		this.character.mesh.add(axesHelper);
+		// Gui init
+		this.guiHandler();
 
 		this.update();
 	}
@@ -87,7 +93,9 @@ export default class App {
 		this.container = document.querySelector('#main');
 		document.body.appendChild(this.container);
 
-		this.scene = new THREE.Scene();
+		this.scene = new THREE.Scene({background: '#0a0a19'});
+
+		//this.scene.fog = new THREE.Fog('#ffefce', 1, 300);
 
 		this.renderer = new THREE.WebGLRenderer({antialias: true});
 		this.renderer.shadowMapType = THREE.PCFSoftShadowMap;
@@ -107,7 +115,7 @@ export default class App {
 		var divisions = 10;
 
 		var gridHelper = new THREE.GridHelper(size, divisions);
-		this.scene.add(gridHelper);
+		//this.scene.add(gridHelper);
 	}
 
 	isIn() {
@@ -131,7 +139,6 @@ export default class App {
 					limitTop < characterZ &&
 					characterZ < limitBottom)
 				{
-					console.log("You're in :", elmt.id, "character last pos : ", this.character.positionOnMap);
 					activeCase = elmt.id;
 					if (activeCase != this.character.positionOnMap) {
 						if(this.floor.pieces.array[elmt.id].mesh.position.x != this.floor.pieces.array[this.character.positionOnMap].mesh.position.x) {
@@ -163,9 +170,7 @@ export default class App {
 
 							} else {
 								this.floor.pieces.array.forEach((elmt2, i) => {
-									console.log(elmt2);
 									if(elmt2.mesh.position.z > this.floor.pieces.array[this.character.positionOnMap].mesh.position.z) {
-										console.log("I'm in");
 										elmt2.mesh.position.z = this.floor.pieces.array[elmt.id].mesh.position.z - this.floor.size;
 									}
 								});
@@ -180,5 +185,14 @@ export default class App {
 				this.playerPositionThrottle = true;
 			}, 100);
 		}
+	}
+
+	guiHandler() {
+		const gui = new dat.GUI();
+
+		let player = gui.addFolder("Player");
+		player.open();
+
+		player.add(this.character, 'movementVelocity', 0.1, 2);
 	}
 }

@@ -1,5 +1,5 @@
 export default class Ground {
-	constructor(size = 12, segments = 8, amp = 0.5) {
+	constructor(size = 100, segments = 1, amp = 0.5) {
 		this.size = size;
 		this.segments = segments;
 		this.amp = amp;
@@ -21,32 +21,17 @@ export default class Ground {
 	}
 
 	createPiece() {
-		let geom = new THREE.PlaneGeometry(this.size, this.size, this.segments, this.segments);
-		let mat = new THREE.MeshLambertMaterial({color: '#C2C2C2'});
-
-		let l = geom.vertices.length;
-
-		for(let i = 0; i < l; i++ ){
-			let v = geom.vertices[i],
-				angle = Math.random() * this.amp * Math.PI;
-
-			let variation = Math.cos(angle);
-
-			v.z += variation;
-		}
-
+		let geom = new THREE.PlaneBufferGeometry(this.size, this.size, this.segments, this.segments);
+		let mat = new THREE.MeshBasicMaterial({color: '#e8cab2'});
 
 		let ground = new THREE.Mesh(geom, mat);
 
-
-
+		// Utility, debug purpose only
 		let edges = new THREE.EdgesGeometry( geom );
-
 		let line = new THREE.LineSegments( edges, new THREE.LineBasicMaterial( { color: 'red' } ) );
 		ground.add(line);
+		// Utilities
 
-		ground.receiveShadow = true;
-		ground.castShadow = true;
 		ground.rotation.x = Math.PI / 180 * -90;
 		ground.position.y = 0;
 

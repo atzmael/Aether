@@ -27,7 +27,7 @@ export default class Character {
 				keydown: false,
 			}
 		};
-		this.movementVelocity = .1;
+		this.movementVelocity = 1;
 		this.rotationVelocity = .06;
 		this.limit = 16 / 2;
 		this.lastPos = {
@@ -72,16 +72,16 @@ export default class Character {
 			this.mesh.position.z -= Math.cos(this.mesh.rotation.y - 90 * Math.PI / 180) * this.movementVelocity;
 			this.mesh.position.x -= Math.sin(this.mesh.rotation.y - 90 * Math.PI / 180) * this.movementVelocity;
 		}
-
-		this.checkDirection();
 	}
 
 	generateCharacter() {
 		this.mesh = new THREE.Object3D();
 		this.mesh.position.y = 0.5;
 
+		/*
 		this.createBody();
 		this.createHead();
+		*/
 
 		this.controls();
 	}
@@ -218,14 +218,5 @@ export default class Character {
 				if(this.direction.goLeft.keydown) this.direction.goLeft.forward = true;
 			}
 		})
-	}
-
-	/**
-	 * @desc if dirX == true : going right, if dirZ == true : going down
-	 * @returns {{dirX: boolean, dirZ: boolean}}
-	 */
-	checkDirection() {
-		this.dir.x = this.mesh.position.x > this.lastPos.x;
-		this.dir.z = this.mesh.position.z > this.lastPos.z;
 	}
 }
