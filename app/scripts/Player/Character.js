@@ -1,6 +1,19 @@
 export default class Character {
 	constructor(color = 'red') {
 		this.color = color;
+
+		this.limit = 16 / 2;
+		this.lastPos = {
+			x: 0,
+			z: 0,
+		};
+		this.dir = {
+			x: false,
+			z: false,
+		};
+
+		this.positionOnMap = 4;
+
 		this.direction = {
 			up: {
 				forward: false,
@@ -29,17 +42,6 @@ export default class Character {
 		};
 		this.movementVelocity = 1;
 		this.rotationVelocity = .06;
-		this.limit = 16 / 2;
-		this.lastPos = {
-			x: 0,
-			z: 0,
-		};
-		this.dir = {
-			x: false,
-			z: false,
-		};
-
-		this.positionOnMap = 4;
 
 		this.init();
 	}
@@ -47,6 +49,20 @@ export default class Character {
 	init() {
 		this.generateCharacter();
 	}
+
+	generateCharacter() {
+		this.mesh = new THREE.Object3D();
+		this.mesh.name = "character";
+		this.mesh.position.y = 0.5;
+
+		/*
+		this.createBody();
+		this.createHead();
+		*/
+
+		this.controls();
+	}
+
 
 	update() {
 
@@ -74,16 +90,73 @@ export default class Character {
 		}
 	}
 
-	generateCharacter() {
-		this.mesh = new THREE.Object3D();
-		this.mesh.position.y = 0.5;
+	controls() {
+		document.addEventListener('keypress', (e) => {
+			if (e.key === 'q' || e.key === 'ArrowLeft' ) {
+				this.direction.left.forward = true;
+				this.direction.left.keydown = true;
 
-		/*
-		this.createBody();
-		this.createHead();
-		*/
+				this.direction.right.forward = false;
+			}else if (e.key === 'd' || e.key === 'ArrowRight') {
+				this.direction.right.forward = true;
+				this.direction.right.keydown = true;
 
-		this.controls();
+				this.direction.left.forward = false;
+			}else if(e.key === 'z' || e.key === 'ArrowUp'){
+				this.direction.up.forward = true;
+				this.direction.up.keydown = true;
+
+				this.direction.down.forward = false;
+			}else if(e.key === 's' || e.key === 'ArrowDown'){
+				this.direction.down.forward = true;
+				this.direction.down.keydown = true;
+
+				this.direction.up.forward = false;
+			}else if(e.key === 'a'){
+				this.direction.goLeft.forward = true;
+				this.direction.goLeft.keydown = true;
+
+				this.direction.goRight.forward = false;
+			}else if(e.key === 'e'){
+				this.direction.goRight.forward = true;
+				this.direction.goRight.keydown = true;
+
+				this.direction.goLeft.forward = false;
+			}
+		});
+		document.addEventListener('keyup', (e) => {
+			if (e.key === 'q' || e.key === 'ArrowLeft') {
+				this.direction.left.forward = false;
+				this.direction.left.keydown = false;
+
+				if(this.direction.right.keydown) this.direction.right.forward = true;
+			}else if (e.key === 'd' || e.key === 'ArrowRight') {
+				this.direction.right.forward = false;
+				this.direction.right.keydown = false;
+
+				if(this.direction.left.keydown) this.direction.left.forward = true;
+			}else if(e.key === 'z' || e.key === 'ArrowUp'){
+				this.direction.up.forward = false;
+				this.direction.up.keydown = false;
+
+				if(this.direction.down.keydown) this.direction.down.forward = true;
+			}else if(e.key === 's' || e.key === 'ArrowDown'){
+				this.direction.down.forward = false;
+				this.direction.down.keydown = false;
+
+				if(this.direction.up.keydown) this.direction.up.forward = true;
+			}else if(e.key === 'a'){
+				this.direction.goLeft.forward = false;
+				this.direction.goLeft.keydown = false;
+
+				if(this.direction.goRight.keydown) this.direction.goRight.forward = true;
+			}else if(e.key === 'e'){
+				this.direction.goRight.forward = false;
+				this.direction.goRight.keydown = false;
+
+				if(this.direction.goLeft.keydown) this.direction.goLeft.forward = true;
+			}
+		})
 	}
 
 	createBody() {
@@ -136,87 +209,5 @@ export default class Character {
 
 		this.mesh.add(handLeft);
 		this.mesh.add(handRight);
-	}
-
-	controls() {
-		document.addEventListener('keypress', (e) => {
-			if (e.key === 'q' || e.key === 'ArrowLeft' ) {
-				this.direction.left.forward = true;
-				this.direction.left.keydown = true;
-
-				this.direction.right.forward = false;
-			}
-			if (e.key === 'd' || e.key === 'ArrowRight') {
-				this.direction.right.forward = true;
-				this.direction.right.keydown = true;
-
-				this.direction.left.forward = false;
-			}
-			if(e.key === 'z' || e.key === 'ArrowUp'){
-				this.direction.up.forward = true;
-				this.direction.up.keydown = true;
-
-				this.direction.down.forward = false;
-			}
-			if(e.key === 's' || e.key === 'ArrowDown'){
-				this.direction.down.forward = true;
-				this.direction.down.keydown = true;
-
-				this.direction.up.forward = false;
-			}
-			if(e.key === 'a'){
-				this.direction.goLeft.forward = true;
-				this.direction.goLeft.keydown = true;
-
-				this.direction.goRight.forward = false;
-			}
-
-			if(e.key === 'e'){
-				this.direction.goRight.forward = true;
-				this.direction.goRight.keydown = true;
-
-				this.direction.goLeft.forward = false;
-			}
-		});
-		document.addEventListener('keyup', (e) => {
-			if (e.key === 'q' || e.key === 'ArrowLeft') {
-				this.direction.left.forward = false;
-				this.direction.left.keydown = false;
-
-				if(this.direction.right.keydown) this.direction.right.forward = true;
-			}
-			if (e.key === 'd' || e.key === 'ArrowRight') {
-				this.direction.right.forward = false;
-				this.direction.right.keydown = false;
-
-				if(this.direction.left.keydown) this.direction.left.forward = true;
-			}
-			if(e.key === 'z' || e.key === 'ArrowUp'){
-				this.direction.up.forward = false;
-				this.direction.up.keydown = false;
-
-				if(this.direction.down.keydown) this.direction.down.forward = true;
-			}
-			if(e.key === 's' || e.key === 'ArrowDown'){
-				this.direction.down.forward = false;
-				this.direction.down.keydown = false;
-
-				if(this.direction.up.keydown) this.direction.up.forward = true;
-			}
-
-			if(e.key === 'a'){
-				this.direction.goLeft.forward = false;
-				this.direction.goLeft.keydown = false;
-
-				if(this.direction.goRight.keydown) this.direction.goRight.forward = true;
-			}
-
-			if(e.key === 'e'){
-				this.direction.goRight.forward = false;
-				this.direction.goRight.keydown = false;
-
-				if(this.direction.goLeft.keydown) this.direction.goLeft.forward = true;
-			}
-		})
 	}
 }

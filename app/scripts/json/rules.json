@@ -1,0 +1,50 @@
+{
+	"1": {
+		"normal": {
+			"stones": 3,
+			"rocks": 0,
+			"corals": 4,
+			"stalagmites": 0,
+			"geysers": 0
+		},
+		"river": {
+			"stones": 4,
+			"rocks": 0,
+			"corals": 0,
+			"stalagmites": 0,
+			"geysers": 0
+		}
+	},
+	"2": {
+		"normal": {
+			"stones": 6,
+			"rocks": 1,
+			"corals": 2,
+			"stalagmites": 3,
+			"geysers": 0
+		},
+		"river": {
+			"stones": 6,
+			"rocks": 0,
+			"corals": 0,
+			"stalagmites": 0,
+			"geysers": 0
+		}
+	},
+	"3": {
+		"normal": {
+			"stones": 10,
+			"rocks": 2,
+			"corals": 0,
+			"stalagmites": 5,
+			"geysers": 0,
+		},
+		"river": {
+			"stones": 8,
+			"rocks": 0,
+			"corals": 0,
+			"stalagmites": 0,
+			"geysers": 2
+		}
+	}
+}
