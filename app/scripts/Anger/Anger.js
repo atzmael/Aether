@@ -458,21 +458,24 @@ export default class Anger {
 	}
 
 	userInteractionHandler() {
-		let id = 0;
-		function findObject(obj) {
-			return obj.id == id
-		}
+		let id = 0, name = '';
 
 		if (this.intersects.length > 0) {
-			let obj;
+			let obj, index;
 			for (var i = 0; i < this.intersects.length; i++) {
 
 				obj = this.intersects[i];
-				id = obj.id;
-				if (obj.distance <= playerHitBox) {
-					console.log(objectToInteractCollection.find(findObject));
+				id = obj.object.id;
+				name = obj.object.name;
 
+				if (obj.distance <= playerHitBox) {
+
+					index = objectToInteractCollection.findIndex(elmt => elmt.id === id);
+					objectToInteractCollection.splice(index, 1);
 					this.character.mesh.add(obj.object);
+
+
+
 					obj.object.position.x = 0;
 					obj.object.position.z = -5;
 					obj.object.position.y = 0;

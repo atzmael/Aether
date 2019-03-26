@@ -1,9 +1,9 @@
 const path = require('path');
 const webpack = require('webpack');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
+const ExtractTextWebpackPlugin = require("extract-text-webpack-plugin");
 
 module.exports = function (env) {
 	let plugins = [
@@ -14,8 +14,6 @@ module.exports = function (env) {
 		new CleanWebpackPlugin('dist', {
 			root: __dirname
 		}),
-		// create styles css
-		new ExtractTextPlugin(env == 'prod' ? '[name].[contenthash].css' : '[name].css'),
 		// create vendor bundle with all imported node_modules
 		new webpack.optimize.CommonsChunkPlugin({
 			name: 'vendor',
@@ -32,6 +30,7 @@ module.exports = function (env) {
 			template: 'index.html',
 			chunksSortMode: 'dependency'
 		}),
+		new ExtractTextWebpackPlugin("styles.css"),
 	];
 	if (env == 'dev') {
 
@@ -72,14 +71,17 @@ module.exports = function (env) {
 					}
 				}
 			}, {
-				test: /\.css$/,
-				use: ExtractTextPlugin.extract({
-					use: 'css-loader'
-				})
-			}, {
 				test: [/\.mp3$/, /\.dae$/, /\.jpg$/, /\.obj$/, /\.fbx$/],
 				use: ['file-loader?name=[path][name].[hash].[ext]']
-			}]
+			},
+				{
+					test: /\.scss$/,
+					use: ExtractTextWebpackPlugin.extract({
+						fallback: 'style-loader',
+						use: ['css-loader', 'sass-loader', 'postcss-loader'],
+					})
+				}
+			],
 		},
 		devtool: env == 'dev' ? 'cheap-eval-source-map' : '',
 		plugins: plugins,

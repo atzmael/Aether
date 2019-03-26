@@ -54,8 +54,6 @@ export default class Stalagmite {
 		radius = Helpers.randFloat(this.radius.min, this.radius.max);
 		height = Helpers.randFloat(this.height.min, this.height.max);
 
-		console.log(radius, height);
-
 		let geom = new THREE.ConeBufferGeometry( radius, height, this.segments );
 
 		let mat = new THREE.MeshLambertMaterial({color: '#720300'});

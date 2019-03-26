@@ -178,12 +178,14 @@ export default class Character {
 		this.hasObjectInHand = true;
 		this.objectInHand = obj;
 
+		/*
 		// TODO: throw first
 		this.mesh.remove(obj);
+		*/
 
-		nbStone ++;
+		nbObjectDestroyed ++;
 
-		if(nbStone >= 4) {
+		if(nbObjectDestroyed >= 4) {
 			playerState = 3;
 		}
 	}

@@ -1,4 +1,4 @@
-import './index.css';
+import './scss/base.scss';
 
 import Anger from './scripts/Anger/Anger';
 
