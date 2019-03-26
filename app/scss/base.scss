@@ -1,3 +1,7 @@
-html {
-	background: red;
-}
+/* Core */
+
+@import 'core/reset';
+
+/* Components */
+
+@import 'component/header';
