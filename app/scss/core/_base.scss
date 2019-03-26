@@ -2,6 +2,13 @@ html {
 	@extend %BrownLight;
 }
 
+body {
+	background-image: url(/app/assets/img/background.png);
+	background-repeat: no-repeat;
+	background-position: center center;
+	background-size: cover;
+}
+
 .is-menu-open {
 	.header {
 		width: 100%;

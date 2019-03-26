@@ -1,23 +1,31 @@
 .emotion-choice {
 	width: 100vw;
 	height: 100vh;
-	background-color: $blue;
 	color: $white;
 	text-transform: uppercase;
 
 	display: flex;
 	justify-content: center;
 	align-items: center;
+	text-align:center;
 
 	&__container {
 
 	}
 
 	&__list {
-		margin: auto;
 		display: flex;
 		justify-content: space-between;
 		align-items: stretch;
+		margin: 190px 0 0;
+	}
+
+	&__single {
+		width: 150px;
+
+		&:not(:last-child) {
+			margin: 0 100px 0 0;
+		}
 	}
 
 	&__name {
