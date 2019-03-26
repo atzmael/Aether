@@ -9,7 +9,12 @@
 	justify-content: center;
 	align-items: center;
 
+	&__container {
+
+	}
+
 	&__list {
+		margin: auto;
 		display: flex;
 		justify-content: space-between;
 		align-items: stretch;

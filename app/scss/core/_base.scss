@@ -1,0 +1,9 @@
+html {
+	@extend %BrownLight;
+}
+
+.is-menu-open {
+	.header {
+		width: 100%;
+	}
+}
