@@ -1,4 +1,4 @@
-export default class Helpers {
+class Helpers {
 	// Convert degrees into radians
 	static degToRadian(degrees) {
 		return degrees * Math.PI / 180;
@@ -60,4 +60,14 @@ export default class Helpers {
 
 		return y;
 	}
+
+	static rand(min, max) {
+		return Math.floor(Math.random() * (max - min) ) + min;
+	}
+
+	static randFloat(min, max) {
+		return Math.random() * (max - min) + min;
+	}
 }
+
+export default Helpers;

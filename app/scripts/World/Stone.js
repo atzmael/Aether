@@ -30,8 +30,8 @@ export default class Stone {
 			y = Math.round(Math.random() * (4 - 1) + 1);
 			if (this.stones[x][y] == undefined) {
 				stone = this.createStone();
-				posX = (x - (this.stones.length / 2)) * 30 + (Math.cos(Math.random() * Math.PI) * 20);
-				posY = (y - (this.stones.length / 2)) * 30 + (Math.sin(Math.random() * Math.PI) * 20);
+				posX = (x - (this.stones.length / 2)) * 30 + (Math.cos(Math.random() * Math.PI) * 10);
+				posY = (y - (this.stones.length / 2)) * 30 + (Math.sin(Math.random() * Math.PI) * 10);
 				stone.position.set(posX, posY, 0);
 				this.stones[x][y] = stone;
 				this.mesh.add(stone);
@@ -52,7 +52,7 @@ export default class Stone {
 			geom = new THREE.DodecahedronGeometry(this.radius, this.details);
 		}
 
-		let mat = new THREE.MeshLambertMaterial({color: '#e8cab2'});
+		let mat = new THREE.MeshLambertMaterial({color: '#720300'});
 
 		let stone = new THREE.Mesh(geom, mat);
 
@@ -74,6 +74,8 @@ export default class Stone {
 		let edges = new THREE.EdgesGeometry(geom);
 		let line = new THREE.LineSegments(edges, new THREE.LineBasicMaterial({color: 'red'}));
 		//stone.add(line);
+
+		objectToInteractCollection.push(stone);
 
 		return stone;
 	}

@@ -1,5 +1,5 @@
 import './index.css';
 
-import App from './scripts/App';
+import Anger from './scripts/Anger/Anger';
 
-window.app = new App();
+import ui from './scripts/ui/App';

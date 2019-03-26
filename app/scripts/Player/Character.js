@@ -3,6 +3,9 @@ export default class Character {
 		this.color = color;
 
 		this.limit = 16 / 2;
+
+		this.playerStrengh = playerState * 0.8;
+
 		this.lastPos = {
 			x: 0,
 			z: 0,
@@ -11,6 +14,9 @@ export default class Character {
 			x: false,
 			z: false,
 		};
+
+		this.hasObjectInHand = false;
+		this.objectInHand = undefined;
 
 		this.positionOnMap = 4;
 
@@ -40,7 +46,7 @@ export default class Character {
 				keydown: false,
 			}
 		};
-		this.movementVelocity = 1;
+		this.movementVelocity = 0.7;
 		this.rotationVelocity = .06;
 
 		this.init();
@@ -48,12 +54,21 @@ export default class Character {
 
 	init() {
 		this.generateCharacter();
+
+		window.addEventListener('click', this.throwObject.bind(this), false);
 	}
 
 	generateCharacter() {
 		this.mesh = new THREE.Object3D();
 		this.mesh.name = "character";
 		this.mesh.position.y = 0.5;
+
+		let geom = new THREE.BoxBufferGeometry(150,150,150);
+		let mat = new THREE.MeshLambertMaterial({color: '#2d1300', side: THREE.BackSide});
+
+		this.sky = new THREE.Mesh(geom, mat);
+
+		//this.mesh.add(this.sky);
 
 		/*
 		this.createBody();
@@ -157,6 +172,26 @@ export default class Character {
 				if(this.direction.goLeft.keydown) this.direction.goLeft.forward = true;
 			}
 		})
+	}
+
+	putObjectInHand(obj) {
+		this.hasObjectInHand = true;
+		this.objectInHand = obj;
+
+		// TODO: throw first
+		this.mesh.remove(obj);
+
+		nbStone ++;
+
+		if(nbStone >= 4) {
+			playerState = 3;
+		}
+	}
+
+	throwObject(){
+		if(this.hasObjectInHand && this.objectInHand != undefined) {
+
+		}
 	}
 
 	createBody() {

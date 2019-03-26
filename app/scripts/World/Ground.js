@@ -1,6 +1,6 @@
 // Ground elements import
-import Normal from './template/Normal';
-import River from './template/River';
+import Normal from '../Anger/template/Normal';
+import River from '../Anger/template/River';
 
 export default class Ground {
 	constructor(size = chunkSize, segments = 1, amp = 0.5) {
@@ -23,8 +23,6 @@ export default class Ground {
 		this.mesh.position.y = -1;
 
 		this.createGround();
-
-		console.log(this.mesh);
 	}
 
 	/**
@@ -32,7 +30,7 @@ export default class Ground {
 	 * @param color
 	 * @returns {THREE.Mesh}
 	 */
-	createPiece(color = '#e8cab2') {
+	createPiece(color = '#b32b00') {
 		let geom = new THREE.PlaneBufferGeometry(this.size, this.size, this.segments, this.segments);
 		let mat = new THREE.MeshLambertMaterial({color: color});
 
@@ -43,7 +41,7 @@ export default class Ground {
 		// Utility, debug purpose only
 		let edges = new THREE.EdgesGeometry(geom);
 		let line = new THREE.LineSegments(edges, new THREE.LineBasicMaterial({color: 'red'}));
-		ground.add(line);
+		//ground.add(line);
 		// Utilities
 
 		ground.rotation.x = Math.PI / 180 * -90;
@@ -75,7 +73,7 @@ export default class Ground {
 					template = new River().mesh;
 					templateID = 1;
 					templateName = "River";
-					piece = this.createPiece('#0c3191');
+					piece = this.createPiece(COLORS.blue);
 				}
 
 				usedTemplateCollection.push(template);
