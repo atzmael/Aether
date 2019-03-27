@@ -1,0 +1,9 @@
+.section {
+	display: none;
+	opacity: 0;
+
+	&.is-visible {
+		display: flex;
+		opacity: 1;
+	}
+}

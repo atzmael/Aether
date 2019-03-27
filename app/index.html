@@ -2,67 +2,117 @@
 <head>
 	<title>Aether</title>
 	<link rel="icon" href="./dist/img/favicon.ico">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
-<body>
+<body class="is-intro">
 
-<header class="header">
-	<nav>
-		<ul>
-			<li><a href="#" class="btn-emotion btn-anger js-btn-anger">Anger</a></li>
+<header class="header js-header">
+	<nav class="menu js-menu">
+		<ul class="menu__container">
+			<li class="menu__item js-menu-item active"><a href="#" class="btn menu__btn js-btn-anger" data-emotion="anger"><img
+					src="/app/assets/img/sphere-small-anger.png" alt=""></a></li>
+			<li class="menu__item js-menu-item"><a href="#" class="btn menu__btn js-btn-sadness" data-emotion="sadness"><img
+					src="/app/assets/img/sphere-small-sadness.png" alt=""></a></li>
+			<li class="menu__item js-menu-item"><a href="#" class="btn menu__btn js-btn-joy" data-emotion="joy"><img
+					src="/app/assets/img/sphere-small-joy.png" alt=""></a></li>
+			<li class="menu__item js-menu-item"><a href="#" class="btn menu__btn js-btn-fear" data-emotion="fear"><img
+					src="/app/assets/img/sphere-small-fear.png" alt=""></a></li>
+			<li class="menu__item js-menu-item"><a href="#" class="btn menu__btn js-btn-info"><img src="/app/assets/img/info.png"
+			                                                                          alt="Information menu link"></a>
+			</li>
 		</ul>
 	</nav>
+	<div class="header__progression">
+		<div class="header__progression-round"></div>
+		<div class="graph"></div>
+	</div>
 </header>
 
-<section id="home">
+<div id="page-content" class="page-content js-page-content">
+	<section id="home" class="section home js-home">
+		<div class="home__part is-visible js-home-first">
+			<img src="/app/assets/img/aether-logo-home.png" alt="">
+		</div>
+		<div class="home__part home-end js-home-end">
+			<h3>End of home</h3>
+		</div>
+	</section>
 
-</section>
-
-<section id="emotion-choice" class="section emotion-choice js-choice-emotion">
-	<div class="emotion-choice__container">
-		<div class="emotion-choice__question">
-			<p>Which strong emotion did you feel lately ?</p>
-			<div class="emotion-choice__logo">
-				<img src="" alt="">
+	<section id="quotation" class="section quotation js-quotation">
+		<div class="quotation__container">
+			<div class="quotation__logo">
+				<img src="/app/assets/img/aether-logo-home.png" alt="Logo">
+			</div>
+			<div class="quotation__content">
+				<p class="quotation__text">The appearance of things changes according to the emotions; and thus we see magic
+					and beauty in them, while the magic and beauty are really in ourselves.</p>
+				<span class="quotation__credit">― Gibran Khalil Gibran, The Broken Wings</span>
 			</div>
 		</div>
-		<div class="emotion-choice__list">
-			<div class="emotion-choice__single">
-				<a href="" class="emotion-choice__link js-emotion-link">
-					<div class="emotion-choice__logo">
-						<img src="" alt="">
-					</div>
-					<p class="emotion-choice__name js-emotion-link">Anger</p>
-				</a>
-			</div>
-			<div class="emotion-choice__single">
+	</section>
+
+	<section id="emotion-choice" class="section emotion-choice js-emotion-choice">
+		<div class="emotion-choice__container">
+			<div class="emotion-choice__question">
+				<h2 class="emotion-choice__title">Which strong emotion did you feel lately ?</h2>
 				<div class="emotion-choice__logo">
-					<img src="" alt="">
+					<img src="/app/assets/img/aether-logo-typo.svg" alt="Logo">
 				</div>
-				<a href="" class="emotion-choice__name js-emotion-link">Sadness</a>
 			</div>
-			<div class="emotion-choice__single">
-				<div class="emotion-choice__logo">
-					<img src="" alt="">
+			<div class="emotion-choice__list">
+				<div class="emotion-choice__single">
+					<a href="#" class="emotion-choice__link js-emotion-link" data-emotion="anger">
+						<div class="emotion-choice__img">
+							<img src="/app/assets/img/sphere-medium-anger.png" alt="">
+						</div>
+						<p class="emotion-choice__name js-emotion-link">Anger</p>
+					</a>
 				</div>
-				<a href="" class="emotion-choice__name js-emotion-link">Joy</a>
-			</div>
-			<div class="emotion-choice__single">
-				<div class="emotion-choice__logo">
-					<img src="" alt="">
+				<div class="emotion-choice__single">
+					<a href="#" class="emotion-choice__link js-emotion-link" data-emotion="sadness">
+						<div class="emotion-choice__img">
+							<img src="/app/assets/img/sphere-medium-sadness.png" alt="">
+						</div>
+						<p class="emotion-choice__name">Sadness</p>
+					</a>
 				</div>
-				<a href="" class="emotion-choice__name js-emotion-link">Fear</a>
-			</div>
-			<div class="emotion-choice__single">
-				<div class="emotion-choice__logo">
-					<img src="" alt="">
+				<div class="emotion-choice__single">
+					<a href="#" class="emotion-choice__link js-emotion-link" data-emotion="joy">
+						<div class="emotion-choice__img">
+							<img src="/app/assets/img/sphere-medium-joy.png" alt="">
+						</div>
+						<p class="emotion-choice__name">Joy</p>
+					</a>
 				</div>
-				<a href="" class="emotion-choice__name js-emotion-link">Why should I care ?</a>
+				<div class="emotion-choice__single">
+					<a href="#" class="emotion-choice__link js-emotion-link" data-emotion="fear">
+						<div class="emotion-choice__img">
+							<img src="/app/assets/img/sphere-medium-fear.png" alt="">
+						</div>
+						<p class="emotion-choice__name">Fear</p>
+					</a>
+				</div>
+				<div class="emotion-choice__single">
+					<a href="#" class="emotion-choice__link js-emotion-link" data-emotion="random">
+						<div class="emotion-choice__img">
+							<img src="/app/assets/img/sphere-medium-random.png" alt="">
+						</div>
+						<p class="emotion-choice__name">Why should I care ?</p>
+					</a>
+				</div>
 			</div>
 		</div>
-	</div>
-</section>
+	</section>
 
-
+	<section id="welcome-back" class="section welcome-back js-welcome-back">
+		<div class="welcome-back__container">
+			<h2 class="welcome-back__title">
+				You are back !<br>
+				Feel free to try another emotion :)
+			</h2>
+		</div>
+	</section>
+</div>
 <div id="main" class="scene-container js-scene-container"></div>
 
 </body>

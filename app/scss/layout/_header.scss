@@ -1,0 +1,58 @@
+.header {
+	$root: &;
+
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: auto;
+
+	&__progression {
+		margin: 35px 0 0 60px;
+
+		&-round {
+			border-radius: 50%;
+			background-color: $white;
+			opacity: 0.7;
+			width: 52px;
+			height: 52px;
+		}
+	}
+
+	.menu {
+		margin: 60px 0 0 60px;
+
+		&__container {
+			display: flex;
+			justify-content: flex-start;
+			align-items: center;
+
+
+		}
+
+		&__item {
+			margin: 0 30px 0 0;
+
+			&:not(.active) {
+				transform: translateX(-20px);
+				opacity: 0;
+			}
+
+			&.active {
+				display: block;
+
+				img {
+					width: 52px;
+					height: 52px;
+				}
+			}
+			a {
+				img {
+					width: 44px;
+					height: 44px;
+					max-width: 100%;
+				}
+			}
+		}
+
+	}
+}

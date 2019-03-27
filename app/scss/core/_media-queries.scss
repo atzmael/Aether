@@ -1,0 +1,12 @@
+// Mixin for tablet BP
+@mixin tablet {
+	@media screen and (max-width: $tablet-bp) {
+		@content
+	}
+}
+
+@mixin mobile {
+	@media screen and (max-width: $mobile-bp) {
+		@content
+	}
+}
