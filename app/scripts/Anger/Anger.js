@@ -29,7 +29,7 @@ window.templateCollection = {
 };
 
 window.playerState = 2;
-window.playerHitBox = 8;
+window.playerHitBox = 12;
 
 // TODO: for presentation only, count object destroyed
 window.nbObjectDestroyed = 0;
@@ -38,7 +38,7 @@ window.chunkSize = 100;
 
 window.COLORS = {
 	blue: '#0c3191',
-	orange: '#e8cab2'
+	orange: '#b32b00'
 }
 
 // Game files
@@ -65,7 +65,7 @@ export default class Anger {
 
 	constructor() {
 
-		this.camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 1000);
+		this.camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 1000);
 		this.camera.position.z = 0;
 		this.camera.position.y = 2;
 		this.camera.rotation.x = Math.PI / 180 * -22.5;
