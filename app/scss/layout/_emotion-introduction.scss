@@ -1,0 +1,59 @@
+#intro-emotion {
+    width: 100vw;
+    height: 100vh;
+    color: white;
+    text-transform: uppercase;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    flex-direction: column;
+    .intro-head {
+        position: relative;
+        .emotion-img {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            height: auto;
+            overflow: hidden;
+            img {
+                width: 500px;
+            }
+        }
+        .emotion-name {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            font-size: 50px;
+            transform: translate(-50%, -50%);
+        }
+    }
+    .intro-timeline {
+        width: 0;
+        height: 2px;
+        border-bottom: 2px dashed $white;
+    }
+    .intro-off {
+        .off-list {
+            margin: 25px 0;
+            li:not(:first-child) {
+                display: none;
+                opacity: 0;
+            }
+        }
+        .off-btn {
+            width: 25px;
+            height: 25px;
+            background-color: #fff;
+            margin: 25px auto;
+            border-radius: 50px;
+            box-shadow: 0 0 15px 2.5px #ccc;
+            cursor: pointer;
+        }
+        .off-ready {
+            display: none;
+            margin: 25px 0;
+            opacity: 0;
+        }
+    }
+}
