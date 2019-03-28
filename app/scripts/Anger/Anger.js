@@ -115,8 +115,10 @@ export default class Anger {
 
 		requestAnimationFrame(this.update.bind(this));
 
-		// Code goes there
+		// Affichage du graph d'état
+		this.displayGraphState();
 
+		// Update du personnage
 		this.character.update();
 
 		//this.camera.position.z -= 0.1;
@@ -488,5 +490,15 @@ export default class Anger {
 				}
 			}
 		}
+	}
+
+	displayGraphState() {
+		let container = document.querySelector('.js-graph');
+
+		container.innerText = playerState;
+	}
+
+	updateUserState() {
+
 	}
 }

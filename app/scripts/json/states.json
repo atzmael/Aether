@@ -1,0 +1,8 @@
+{
+	"stone": 0.1,
+	"corals": {
+		"full": 0.1,
+		"node": 0.01
+	},
+	"stalagmite": 0.04
+}
