@@ -68,7 +68,28 @@ export default class Character {
 
 		this.sky = new THREE.Mesh(geom, mat);
 
-		//this.mesh.add(this.sky);
+		/*
+		Hitbox helper
+		 */
+		let geometry = new THREE.CircleBufferGeometry( playerHitBox, 32 );
+		let material = new THREE.MeshBasicMaterial({color: COLORS.orange});
+		let hitbox = new THREE.Mesh( geometry, material );
+
+		hitbox.position.y = -1.4;
+		hitbox.position.z = 0;
+		hitbox.position.x = 0;
+		hitbox.rotation.x = Math.PI / 180 * -90;
+
+		let edges = new THREE.EdgesGeometry(geometry);
+		let line = new THREE.LineSegments(edges, new THREE.LineBasicMaterial({color: 'yellow'}));
+		hitbox.add(line);
+
+		this.mesh.add(hitbox);
+
+		/*
+
+		 */
+
 
 		/*
 		this.createBody();
