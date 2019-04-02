@@ -63,7 +63,7 @@ export default class Character {
 		this.mesh.name = "character";
 		this.mesh.position.y = 0.5;
 
-		let geom = new THREE.BoxBufferGeometry(150,150,150);
+		let geom = new THREE.BoxBufferGeometry(150, 150, 150);
 		let mat = new THREE.MeshLambertMaterial({color: '#2d1300', side: THREE.BackSide});
 
 		this.sky = new THREE.Mesh(geom, mat);
@@ -71,9 +71,9 @@ export default class Character {
 		/*
 		Hitbox helper
 		 */
-		let geometry = new THREE.CircleBufferGeometry( playerHitBox, 32 );
+		let geometry = new THREE.CircleBufferGeometry(playerHitBox, 32);
 		let material = new THREE.MeshBasicMaterial({color: COLORS.orange});
-		let hitbox = new THREE.Mesh( geometry, material );
+		let hitbox = new THREE.Mesh(geometry, material);
 
 		hitbox.position.y = -1.4;
 		hitbox.position.z = 0;
@@ -116,11 +116,11 @@ export default class Character {
 			this.mesh.position.z -= Math.cos(this.mesh.rotation.y) * this.movementVelocity;
 			this.mesh.position.x -= Math.sin(this.mesh.rotation.y) * this.movementVelocity;
 		}
-		if(this.direction.goLeft.forward) {
+		if (this.direction.goLeft.forward) {
 			this.mesh.position.z -= Math.cos(this.mesh.rotation.y + 90 * Math.PI / 180) * this.movementVelocity;
 			this.mesh.position.x -= Math.sin(this.mesh.rotation.y + 90 * Math.PI / 180) * this.movementVelocity;
 		}
-		if(this.direction.goRight.forward) {
+		if (this.direction.goRight.forward) {
 			this.mesh.position.z -= Math.cos(this.mesh.rotation.y - 90 * Math.PI / 180) * this.movementVelocity;
 			this.mesh.position.x -= Math.sin(this.mesh.rotation.y - 90 * Math.PI / 180) * this.movementVelocity;
 		}
@@ -128,32 +128,32 @@ export default class Character {
 
 	controls() {
 		document.addEventListener('keypress', (e) => {
-			if (e.key === 'q' || e.key === 'ArrowLeft' ) {
+			if (e.key === 'q' || e.key === 'ArrowLeft') {
 				this.direction.left.forward = true;
 				this.direction.left.keydown = true;
 
 				this.direction.right.forward = false;
-			}else if (e.key === 'd' || e.key === 'ArrowRight') {
+			} else if (e.key === 'd' || e.key === 'ArrowRight') {
 				this.direction.right.forward = true;
 				this.direction.right.keydown = true;
 
 				this.direction.left.forward = false;
-			}else if(e.key === 'z' || e.key === 'ArrowUp'){
+			} else if (e.key === 'z' || e.key === 'ArrowUp') {
 				this.direction.up.forward = true;
 				this.direction.up.keydown = true;
 
 				this.direction.down.forward = false;
-			}else if(e.key === 's' || e.key === 'ArrowDown'){
+			} else if (e.key === 's' || e.key === 'ArrowDown') {
 				this.direction.down.forward = true;
 				this.direction.down.keydown = true;
 
 				this.direction.up.forward = false;
-			}else if(e.key === 'a'){
+			} else if (e.key === 'a') {
 				this.direction.goLeft.forward = true;
 				this.direction.goLeft.keydown = true;
 
 				this.direction.goRight.forward = false;
-			}else if(e.key === 'e'){
+			} else if (e.key === 'e') {
 				this.direction.goRight.forward = true;
 				this.direction.goRight.keydown = true;
 
@@ -165,32 +165,32 @@ export default class Character {
 				this.direction.left.forward = false;
 				this.direction.left.keydown = false;
 
-				if(this.direction.right.keydown) this.direction.right.forward = true;
-			}else if (e.key === 'd' || e.key === 'ArrowRight') {
+				if (this.direction.right.keydown) this.direction.right.forward = true;
+			} else if (e.key === 'd' || e.key === 'ArrowRight') {
 				this.direction.right.forward = false;
 				this.direction.right.keydown = false;
 
-				if(this.direction.left.keydown) this.direction.left.forward = true;
-			}else if(e.key === 'z' || e.key === 'ArrowUp'){
+				if (this.direction.left.keydown) this.direction.left.forward = true;
+			} else if (e.key === 'z' || e.key === 'ArrowUp') {
 				this.direction.up.forward = false;
 				this.direction.up.keydown = false;
 
-				if(this.direction.down.keydown) this.direction.down.forward = true;
-			}else if(e.key === 's' || e.key === 'ArrowDown'){
+				if (this.direction.down.keydown) this.direction.down.forward = true;
+			} else if (e.key === 's' || e.key === 'ArrowDown') {
 				this.direction.down.forward = false;
 				this.direction.down.keydown = false;
 
-				if(this.direction.up.keydown) this.direction.up.forward = true;
-			}else if(e.key === 'a'){
+				if (this.direction.up.keydown) this.direction.up.forward = true;
+			} else if (e.key === 'a') {
 				this.direction.goLeft.forward = false;
 				this.direction.goLeft.keydown = false;
 
-				if(this.direction.goRight.keydown) this.direction.goRight.forward = true;
-			}else if(e.key === 'e'){
+				if (this.direction.goRight.keydown) this.direction.goRight.forward = true;
+			} else if (e.key === 'e') {
 				this.direction.goRight.forward = false;
 				this.direction.goRight.keydown = false;
 
-				if(this.direction.goLeft.keydown) this.direction.goLeft.forward = true;
+				if (this.direction.goLeft.keydown) this.direction.goLeft.forward = true;
 			}
 		})
 	}
@@ -199,20 +199,31 @@ export default class Character {
 		this.hasObjectInHand = true;
 		this.objectInHand = obj;
 
-		/*
-		// TODO: throw first
-		this.mesh.remove(obj);
-		*/
+		let scoreToAdd = 0;
 
-		nbObjectDestroyed ++;
-
-		if(nbObjectDestroyed >= 4) {
-			playerState = 3;
+		switch (obj.name) {
+			case 'stone':
+				scoreToAdd = statesScore.stone;
+				break;
+			case 'stalagmite':
+				scoreToAdd = statesScore.stalagmite;
+				this.mesh.remove(obj);
+				break;
 		}
+
+		scoreObjectDestroyed += scoreToAdd;
+
+		playerState = Math.floor(scoreObjectDestroyed);
+
+		console.log(obj.name, statesScore, scoreObjectDestroyed, playerState);
+
+		if(playerState > 3) playerState = 3;
+
+
 	}
 
-	throwObject(){
-		if(this.hasObjectInHand && this.objectInHand != undefined) {
+	throwObject() {
+		if (this.hasObjectInHand && this.objectInHand != undefined) {
 
 		}
 	}

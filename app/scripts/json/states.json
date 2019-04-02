@@ -1,6 +1,6 @@
 {
 	"stone": 0.1,
-	"corals": {
+	"coral": {
 		"full": 0.1,
 		"node": 0.01
 	},

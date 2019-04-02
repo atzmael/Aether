@@ -17,14 +17,16 @@
 					src="/app/assets/img/sphere-small-joy.png" alt=""></a></li>
 			<li class="menu__item js-menu-item"><a href="#" class="btn menu__btn js-btn-fear" data-emotion="fear"><img
 					src="/app/assets/img/sphere-small-fear.png" alt=""></a></li>
-			<li class="menu__item js-menu-item"><a href="#" class="btn menu__btn js-btn-info"><img src="/app/assets/img/info.png"
+			<li class="menu__item js-menu-item"><a href="#" class="btn menu__btn js-open-infos"><img src="/app/assets/img/info.png"
 			                                                                          alt="Information menu link"></a>
 			</li>
 		</ul>
 	</nav>
 	<div class="header__progression">
 		<div class="header__progression-round"></div>
-		<div class="graph js-graph"></div>
+		<div class="graph js-graph">
+			<canvas class="js-graph-canvas" width="100" height="50"></canvas>
+		</div>
 	</div>
 </header>
 
@@ -77,7 +79,7 @@
 					</a>
 				</div>
 				<div class="emotion-choice__single">
-					<a href="#" class="emotion-choice__li<img src="" alt="">nk js-emotion-link" data-emotion="joy">
+					<a href="#" class="emotion-choice__link js-emotion-link" data-emotion="joy">
 						<div class="emotion-choice__img">
 							<img src="/app/assets/img/sphere-medium-joy.png" alt="">
 						</div>
@@ -142,6 +144,87 @@
 	</section>
 </div>
 <div id="main" class="scene-container js-scene-container"></div>
+
+<div class="infos js-infos">
+	<div class="infos__close-btn js-close-infos">
+		<img src="/app/assets/img/croix.png" alt="Close infos">
+	</div>
+	<div class="infos__logo">
+		<img class="infos__logo-img" src="/app/assets/img/aether-logo-typo.svg" alt="Logo">
+	</div>
+	<div class="infos__container">
+		<div class="infos__section accordion-item js-infos-accordion-item">
+			<h4 class="infos__title js-infos-accordion-btn">The project</h4>
+			<div class="infos__content js-infos-accordion-content">
+				<p class="infos__content__inner js-infos-content-inner">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequatur deserunt dicta ducimus, explicabo facilis fugit quia quod. Ab amet assumenda, at corporis cupiditate iure, iusto laudantium nam necessitatibus quas, suscipit?</p>
+			</div>
+		</div>
+		<div class="infos__section accordion-item js-infos-accordion-item">
+			<h4 class="infos__title js-infos-accordion-btn">The context</h4>
+			<div class="infos__content js-infos-accordion-content">
+				<p class="infos__content__inner js-infos-content-inner">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequatur deserunt dicta ducimus, explicabo facilis fugit quia quod. Ab amet assumenda, at corporis cupiditate iure, iusto laudantium nam necessitatibus quas, suscipit?</p>
+			</div>
+		</div>
+		<div class="infos__section accordion-item js-infos-accordion-item">
+			<h4 class="infos__title js-infos-accordion-btn">The team</h4>
+			<div class="infos__content js-infos-accordion-content">
+				<p class="infos__content__inner js-infos-content-inner">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequatur deserunt dicta ducimus, explicabo facilis fugit quia quod. Ab amet assumenda, at corporis cupiditate iure, iusto laudantium nam necessitatibus quas, suscipit?</p>
+			</div>
+		</div>
+		<div class="infos__section infos__references js-infos-accordion-item">
+			<h4 class="infos__title js-infos-accordion-btn">References</h4>
+			<div class="infos__content infos__references__content js-infos-accordion-content">
+				<div class="infos__content__inner js-infos-content-inner">
+					<p class="infos__references__desc">Amazing books, videos and website we based our researches on.</p>
+					<div class="infos__references__list">
+						<div class="infos__references__item">
+							<div class="infos__references__media">
+								<img class="infos__references__img" src="https://placehold.it/247x160" alt="">
+								<p class="infos__references__figcaption">VIDEO — 2018</p>
+								<p class="infos__references__figcaption"> Why Beautiful Things Make us Happy</p>
+							</div>
+						</div>
+						<div class="infos__references__item">
+							<div class="infos__references__media">
+								<img class="infos__references__img" src="https://placehold.it/247x160" alt="">
+								<p class="infos__references__figcaption">VIDEO — 2018</p>
+								<p class="infos__references__figcaption"> Why Beautiful Things Make us Happy</p>
+							</div>
+						</div>
+						<div class="infos__references__item">
+							<div class="infos__references__media">
+								<img class="infos__references__img" src="https://placehold.it/247x160" alt="">
+								<p class="infos__references__figcaption">VIDEO — 2018</p>
+								<p class="infos__references__figcaption">Why Beautiful Things Make us Happy</p>
+							</div>
+						</div>
+						<div class="infos__references__item">
+							<div class="infos__references__media">
+								<img class="infos__references__img" src="https://placehold.it/247x160" alt="">
+								<p class="infos__references__figcaption">VIDEO — 2018</p>
+								<p class="infos__references__figcaption">Why Beautiful Things Make us Happy</p>
+							</div>
+						</div>
+						<div class="infos__references__item">
+							<div class="infos__references__media">
+								<img class="infos__references__img" src="https://placehold.it/247x160" alt="">
+								<p class="infos__references__figcaption">VIDEO — 2018</p>
+								<p class="infos__references__figcaption">Why Beautiful Things Make us Happy</p>
+							</div>
+						</div>
+						<div class="infos__references__item">
+							<div class="infos__references__media">
+								<img class="infos__references__img" src="https://placehold.it/247x160" alt="">
+								<p class="infos__references__figcaption">VIDEO — 2018</p>
+								<p class="infos__references__figcaption">Why Beautiful Things Make us Happy</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
 
 </body>
 </html>

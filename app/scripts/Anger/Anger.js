@@ -31,8 +31,9 @@ window.templateCollection = {
 window.playerState = 2;
 window.playerHitBox = 12;
 
-// TODO: for presentation only, count object destroyed
-window.nbObjectDestroyed = 0;
+window.statesScore = require('../json/states');
+
+window.scoreObjectDestroyed = playerState;
 
 window.chunkSize = 100;
 
@@ -115,9 +116,6 @@ export default class Anger {
 
 		requestAnimationFrame(this.update.bind(this));
 
-		// Affichage du graph d'état
-		this.displayGraphState();
-
 		// Update du personnage
 		this.character.update();
 
@@ -144,6 +142,8 @@ export default class Anger {
 	init() {
 		this.initScene();
 		this.helpers();
+
+		this.displayGraphState();
 	}
 
 	initScene() {
@@ -476,8 +476,6 @@ export default class Anger {
 					objectToInteractCollection.splice(index, 1);
 					this.character.mesh.add(obj.object);
 
-
-
 					obj.object.position.x = 0;
 					obj.object.position.z = -5;
 					obj.object.position.y = 0;
@@ -493,12 +491,54 @@ export default class Anger {
 	}
 
 	displayGraphState() {
-		let container = document.querySelector('.js-graph');
+		let canvas = document.querySelector('.js-graph-canvas'),
+			ctx = canvas.getContext('2d'),
+			canvasW = canvas.width, canvasH = canvas.height,
+			dotCollection = [],
+			posX = 0, posY = canvasH / 2,
+			lastPosY = 0,
+			diff = 0;
 
-		container.innerText = playerState;
+		setInterval(() => {
+			posY = scoreObjectDestroyed;
+			if (posY != lastPosY) {
+
+				posY += diff;
+
+				let dot = new Dot(posX, posY * 10, ctx);
+				dot.init();
+				dotCollection.push(dot);
+
+				lastPosY = posY;
+				posX += 6;
+			}
+		}, 50);
 	}
 
 	updateUserState() {
 
+	}
+}
+
+
+class Dot {
+	constructor(posX, posY, ctx) {
+		this.radius = 2;
+
+		this.posX = posX + this.radius;
+		this.posY = posY;
+		this.ctx = ctx;
+	}
+
+	init() {
+		this.drawDot();
+	}
+
+	drawDot() {
+		this.ctx.beginPath();
+		this.ctx.fillStyle = 'white';
+		this.ctx.arc(this.posX, this.posY, this.radius, 0, Math.PI * 2);
+		this.ctx.fill();
+		this.ctx.closePath();
 	}
 }
