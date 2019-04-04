@@ -9,6 +9,7 @@ module.exports = function (env) {
 	let plugins = [
 		new webpack.ProvidePlugin({
 			THREE: 'three',
+			CANNON: 'cannon'
 		}),
 		// clean export folder
 		new CleanWebpackPlugin('dist', {
