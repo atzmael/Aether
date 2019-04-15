@@ -73,7 +73,9 @@ let rules = {
 
 export default class Normal {
 	constructor() {
-		this.rule = rules[playerState];
+		if(playerState > 0 && playerState < 4) {
+			this.rule = rules[playerState];
+		}
 
 		this.init();
 	}

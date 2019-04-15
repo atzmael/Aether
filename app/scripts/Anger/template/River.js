@@ -72,12 +72,15 @@ let rules = {
 
 export default class River {
 	constructor() {
-		this.rule = rules[playerState];
+		if(playerState > 0 && playerState < 4) {
+			this.rule = rules[playerState];
+		}
 
 		this.init();
 	}
 
 	init() {
+
 		this.mesh = new THREE.Object3D();
 		this.mesh.name = "template-river";
 		this.mesh.position.y = 0;
@@ -87,6 +90,5 @@ export default class River {
 
 		let fieldOfStalagmite = new Stalagmite(this.rule.stalagmites.radius, this.rule.stalagmites.height, this.rule.stalagmites.segments, this.rule.stalagmites.number).mesh;
 		this.mesh.add(fieldOfStalagmite);
-
 	}
 }

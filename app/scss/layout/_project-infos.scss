@@ -1,0 +1,124 @@
+.infos {
+	position:fixed;
+	top:0;
+	left:0;
+	width:100vw;
+	height: 100vh;
+
+	opacity:0;
+	display: none;
+
+	overflow: auto;
+
+	background-image: url(/app/assets/img/bg-info.jpg);
+	background-repeat: no-repeat;
+	background-position: center center;
+	background-size: cover;
+
+	&__logo {
+		width:30%;
+		margin: 30px auto 0;
+
+		@include mobile {
+			width:80%;
+		}
+
+		&-img {
+			width: 100%;
+		}
+	}
+
+	&__container {
+		border-left: 1px dashed $white;
+
+		margin: 70px 100px 145px 385px;
+		padding: 0 0 0 50px;
+
+		display: flex;
+		flex-flow: column nowrap;
+		justify-content: flex-start;
+		align-items: stretch;
+
+		color: $white;
+		overflow-y:scroll;
+	}
+
+	&__section {
+		display: flex;
+
+		justify-content: flex-start;
+		align-items: flex-start;
+
+		&:not(:first-child) {
+			margin: 35px 0 0 0;
+		}
+	}
+
+	&__title {
+		font-size: 34px;
+		line-height: 41px;
+
+		width: 257px;
+		max-width: 100%;
+
+		flex-shrink: 0;
+		text-transform: uppercase;
+		margin: 0 50px 0 0;
+
+		cursor: pointer;
+	}
+
+	&__content {
+		@extend .smaller-text;
+		width: 512px;
+		height:0%;
+		overflow:hidden;
+
+		&__inner {
+			transform: translateX(-40px);
+			opacity: 0;
+		}
+	}
+
+	&__references {
+
+		&__content {
+			width: auto;
+		}
+
+		&__list {
+			margin: 40px 0 0 0;
+
+			display: flex;
+			justify-content: space-between;
+			flex-flow: wrap row;
+		}
+
+		&__item {
+			width: 255px;
+
+			&:nth-child(n + 4){
+				margin: 45px 0 0 0;
+			}
+		}
+
+		&__img {
+			margin: 0 0 20px 0;
+		}
+
+		&__figcaption {
+			@extend .smaller-text;
+		}
+	}
+
+	&__close-btn {
+		width: 52px;
+		height: 52px;
+
+		position:absolute;
+		top: 72px;
+		left: 72px;
+
+		cursor: pointer;
+	}
+}

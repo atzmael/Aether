@@ -1,4 +1,5 @@
-# Three.js Boilerplate
+# Aether project - _WIP_
+
 
 ## Setup
 
