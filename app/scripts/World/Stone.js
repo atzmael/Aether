@@ -1,8 +1,11 @@
 export default class Stone {
-	constructor(radius = 1, details = 0, stoneNumber = 0, amp = 0.5) {
+	constructor(groundID, coord, radius = 1, details = 0, stoneNumber = 0, amp = 0.5) {
 		this.radius = radius;
 		this.details = details;
 		this.stoneNumber = stoneNumber;
+
+		this.groundID = groundID;
+		this.coord = coord;
 
 		this.stones = [];
 		for(let x = 0; x < 5;x++){
@@ -30,11 +33,12 @@ export default class Stone {
 			y = Math.round(Math.random() * (4 - 1) + 1);
 			if (this.stones[x][y] == undefined) {
 				stone = this.createStone();
-				posX = (x - (this.stones.length / 2)) * 30 + (Math.cos(Math.random() * Math.PI) * 10);
-				posY = (y - (this.stones.length / 2)) * 30 + (Math.sin(Math.random() * Math.PI) * 10);
-				stone.position.set(posX, posY, 0);
+				posX = (x - (this.stones.length / 2)) * 30 + (Math.cos(Math.random() * Math.PI) * 10) + this.coord.x;
+				posY = (y - (this.stones.length / 2)) * 30 + (Math.sin(Math.random() * Math.PI) * 10) + this.coord.y;
+				stone.position.set(posX, -1, posY);
 				this.stones[x][y] = stone;
 				this.mesh.add(stone);
+				window.grounds[this.groundID].objects.push(stone);
 			}
 		}
 	}

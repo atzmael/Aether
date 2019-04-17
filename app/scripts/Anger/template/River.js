@@ -71,10 +71,13 @@ let rules = {
 };
 
 export default class River {
-	constructor() {
+	constructor(groundID, coord) {
 		if(playerState > 0 && playerState < 4) {
 			this.rule = rules[playerState];
 		}
+
+		this.groundID = groundID;
+		this.coord = coord;
 
 		this.init();
 	}
@@ -85,10 +88,10 @@ export default class River {
 		this.mesh.name = "template-river";
 		this.mesh.position.y = 0;
 
-		let fieldOfStone = new Stone(this.rule.stones.radius, this.rule.stones.details, this.rule.stones.number).mesh;
+		let fieldOfStone = new Stone(this.groundID, this.coord, this.rule.stones.radius, this.rule.stones.details, this.rule.stones.number).mesh;
 		this.mesh.add(fieldOfStone);
 
-		let fieldOfStalagmite = new Stalagmite(this.rule.stalagmites.radius, this.rule.stalagmites.height, this.rule.stalagmites.segments, this.rule.stalagmites.number).mesh;
+		let fieldOfStalagmite = new Stalagmite(this.groundID, this.coord, this.rule.stalagmites.radius, this.rule.stalagmites.height, this.rule.stalagmites.segments, this.rule.stalagmites.number).mesh;
 		this.mesh.add(fieldOfStalagmite);
 	}
 }

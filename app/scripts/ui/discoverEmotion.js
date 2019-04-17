@@ -68,7 +68,6 @@ const discoverEmotion = {
 	},
 	introductionNextSlide(i) {
 		let tmln = ((i+1) * (100 / this.ui.textVoices.length)) + '%';
-		console.log(tmln)
 		if (this.increment === this.ui.textVoices.length - 1) {
 			this.tl.to(this.ui.introductionSection, 0.6, {opacity: 0})
 				.to(this.ui.timeline, 0.6, {width: tmln }, '-=0.6')

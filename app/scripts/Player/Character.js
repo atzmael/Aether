@@ -215,8 +215,6 @@ export default class Character {
 
 		playerState = Math.floor(scoreObjectDestroyed);
 
-		console.log(obj.name, statesScore, scoreObjectDestroyed, playerState);
-
 		if(playerState > 3) playerState = 3;
 
 

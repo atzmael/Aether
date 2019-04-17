@@ -64,13 +64,23 @@ export default class Ground {
 				posChunkX = x * this.size - (this.size * 3) / 2 + this.size / 2;
 				posChunkZ = y * this.size - (this.size * 3) / 2 + this.size / 2;
 
+				window.grounds.push(
+					{
+						id: piecesNumber,
+						elmt: undefined,
+						posX: posChunkX,
+						posY: posChunkZ,
+						objects: [],
+					}
+				);
+
 				if (!this.checkChunkTemplate(posChunkX)) {
-					template = new Normal().mesh;
+					template = new Normal(piecesNumber, {x: posChunkX, y: posChunkZ}).mesh;
 					templateID = 0;
 					templateName = "Normal";
 					piece = this.createPiece();
 				} else {
-					template = new River().mesh;
+					template = new River(piecesNumber, {x: posChunkX, y: posChunkZ}).mesh;
 					templateID = 1;
 					templateName = "River";
 					piece = this.createPiece(COLORS.blue);
@@ -80,7 +90,10 @@ export default class Ground {
 
 				piece.position.x = posChunkX;
 				piece.position.z = posChunkZ;
+				piece.position.y = -1;
 				piece.add(template);
+
+				window.grounds[piecesNumber].elmt = piece;
 
 				this.pieces.piece.push({
 					mesh: piece,
@@ -91,6 +104,7 @@ export default class Ground {
 						object: template
 					}
 				});
+
 				piecesNumber++;
 			}
 		}

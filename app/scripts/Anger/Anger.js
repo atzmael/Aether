@@ -42,6 +42,8 @@ window.COLORS = {
 	orange: '#b32b00'
 }
 
+window.grounds = [];
+
 // Game files
 import Character from '../Player/Character';
 import Ground from '../World/Ground';
@@ -69,7 +71,7 @@ export default class Anger {
 		this.camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 1000);
 		this.camera.position.z = 0;
 		this.camera.position.y = 2;
-		this.camera.rotation.x = Math.PI / 180 * -22.5;
+		this.camera.rotation.x = Math.PI / 180 * -15;
 
 		// Vars
 		this.playerPositionThrottle = true;
@@ -87,7 +89,17 @@ export default class Anger {
 		this.scene.add(this.character.mesh);
 
 		this.floor = new Ground();
-		this.scene.add(this.floor.mesh);
+		window.grounds.forEach(ground => {
+			this.scene.add(ground.elmt);
+			ground.objects.forEach(groundElmt => {
+				this.scene.add(groundElmt);
+			})
+		});
+
+		console.log(window.grounds);
+		console.log(this.scene);
+
+		//this.scene.add(this.floor.mesh);
 
 		// Light
 		let ambientLight = new THREE.AmbientLight(0x404040, 4);
@@ -198,49 +210,55 @@ export default class Anger {
 				newTemplate;
 
 
-			this.floor.pieces.piece.forEach((elmt, i) => {
+			window.grounds.forEach((ground, i) => {
 
 				// Character position
 				characterX = this.character.mesh.position.x;
 				characterZ = this.character.mesh.position.z;
 
 				// Current chunk limits
-				limitLeft = elmt.mesh.position.x - this.floor.size / 2;
-				limitTop = elmt.mesh.position.z - this.floor.size / 2;
-				limitRight = elmt.mesh.position.x + this.floor.size / 2;
-				limitBottom = elmt.mesh.position.z + this.floor.size / 2;
+				limitLeft = ground.elmt.position.x - this.floor.size / 2;
+				limitTop = ground.elmt.position.z - this.floor.size / 2;
+				limitRight = ground.elmt.position.x + this.floor.size / 2;
+				limitBottom = ground.elmt.position.z + this.floor.size / 2;
 
 				// If player is in the chunk
 				if (limitLeft < characterX &&
 					characterX < limitRight &&
 					limitTop < characterZ &&
 					characterZ < limitBottom) {
-					activeCase = elmt.id;
+					activeCase = ground.id;
 
 					// If current chunk is not equals to the player current chunk ID
 					if (activeCase != this.character.positionOnMap) {
 
+						console.log('player changed chunk');
+
 						// If current chunk pos X is not equals to the last chunk pos X
-						if (this.floor.pieces.piece[activeCase].mesh.position.x != this.floor.pieces.piece[this.character.positionOnMap].mesh.position.x) {
+						if (ground.elmt.position.x != window.grounds[this.character.positionOnMap].elmt.position.x) {
+
+							console.log('player moved on X');
 
 							// If current chunk pos X minus last chunk pos X is superior to 0
 							// This mean that character is going to right
 							// Else you are going to left
-							if (this.floor.pieces.piece[activeCase].mesh.position.x - this.floor.pieces.piece[this.character.positionOnMap].mesh.position.x > 0) {
-								this.floor.pieces.piece.forEach((elmt2, i) => {
+							if (ground.elmt.position.x - window.grounds[this.character.positionOnMap].elmt.position.x > 0) {
 
+								console.log('player moved on right');
+
+								window.grounds.forEach((elmt2, i) => {
 									// If current chunk pos X is inferior to last chunk pos X
 									// Move his position to the right
-									if (elmt2.mesh.position.x < this.floor.pieces.piece[this.character.positionOnMap].mesh.position.x) {
+									if (elmt2.elmt.position.x < window.grounds[this.character.positionOnMap].elmt.position.x) {
 
 										// check if the last is a river
-										isLastRiver = this.checkChunkTemplate(elmt2.mesh.position.x);
+										isLastRiver = this.checkChunkTemplate(elmt2.elmt.position.x);
 
 										// Move the chunk to his new position
-										elmt2.mesh.position.x = this.floor.pieces.piece[elmt.id].mesh.position.x + this.floor.size;
+										elmt2.elmt.position.x = ground.elmt.position.x + this.floor.size;
 
 										// check if the new is a river
-										isNewRiver = this.checkChunkTemplate(elmt2.mesh.position.x);
+										isNewRiver = this.checkChunkTemplate(elmt2.elmt.position.x);
 
 										// if one of them is not a river
 										if (!isNewRiver || !isLastRiver) {
@@ -248,48 +266,56 @@ export default class Anger {
 											// if the new chunk is not a river
 											if (!isNewRiver) {
 												// Remove the template
-												elmt2.mesh.remove(elmt2.mesh.children[1]);
-												elmt2.mesh.material.color.set('#b32b00');
-												newTemplate = new Normal().mesh;
-												elmt2.mesh.add(newTemplate);
-												elmt2.template.name = 'template-normal';
-												elmt2.template.id = 0;
-												elmt2.template.object = newTemplate;
+												elmt2.objects.forEach((obj) => {
+													this.scene.remove(obj);
+												});
+												elmt2.objects = [];
+												new Normal(elmt2.id, {x: elmt2.elmt.position.x, y: elmt2.elmt.position.z});
+												elmt2.objects.forEach(e => {
+													this.scene.add(e);
+												});
+												elmt2.elmt.material.color.set(0xb32B00);
 											} else {
-												elmt2.mesh.remove(this.scene.getObjectById(elmt2.template.object.id));
-												elmt2.mesh.material.color.set(COLORS.blue);
-												newTemplate = new River().mesh;
-												elmt2.mesh.add(newTemplate);
-												elmt2.template.name = 'template-river';
-												elmt2.template.id = 1;
-												elmt2.template.object = newTemplate;
+												elmt2.objects.forEach((obj) => {
+													this.scene.remove(obj);
+												});
+												elmt2.objects = [];
+												new River(elmt2.id, {x: elmt2.elmt.position.x, y: elmt2.elmt.position.z});
+												elmt2.objects.forEach(e => {
+													this.scene.add(e);
+												});
+												elmt2.elmt.material.color.set(0x0c3191);
 											}
 										} else {
-											elmt2.mesh.remove(this.scene.getObjectById(elmt2.template.object.id));
-											newTemplate = new River().mesh;
-											elmt2.mesh.add(newTemplate);
-											elmt2.template.name = 'template-river';
-											elmt2.template.id = 1;
-											elmt2.template.object = newTemplate;
+											elmt2.objects.forEach((obj) => {
+												this.scene.remove(obj);
+											});
+											elmt2.objects = [];
+											new River(elmt2.id, {x: elmt2.elmt.position.x, y: elmt2.elmt.position.z});
+											elmt2.objects.forEach(e => {
+												this.scene.add(e);
+											});
 										}
+
 									}
 								});
+
 								this.character.positionOnMap = activeCase;
 							} else {
-								this.floor.pieces.piece.forEach((elmt2, i) => {
+								window.grounds.forEach((elmt2, i) => {
 
 									// If current chunk pos X is superior to last chunk pos X
 									// Move his position to the left
-									if (elmt2.mesh.position.x > this.floor.pieces.piece[this.character.positionOnMap].mesh.position.x) {
+									if (elmt2.elmt.position.x > window.grounds[this.character.positionOnMap].elmt.position.x) {
 
 										// check if the last is a river
-										isLastRiver = this.checkChunkTemplate(elmt2.mesh.position.x);
+										isLastRiver = this.checkChunkTemplate(elmt2.elmt.position.x);
 
 										// Move the chunk to his new position
-										elmt2.mesh.position.x = this.floor.pieces.piece[activeCase].mesh.position.x - this.floor.size;
+										elmt2.elmt.position.x = ground.elmt.position.x - this.floor.size;
 
 										// check if the new is a river
-										isNewRiver = this.checkChunkTemplate(elmt2.mesh.position.x);
+										isNewRiver = this.checkChunkTemplate(elmt2.elmt.position.x);
 
 										// if one of them is not a river
 										if (!isNewRiver || !isLastRiver) {
@@ -297,50 +323,57 @@ export default class Anger {
 											// if the new chunk is not a river
 											if (!isNewRiver) {
 												// Remove the template
-												elmt2.mesh.remove(elmt2.mesh.children[1]);
-												elmt2.mesh.material.color.set('#b32B00');
-												newTemplate = new Normal().mesh;
-												elmt2.mesh.add(newTemplate);
-												elmt2.template.name = 'template-normal';
-												elmt2.template.id = 0;
-												elmt2.template.object = newTemplate;
+												elmt2.objects.forEach((obj) => {
+													this.scene.remove(obj);
+												});
+												elmt2.objects = [];
+												new Normal(elmt2.id, {x: elmt2.elmt.position.x, y: elmt2.elmt.position.z});
+												elmt2.objects.forEach(e => {
+													this.scene.add(e);
+												});
+												elmt2.elmt.material.color.set(0xb32B00);
 											} else {
-												elmt2.mesh.remove(this.scene.getObjectById(elmt2.template.object.id));
-												elmt2.mesh.material.color.set(COLORS.blue);
-												newTemplate = new River().mesh;
-												elmt2.mesh.add(newTemplate);
-												elmt2.template.name = 'template-river';
-												elmt2.template.id = 1;
-												elmt2.template.object = newTemplate;
+												elmt2.objects.forEach((obj) => {
+													this.scene.remove(obj);
+												});
+												elmt2.objects = [];
+												new River(elmt2.id, {x: elmt2.elmt.position.x, y: elmt2.elmt.position.z});
+												elmt2.objects.forEach(e => {
+													this.scene.add(e);
+												});
+												elmt2.elmt.material.color.set(0x0c3191);
 											}
 										} else {
-											elmt2.mesh.remove(this.scene.getObjectById(elmt2.template.object.id));
-											newTemplate = new River().mesh;
-											elmt2.mesh.add(newTemplate);
-											elmt2.template.name = 'template-river';
-											elmt2.template.id = 1;
-											elmt2.template.object = newTemplate;
+											elmt2.objects.forEach((obj) => {
+												this.scene.remove(obj);
+											});
+											elmt2.objects = [];
+											new River(elmt2.id, {x: elmt2.elmt.position.x, y: elmt2.elmt.position.z});
+											elmt2.objects.forEach(e => {
+												this.scene.add(e);
+											});
 										}
 
 									}
 								});
+
 								this.character.positionOnMap = activeCase;
 							}
 						}
 
-						if (this.floor.pieces.piece[activeCase].mesh.position.z != this.floor.pieces.piece[this.character.positionOnMap].mesh.position.z) {
-							if (this.floor.pieces.piece[activeCase].mesh.position.z - this.floor.pieces.piece[this.character.positionOnMap].mesh.position.z > 0) {
-								this.floor.pieces.piece.forEach((elmt2, i) => {
-									if (elmt2.mesh.position.z < this.floor.pieces.piece[this.character.positionOnMap].mesh.position.z) {
+						if (ground.elmt.position.z != window.grounds[this.character.positionOnMap].elmt.position.z) {
+							if (ground.elmt.position.z - window.grounds[this.character.positionOnMap].elmt.position.z > 0) {
+								window.grounds.forEach((elmt2, i) => {
+									if (elmt2.elmt.position.z < window.grounds[this.character.positionOnMap].elmt.position.z) {
 
 										// check if the last is a river
-										isLastRiver = this.checkChunkTemplate(elmt2.mesh.position.x);
+										isLastRiver = this.checkChunkTemplate(elmt2.elmt.position.x);
 
 										// Move the chunk to his new position
-										elmt2.mesh.position.z = this.floor.pieces.piece[activeCase].mesh.position.z + this.floor.size;
+										elmt2.elmt.position.z = ground.elmt.position.z + this.floor.size;
 
 										// check if the new is a river
-										isNewRiver = this.checkChunkTemplate(elmt2.mesh.position.x);
+										isNewRiver = this.checkChunkTemplate(elmt2.elmt.position.x);
 
 										// if one of them is not a river
 										if (!isNewRiver || !isLastRiver) {
@@ -348,46 +381,50 @@ export default class Anger {
 											// if the new chunk is not a river
 											if (!isNewRiver) {
 												// Remove the template
-
-												// TODO: hardcoded children number, find a way to dynamicly select the right to be removed
-												elmt2.mesh.remove(elmt2.mesh.children[1]);
-												newTemplate = new Normal().mesh;
-												elmt2.mesh.add(newTemplate);
-												elmt2.template.name = 'template-normal';
-												elmt2.template.id = 0;
-												elmt2.template.object = newTemplate;
+												elmt2.objects.forEach((obj) => {
+													this.scene.remove(obj);
+												});
+												elmt2.objects = [];
+												new Normal(elmt2.id, {x: elmt2.elmt.position.x, y: elmt2.elmt.position.z});
+												elmt2.objects.forEach(e => {
+													this.scene.add(e);
+												});
 											} else {
-												elmt2.mesh.remove(this.scene.getObjectById(elmt2.template.object.id));
-												newTemplate = new River().mesh;
-												elmt2.mesh.add(newTemplate);
-												elmt2.template.name = 'template-river';
-												elmt2.template.id = 1;
-												elmt2.template.object = newTemplate;
+												elmt2.objects.forEach((obj) => {
+													this.scene.remove(obj);
+												});
+												elmt2.objects = [];
+												new River(elmt2.id, {x: elmt2.elmt.position.x, y: elmt2.elmt.position.z});
+												elmt2.objects.forEach(e => {
+													this.scene.add(e);
+												});
 											}
 										} else {
-											elmt2.mesh.remove(this.scene.getObjectById(elmt2.template.object.id));
-											newTemplate = new River().mesh;
-											elmt2.mesh.add(newTemplate);
-											elmt2.template.name = 'template-river';
-											elmt2.template.id = 1;
-											elmt2.template.object = newTemplate;
+											elmt2.objects.forEach((obj) => {
+												this.scene.remove(obj);
+											});
+											elmt2.objects = [];
+											new River(elmt2.id, {x: elmt2.elmt.position.x, y: elmt2.elmt.position.z});
+											elmt2.objects.forEach(e => {
+												this.scene.add(e);
+											});
 										}
 									}
 								});
 								this.character.positionOnMap = activeCase;
 
 							} else {
-								this.floor.pieces.piece.forEach((elmt2, i) => {
-									if (elmt2.mesh.position.z > this.floor.pieces.piece[this.character.positionOnMap].mesh.position.z) {
+								window.grounds.forEach((elmt2, i) => {
+									if (elmt2.elmt.position.z > window.grounds[this.character.positionOnMap].elmt.position.z) {
 
 										// check if the last is a river
-										isLastRiver = this.checkChunkTemplate(elmt2.mesh.position.x);
+										isLastRiver = this.checkChunkTemplate(elmt2.elmt.position.x);
 
 										// Move the chunk to his new position
-										elmt2.mesh.position.z = this.floor.pieces.piece[activeCase].mesh.position.z - this.floor.size;
+										elmt2.elmt.position.z = ground.elmt.position.z - this.floor.size;
 
 										// check if the new is a river
-										isNewRiver = this.checkChunkTemplate(elmt2.mesh.position.x);
+										isNewRiver = this.checkChunkTemplate(elmt2.elmt.position.x);
 
 										// if one of them is not a river
 										if (!isNewRiver || !isLastRiver) {
@@ -395,30 +432,33 @@ export default class Anger {
 											// if the new chunk is not a river
 											if (!isNewRiver) {
 												// Remove the template
-
-												// TODO: hardcoded children number, find a way to dynamicly select the right to be removed
-												elmt2.mesh.remove(elmt2.mesh.children[1]);
-												newTemplate = new Normal().mesh;
-												elmt2.mesh.add(newTemplate);
-												elmt2.template.name = 'template-normal';
-												elmt2.template.id = 0;
-												elmt2.template.object = newTemplate;
+												elmt2.objects.forEach((obj) => {
+													this.scene.remove(obj);
+												});
+												elmt2.objects = [];
+												new River(elmt2.id, {x: elmt2.elmt.position.x, y: elmt2.elmt.position.z});
+												elmt2.objects.forEach(e => {
+													this.scene.add(e);
+												});
 											} else {
-												elmt2.mesh.remove(this.scene.getObjectById(elmt2.template.object.id));
-												elmt2.mesh.color =
-													newTemplate = new River().mesh;
-												elmt2.mesh.add(newTemplate);
-												elmt2.template.name = 'template-river';
-												elmt2.template.id = 1;
-												elmt2.template.object = newTemplate;
+												elmt2.objects.forEach((obj) => {
+													this.scene.remove(obj);
+												});
+												elmt2.objects = [];
+												new River(elmt2.id, {x: elmt2.elmt.position.x, y: elmt2.elmt.position.z});
+												elmt2.objects.forEach(e => {
+													this.scene.add(e);
+												});
 											}
 										} else {
-											elmt2.mesh.remove(this.scene.getObjectById(elmt2.template.object.id));
-											newTemplate = new River().mesh;
-											elmt2.mesh.add(newTemplate);
-											elmt2.template.name = 'template-river';
-											elmt2.template.id = 1;
-											elmt2.template.object = newTemplate;
+											elmt2.objects.forEach((obj) => {
+												this.scene.remove(obj);
+											});
+											elmt2.objects = [];
+											new River(elmt2.id, {x: elmt2.elmt.position.x, y: elmt2.elmt.position.z});
+											elmt2.objects.forEach(e => {
+												this.scene.add(e);
+											});
 										}
 									}
 								});

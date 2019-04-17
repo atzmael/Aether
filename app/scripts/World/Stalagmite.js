@@ -1,11 +1,14 @@
 import Helpers from '../helpers';
 
 export default class Stalagmite {
-	constructor(radius = 1.6, height = 15, segments = 32, stalagmiteNumber = 0, amp = 0.5) {
+	constructor(groundID, coord, radius = 1.6, height = 15, segments = 32, stalagmiteNumber = 0, amp = 0.5) {
 		this.radius = radius;
 		this.height = height;
 		this.segments = segments;
 		this.stalagmiteNumber = stalagmiteNumber;
+
+		this.groundID = groundID;
+		this.coord = coord;
 
 		this.stalagmites = [];
 		for(let x = 0; x < 5;x++){
@@ -35,11 +38,12 @@ export default class Stalagmite {
 			y = Math.round(Math.random() * (4 - 1) + 1);
 			if (this.stalagmites[x][y] == undefined) {
 				stalagmite = this.createstalagmite();
-				posX = (x - (this.stalagmites.length / 2)) * 30 + (Math.cos(Math.random() * Math.PI) * 10);
-				posY = (y - (this.stalagmites.length / 2)) * 30 + (Math.sin(Math.random() * Math.PI) * 10);
-				stalagmite.position.set(posX, posY, 0);
+				posX = (x - (this.stalagmites.length / 2)) * 30 + (Math.cos(Math.random() * Math.PI) * 10) + this.coord.x;
+				posY = (y - (this.stalagmites.length / 2)) * 30 + (Math.sin(Math.random() * Math.PI) * 10) + this.coord.y;
+				stalagmite.position.set(posX, -1, posY);
 				this.stalagmites[x][y] = stalagmite;
 				this.mesh.add(stalagmite);
+				window.grounds[this.groundID].objects.push(stalagmite);
 			}
 		}
 	}
@@ -60,7 +64,7 @@ export default class Stalagmite {
 
 		let stalagmite = new THREE.Mesh(geom, mat);
 
-		stalagmite.rotation.x = Math.PI / 180 * 90;
+		stalagmite.rotation.y = Math.PI / 180 * 90;
 
 		stalagmite.name = "stalagmite";
 
