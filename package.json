@@ -34,6 +34,7 @@
     "webpack-dev-server": "^2.4.5"
   },
   "dependencies": {
+    "cannon": "^0.6.2",
     "dat.gui": "^0.7.5",
     "gsap": "^2.0.2",
     "simplex-noise": "^2.4.0",

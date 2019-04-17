@@ -6,32 +6,36 @@ import discoverEmotion from "./discoverEmotion";
 import cookies from "./cookies";
 import header from "./header";
 
+import Anger from "../Anger/Anger";
+
 window.onload = () => {
 
 	// Cookies handler
 	window.COOKIES = cookies;
 
-	// Handle animation in intro pages
-	if (document.querySelector('body.is-intro')) {
-		introHandler.init();
-	}
+	new Anger();
 
-	// Fast switch scene in menu
-	if (document.querySelector('.js-scene-container')) {
-		sceneSwitch.init();
-	}
+	// // Handle animation in intro pages
+	// if (document.querySelector('body.is-intro')) {
+	// 	introHandler.init();
+	// }
 
-	if (document.querySelector('.js-emotion-choice')) {
-		discoverEmotion.init();
-	}
+	// // Fast switch scene in menu
+	// if (document.querySelector('.js-scene-container')) {
+	// 	sceneSwitch.init();
+	// }
 
-	// Skip intro if you already saw it
-	if(COOKIES.read('intro-is-finished')) {
-		introHandler.skipIntro();
-	}
+	// if (document.querySelector('.js-emotion-choice')) {
+	// 	discoverEmotion.init();
+	// }
 
-	// Build navigation controller
-	if(document.querySelector('.js-header')) {
-		header.init();
-	}
+	// // Skip intro if you already saw it
+	// if(COOKIES.read('intro-is-finished')) {
+	// 	introHandler.skipIntro();
+	// }
+
+	// // Build navigation controller
+	// if(document.querySelector('.js-header')) {
+	// 	header.init();
+	// }
 };

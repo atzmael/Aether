@@ -101,6 +101,50 @@ export default class Anger {
 
 		//this.scene.add(this.floor.mesh);
 
+		// Add physics to the ground
+		let ground = new CANNON.Plane();
+		for (let floor of this.floor.mesh.children) {
+			let body = new CANNON.Body({ mass: 0 });
+			body.addShape(ground);
+			body.quaternion.setFromAxisAngle(new CANNON.Vec3(1, 0, 0), -Math.PI/2);
+			body.position.set(floor.position.x, floor.position.y, floor.position.z+20);
+			this.world.add(body);
+			floor.body = body;
+		}
+
+		// let geom = new THREE.PlaneBufferGeometry(100, 100, 10, 10);
+		// let mat = new THREE.MeshNormalMaterial();
+		// this.test = new THREE.Mesh(geom, mat);
+		// this.scene.add(this.test);
+		// let ground = new CANNON.Plane(100);
+		// let material = new CANNON.Material(this.ground)
+		// let bodya = new CANNON.Body({ mass: 0, material: material });
+		// bodya.addShape(ground);
+		// bodya.quaternion.setFromAxisAngle(new CANNON.Vec3(1, 0, 0), -Math.PI / 2);
+		// bodya.position.set(this.test.position.x, this.test.position.y, 2);
+		// this.world.add(bodya);
+		// this.test.body = bodya;
+
+		// console.log(this.test)
+
+
+		// Add physics to the objects
+		let shape = new CANNON.Sphere(10);
+		let ok = new CANNON.Material(this.ground)
+		for (let floor of this.floor.mesh.children) {
+			for (let object of floor.children) {
+				for (let pieces of object.children) {
+					for (let piece of pieces.children) {
+						let body = new CANNON.Body({ mass: 1, material: ok });
+						body.position.set(piece.position.x, piece.position.y, 5);
+						body.addShape(shape);
+						this.world.add(body);
+						piece.body = body;
+					}
+				}
+			}
+		}
+
 		// Light
 		let ambientLight = new THREE.AmbientLight(0x404040, 4);
 		//this.scene.add(ambientLight);
@@ -127,6 +171,30 @@ export default class Anger {
 		stats.begin();
 
 		requestAnimationFrame(this.update.bind(this));
+		
+		this.physicsUpdate();
+
+		// Link physics to the ground
+		let ground = new CANNON.Plane();
+		for (let floor of this.floor.mesh.children) {
+			floor.position.copy(floor.body.position);
+			floor.quaternion.copy(floor.body.quaternion);
+		}
+		// this.test.position.copy(this.test.body.position);
+		// this.test.quaternion.copy(this.test.body.quaternion);
+
+		// Link physics to the objects
+		let shape = new CANNON.Sphere();
+		for (let floor of this.floor.mesh.children) {
+			for (let object of floor.children) {
+				for (let pieces of object.children) {
+					for (let piece of pieces.children) {
+						piece.position.copy(piece.body.position);
+						piece.quaternion.copy(piece.body.quaternion);
+					}
+				}
+			}
+		}
 
 		// Update du personnage
 		this.character.update();
@@ -153,6 +221,7 @@ export default class Anger {
 
 	init() {
 		this.initScene();
+		this.initPhysics();
 		this.helpers();
 
 		this.displayGraphState();
@@ -187,6 +256,21 @@ export default class Anger {
 		window.addEventListener('click', this.userInteractionHandler.bind(this), false);
 
 		this.onWindowResize();
+	}
+
+	initPhysics() {
+		this.world = new CANNON.World();
+		this.world.gravity.set(0, 0, -1);
+		console.log(this.world)
+		this.world.broadphase = new CANNON.NaiveBroadphase();
+		this.world.solver.iterations = 5;
+		this.world.defaultContactMaterial.contactEquationStiffness = 1e6;
+		this.world.defaultContactMaterial.contactEquationRelaxation = 10;
+		this.ground = new CANNON.ContactMaterial(new CANNON.Material("groundMaterial"), new CANNON.Material("slipperyMaterial"), {
+			friction: .1,
+			restitution: .55
+		})
+		this.world.addContactMaterial(this.ground)
 	}
 
 	helpers() {
@@ -473,6 +557,10 @@ export default class Anger {
 				this.playerPositionThrottle = true;
 			}, 100);
 		}
+	}
+
+	physicsUpdate() {
+		this.world.step(1/60);
 	}
 
 	guiHandler() {
