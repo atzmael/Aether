@@ -220,9 +220,16 @@ export default class Character {
 
 	}
 
-	throwObject() {
+	throwObject(scene, obj) {
 		if (this.hasObjectInHand && this.objectInHand != undefined) {
 
+			// console.log(scene, obj)
+
+			// scene.add(obj);
+
+			// var worldPoint = new CANNON.Vec3(0, 0, 1);
+			// var force = new CANNON.Vec3(0, 50, 0);
+			// obj.object.body.applyForce(force, worldPoint);
 		}
 	}
 

@@ -108,13 +108,13 @@ export default class Anger {
 			let body = new CANNON.Body({ mass: 0 });
 			body.addShape(plane);
 			body.quaternion.setFromAxisAngle(new CANNON.Vec3(1, 0, 0), -Math.PI/2);
-			body.position.set(ground.elmt.position.x, ground.elmt.position.y, ground.elmt.position.z + 20);
+			body.position.set(ground.elmt.position.x, ground.elmt.position.y, ground.elmt.position.z);
 			this.world.add(body);
 			ground.elmt.body = body;
 			ground.objects.forEach(groundObj => {
 				let sphere = new CANNON.Sphere(1);
 				let body = new CANNON.Body({ mass: 1 });
-				body.position.set(groundObj.position.x, 40, groundObj.position.z);
+				body.position.set(groundObj.position.x, groundObj.position.y, groundObj.position.z);
 				body.addShape(sphere);
 				this.world.add(body);
 				groundObj.body = body;
@@ -577,15 +577,46 @@ export default class Anger {
 
 				if (obj.distance <= playerHitBox) {
 
-					index = objectToInteractCollection.findIndex(elmt => elmt.id === id);
-					objectToInteractCollection.splice(index, 1);
-					this.character.mesh.add(obj.object);
+					// index = objectToInteractCollection.findIndex(elmt => elmt.id === id);
+					// objectToInteractCollection.splice(index, 1);
+					// this.character.mesh.add(obj.object);
 
-					obj.object.body.position.x = 0;
-					obj.object.body.position.z = -5;
-					obj.object.body.position.y = 0;
+					// obj.object.body.position.x = 0;
+					// obj.object.body.position.z = -5;
+					// obj.object.body.position.y = 0;
 
-					this.character.putObjectInHand(obj.object);
+					// this.character.putObjectInHand(obj.object);
+					var x = obj.object.body.position.x;
+                    var y = obj.object.body.position.y;
+                    var z = obj.object.body.position.z;
+
+					var shootDirection = new THREE.Vector3();
+					var shootVelo = 25;
+					// var projector = new THREE.Projector();
+					shootDirection.set(0,0,1);
+					shootDirection.unproject(this.camera);
+					// projector.unprojectVector(shootDirection, this.camera);
+					var ray = new THREE.Ray(obj.object.body.position, shootDirection.sub(obj.object.body.position).normalize() );
+					shootDirection.copy(ray.direction);
+
+					obj.object.body.velocity.set(  shootDirection.x * shootVelo,
+                                            shootDirection.y * shootVelo + 15,
+                                            shootDirection.z * shootVelo);
+                    x += shootDirection.x * (1*1.02 + 1);
+                    y += shootDirection.y * (1*1.02 + 1);
+                    z += shootDirection.z * (1*1.02 + 1);
+                    obj.object.body.position.set(x,y,z);
+
+					// var worldPoint = new CANNON.Vec3(0, 0, 1);
+					// var force = new CANNON.Vec3(vector.x * -100, vector.y * -100, vector.z * -100);
+					// obj.object.body.applyForce(force, worldPoint);
+
+					// console.log(this.character.mesh.position)
+					// obj.object.body.position.x = this.character.mesh.position.x;
+					// obj.object.body.position.y = this.character.mesh.position.y;
+					// obj.object.body.position.z = this.character.mesh.position.z - 5;
+
+					// this.character.throwObject(this.scene, obj.object);
 
 					//TODO: apply physic to throw the object$
 				} else {
@@ -627,7 +658,7 @@ export default class Anger {
 	addPhysicsObject(groundObj) {
 		let sphere = new CANNON.Sphere(1);
 		let body = new CANNON.Body({ mass: 1 });
-		body.position.set(groundObj.position.x, 40, groundObj.position.z);
+		body.position.set(groundObj.position.x, groundObj.position.y, groundObj.position.z);
 		body.addShape(sphere);
 		this.world.add(body);
 		groundObj.body = body;
