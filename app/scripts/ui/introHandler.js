@@ -63,6 +63,7 @@ const introHandler = {
 	},
 
 	skipIntro() {
+			console.log('ok')
 		this.tl.to(this.ui.sectionHome, 0.8, {opacity: 0}, '+=1')
 			.to(this.ui.sectionHome, 0, {display: 'none'})
 			.to(this.ui.sectionWelcomeBack, 0, {display: 'flex'})
