@@ -34,10 +34,6 @@ export default class Ground {
 	}
 
 	init() {
-		this.mesh = new THREE.Object3D();
-		this.mesh.name = "ground";
-		this.mesh.position.y = -1;
-
 		this.createGround();
 	}
 
@@ -49,7 +45,6 @@ export default class Ground {
 	createPiece(color = '#b32b00') {
 
 		let uniforms = this.uniforms;
-		console.log(this.uniforms.time.value)
 		
 		let geom = new THREE.PlaneBufferGeometry(this.size, this.size, this.segments, this.segments);
 		let mat = new THREE.ShaderMaterial({
@@ -147,6 +142,7 @@ export default class Ground {
 			}
 		})
 
+		mat = new THREE.MeshBasicMaterial({color: color});
 		let ground = new THREE.Mesh(geom, mat);
 
 		ground.name = "chunk";
@@ -160,8 +156,6 @@ export default class Ground {
 		ground.rotation.x = Math.PI / 180 * -90;
 		ground.position.y = 0;
 
-		this.mesh.add(ground);
-
 		return ground;
 	}
 
@@ -174,49 +168,36 @@ export default class Ground {
 		let row = Math.sqrt(this.mapNumber);
 		for (let x = 0; x < row; x++) {
 			for (let y = 0; y < row; y++) {
-				posChunkX = x * this.size - (this.size * 3) / 2 + this.size / 2;
-				posChunkZ = y * this.size - (this.size * 3) / 2 + this.size / 2;
+				posChunkX = x * this.size - ((this.size * 3) / 2) + (this.size / 2);
+				posChunkZ = y * this.size - ((this.size * 3) / 2) + (this.size / 2);
+
+				console.log(posChunkX, posChunkZ);
 
 				window.grounds.push(
 					{
 						id: piecesNumber,
 						elmt: undefined,
 						posX: posChunkX,
-						posY: posChunkZ,
+						posZ: posChunkZ,
 						objects: [],
 					}
 				);
 
 				if (!this.checkChunkTemplate(posChunkX)) {
-					template = new Normal(piecesNumber, {x: posChunkX, y: posChunkZ}).mesh;
-					templateID = 0;
-					templateName = "Normal";
+					new Normal(piecesNumber, {x: posChunkX, y: posChunkZ});
 					piece = this.createPiece();
 				} else {
-					template = new River(piecesNumber, {x: posChunkX, y: posChunkZ}).mesh;
-					templateID = 1;
-					templateName = "River";
+					new River(piecesNumber, {x: posChunkX, y: posChunkZ});
 					piece = this.createPiece(COLORS.blue);
 				}
-
-				usedTemplateCollection.push(template);
 
 				piece.position.x = posChunkX;
 				piece.position.z = posChunkZ;
 				piece.position.y = -1;
-				piece.add(template);
+
+				console.log(piece);
 
 				window.grounds[piecesNumber].elmt = piece;
-
-				this.pieces.piece.push({
-					mesh: piece,
-					id: piecesNumber,
-					template: {
-						id: templateID,
-						name: templateName,
-						object: template
-					}
-				});
 
 				piecesNumber++;
 			}

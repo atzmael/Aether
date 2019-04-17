@@ -22,13 +22,6 @@ window.RATIO = 0.1;
 
 window.objectToInteractCollection = [];
 
-window.usedTemplateCollection = [];
-
-window.templateCollection = {
-	normal: [],
-	rivers: [],
-};
-
 window.playerState = 2;
 window.playerHitBox = 12;
 
@@ -108,13 +101,13 @@ export default class Anger {
 			let body = new CANNON.Body({ mass: 0 });
 			body.addShape(plane);
 			body.quaternion.setFromAxisAngle(new CANNON.Vec3(1, 0, 0), -Math.PI/2);
-			body.position.set(ground.elmt.position.x, ground.elmt.position.y, ground.elmt.position.z + 20);
+			body.position.set(ground.elmt.position.x, ground.elmt.position.y, ground.elmt.position.z);
 			this.world.add(body);
 			ground.elmt.body = body;
 			ground.objects.forEach(groundObj => {
 				let sphere = new CANNON.Sphere(1);
 				let body = new CANNON.Body({ mass: 1 });
-				body.position.set(groundObj.position.x, 40, groundObj.position.z);
+				body.position.set(groundObj.position.x, groundObj.position.y, groundObj.position.z);
 				body.addShape(sphere);
 				this.world.add(body);
 				groundObj.body = body;
@@ -281,7 +274,6 @@ export default class Anger {
 					if (activeCase != this.character.positionOnMap) {
 
 						console.log('player changed chunk');
-						console.log(window.grounds);
 
 						// If current chunk pos X is not equals to the last chunk pos X
 						if (ground.elmt.position.x != window.grounds[this.character.positionOnMap].elmt.position.x) {
@@ -304,7 +296,7 @@ export default class Anger {
 										isLastRiver = this.checkChunkTemplate(elmt2.elmt.position.x);
 
 										// Move the chunk to his new position
-										elmt2.elmt.position.x = ground.elmt.position.x + this.floor.size;
+										elmt2.elmt.body.position.x = ground.elmt.position.x + this.floor.size;
 
 										// check if the new is a river
 										isNewRiver = this.checkChunkTemplate(elmt2.elmt.position.x);
@@ -319,7 +311,7 @@ export default class Anger {
 													this.scene.remove(obj);
 												});
 												elmt2.objects = [];
-												new Normal(elmt2.id, {x: elmt2.elmt.position.x, y: elmt2.elmt.position.z});
+												new Normal(elmt2.id, {x: elmt2.elmt.body.position.x, y: elmt2.elmt.body.position.z});
 												elmt2.objects.forEach(e => {
 													this.addPhysicsObject(e);
 													this.scene.add(e);
@@ -330,7 +322,7 @@ export default class Anger {
 													this.scene.remove(obj);
 												});
 												elmt2.objects = [];
-												new River(elmt2.id, {x: elmt2.elmt.position.x, y: elmt2.elmt.position.z});
+												new River(elmt2.id, {x: elmt2.elmt.body.position.x, y: elmt2.elmt.body.position.z});
 												elmt2.objects.forEach(e => {
 													this.addPhysicsObject(e);
 													this.scene.add(e);
@@ -342,7 +334,7 @@ export default class Anger {
 												this.scene.remove(obj);
 											});
 											elmt2.objects = [];
-											new River(elmt2.id, {x: elmt2.elmt.position.x, y: elmt2.elmt.position.z});
+											new River(elmt2.id, {x: elmt2.elmt.body.position.x, y: elmt2.elmt.body.position.z});
 											elmt2.objects.forEach(e => {
 												this.addPhysicsObject(e);
 												this.scene.add(e);
@@ -364,7 +356,7 @@ export default class Anger {
 										isLastRiver = this.checkChunkTemplate(elmt2.elmt.position.x);
 
 										// Move the chunk to his new position
-										elmt2.elmt.position.x = ground.elmt.position.x - this.floor.size;
+										elmt2.elmt.body.position.x = ground.elmt.position.x - this.floor.size;
 
 										// check if the new is a river
 										isNewRiver = this.checkChunkTemplate(elmt2.elmt.position.x);
@@ -379,7 +371,7 @@ export default class Anger {
 													this.scene.remove(obj);
 												});
 												elmt2.objects = [];
-												new Normal(elmt2.id, {x: elmt2.elmt.position.x, y: elmt2.elmt.position.z});
+												new Normal(elmt2.id, {x: elmt2.elmt.body.position.x, y: elmt2.elmt.body.position.z});
 												elmt2.objects.forEach(e => {
 													this.addPhysicsObject(e);
 													this.scene.add(e);
@@ -390,7 +382,7 @@ export default class Anger {
 													this.scene.remove(obj);
 												});
 												elmt2.objects = [];
-												new River(elmt2.id, {x: elmt2.elmt.position.x, y: elmt2.elmt.position.z});
+												new River(elmt2.id, {x: elmt2.elmt.body.position.x, y: elmt2.elmt.body.position.z});
 												elmt2.objects.forEach(e => {
 													this.addPhysicsObject(e);
 													this.scene.add(e);
@@ -402,7 +394,7 @@ export default class Anger {
 												this.scene.remove(obj);
 											});
 											elmt2.objects = [];
-											new River(elmt2.id, {x: elmt2.elmt.position.x, y: elmt2.elmt.position.z});
+											new River(elmt2.id, {x: elmt2.elmt.body.position.x, y: elmt2.elmt.body.position.z});
 											elmt2.objects.forEach(e => {
 												this.addPhysicsObject(e);
 												this.scene.add(e);
@@ -425,7 +417,7 @@ export default class Anger {
 										isLastRiver = this.checkChunkTemplate(elmt2.elmt.position.x);
 
 										// Move the chunk to his new position
-										elmt2.elmt.position.z = ground.elmt.position.z + this.floor.size;
+										elmt2.elmt.body.position.z = ground.elmt.position.z + this.floor.size;
 
 										// check if the new is a river
 										isNewRiver = this.checkChunkTemplate(elmt2.elmt.position.x);
@@ -440,7 +432,7 @@ export default class Anger {
 													this.scene.remove(obj);
 												});
 												elmt2.objects = [];
-												new Normal(elmt2.id, {x: elmt2.elmt.position.x, y: elmt2.elmt.position.z});
+												new Normal(elmt2.id, {x: elmt2.elmt.body.position.x, y: elmt2.elmt.body.position.z});
 												elmt2.objects.forEach(e => {
 													this.addPhysicsObject(e);
 													this.scene.add(e);
@@ -450,7 +442,7 @@ export default class Anger {
 													this.scene.remove(obj);
 												});
 												elmt2.objects = [];
-												new River(elmt2.id, {x: elmt2.elmt.position.x, y: elmt2.elmt.position.z});
+												new River(elmt2.id, {x: elmt2.elmt.body.position.x, y: elmt2.elmt.body.position.z});
 												elmt2.objects.forEach(e => {
 													this.addPhysicsObject(e);
 													this.scene.add(e);
@@ -461,7 +453,7 @@ export default class Anger {
 												this.scene.remove(obj);
 											});
 											elmt2.objects = [];
-											new River(elmt2.id, {x: elmt2.elmt.position.x, y: elmt2.elmt.position.z});
+											new River(elmt2.id, {x: elmt2.elmt.body.position.x, y: elmt2.elmt.body.position.z});
 											elmt2.objects.forEach(e => {
 												this.addPhysicsObject(e);
 												this.scene.add(e);
@@ -479,7 +471,7 @@ export default class Anger {
 										isLastRiver = this.checkChunkTemplate(elmt2.elmt.position.x);
 
 										// Move the chunk to his new position
-										elmt2.elmt.position.z = ground.elmt.position.z - this.floor.size;
+										elmt2.elmt.body.position.z = ground.elmt.position.z - this.floor.size;
 
 										// check if the new is a river
 										isNewRiver = this.checkChunkTemplate(elmt2.elmt.position.x);
@@ -494,7 +486,7 @@ export default class Anger {
 													this.scene.remove(obj);
 												});
 												elmt2.objects = [];
-												new River(elmt2.id, {x: elmt2.elmt.position.x, y: elmt2.elmt.position.z});
+												new Normal(elmt2.id, {x: elmt2.elmt.body.position.x, y: elmt2.elmt.body.position.z});
 												elmt2.objects.forEach(e => {
 													this.addPhysicsObject(e);
 													this.scene.add(e);
@@ -504,7 +496,7 @@ export default class Anger {
 													this.scene.remove(obj);
 												});
 												elmt2.objects = [];
-												new River(elmt2.id, {x: elmt2.elmt.position.x, y: elmt2.elmt.position.z});
+												new River(elmt2.id, {x: elmt2.elmt.body.position.x, y: elmt2.elmt.body.position.z});
 												elmt2.objects.forEach(e => {
 													this.addPhysicsObject(e);
 													this.scene.add(e);
@@ -515,7 +507,7 @@ export default class Anger {
 												this.scene.remove(obj);
 											});
 											elmt2.objects = [];
-											new River(elmt2.id, {x: elmt2.elmt.position.x, y: elmt2.elmt.position.z});
+											new River(elmt2.id, {x: elmt2.elmt.body.position.x, y: elmt2.elmt.body.position.z});
 											elmt2.objects.forEach(e => {
 												this.addPhysicsObject(e);
 												this.scene.add(e);
@@ -526,7 +518,6 @@ export default class Anger {
 								this.character.positionOnMap = activeCase;
 							}
 						}
-						console.log(window.grounds);
 					}
 				}
 			});
@@ -628,7 +619,7 @@ export default class Anger {
 	addPhysicsObject(groundObj) {
 		let sphere = new CANNON.Sphere(1);
 		let body = new CANNON.Body({ mass: 1 });
-		body.position.set(groundObj.position.x, 40, groundObj.position.z);
+		body.position.set(groundObj.position.x, groundObj.position.y, groundObj.position.z);
 		body.addShape(sphere);
 		this.world.add(body);
 		groundObj.body = body;

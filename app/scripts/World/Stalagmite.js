@@ -40,7 +40,7 @@ export default class Stalagmite {
 				stalagmite = this.createstalagmite();
 				posX = (x - (this.stalagmites.length / 2)) * 30 + (Math.cos(Math.random() * Math.PI) * 10) + this.coord.x;
 				posY = (y - (this.stalagmites.length / 2)) * 30 + (Math.sin(Math.random() * Math.PI) * 10) + this.coord.y;
-				stalagmite.position.set(posX, -1, posY);
+				stalagmite.position.set(posX, 0, posY);
 				this.stalagmites[x][y] = stalagmite;
 				this.mesh.add(stalagmite);
 				window.grounds[this.groundID].objects.push(stalagmite);

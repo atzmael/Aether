@@ -35,7 +35,7 @@ export default class Stone {
 				stone = this.createStone();
 				posX = (x - (this.stones.length / 2)) * 30 + (Math.cos(Math.random() * Math.PI) * 10) + this.coord.x;
 				posY = (y - (this.stones.length / 2)) * 30 + (Math.sin(Math.random() * Math.PI) * 10) + this.coord.y;
-				stone.position.set(posX, -1, posY);
+				stone.position.set(posX, 0, posY);
 				this.stones[x][y] = stone;
 				this.mesh.add(stone);
 				window.grounds[this.groundID].objects.push(stone);
