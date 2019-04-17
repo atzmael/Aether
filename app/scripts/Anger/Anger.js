@@ -74,6 +74,9 @@ export default class Anger {
 		this.camera.position.y = 2;
 		this.camera.rotation.x = Math.PI / 180 * -15;
 
+		this.controls = new THREE.OrbitControls(this.camera);
+		this.controls.update();
+
 		// Vars
 		this.playerPositionThrottle = true;
 
@@ -113,30 +116,13 @@ export default class Anger {
 			floor.body = body;
 		}
 
-		// let geom = new THREE.PlaneBufferGeometry(100, 100, 10, 10);
-		// let mat = new THREE.MeshNormalMaterial();
-		// this.test = new THREE.Mesh(geom, mat);
-		// this.scene.add(this.test);
-		// let ground = new CANNON.Plane(100);
-		// let material = new CANNON.Material(this.ground)
-		// let bodya = new CANNON.Body({ mass: 0, material: material });
-		// bodya.addShape(ground);
-		// bodya.quaternion.setFromAxisAngle(new CANNON.Vec3(1, 0, 0), -Math.PI / 2);
-		// bodya.position.set(this.test.position.x, this.test.position.y, 2);
-		// this.world.add(bodya);
-		// this.test.body = bodya;
-
-		// console.log(this.test)
-
-
 		// Add physics to the objects
 		let shape = new CANNON.Sphere(10);
-		let ok = new CANNON.Material(this.ground)
 		for (let floor of this.floor.mesh.children) {
 			for (let object of floor.children) {
 				for (let pieces of object.children) {
 					for (let piece of pieces.children) {
-						let body = new CANNON.Body({ mass: 1, material: ok });
+						let body = new CANNON.Body({ mass: 1 });
 						body.position.set(piece.position.x, piece.position.y, 5);
 						body.addShape(shape);
 						this.world.add(body);
@@ -168,10 +154,12 @@ export default class Anger {
 		this.renderer.render(this.scene, this.camera);
 	}
 
-	update() {
+	update(dt) {
 		stats.begin();
 
 		requestAnimationFrame(this.update.bind(this));
+
+		this.controls.update();
 		
 		this.physicsUpdate();
 
@@ -181,8 +169,6 @@ export default class Anger {
 			floor.position.copy(floor.body.position);
 			floor.quaternion.copy(floor.body.quaternion);
 		}
-		// this.test.position.copy(this.test.body.position);
-		// this.test.quaternion.copy(this.test.body.quaternion);
 
 		// Link physics to the objects
 		let shape = new CANNON.Sphere();
