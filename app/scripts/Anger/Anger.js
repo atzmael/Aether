@@ -9,6 +9,7 @@ import 'three/examples/js/controls/OrbitControls';
 
 import SimplexNoise from 'simplex-noise';
 import dat from 'dat.gui';
+import CANNON from 'cannon';
 
 // Utilities files
 
