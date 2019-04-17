@@ -258,7 +258,6 @@ export default class Anger {
 				isNewRiver = false,
 				newTemplate;
 
-
 			window.grounds.forEach((ground, i) => {
 
 				// Character position
@@ -282,6 +281,7 @@ export default class Anger {
 					if (activeCase != this.character.positionOnMap) {
 
 						console.log('player changed chunk');
+						console.log(window.grounds);
 
 						// If current chunk pos X is not equals to the last chunk pos X
 						if (ground.elmt.position.x != window.grounds[this.character.positionOnMap].elmt.position.x) {
@@ -526,6 +526,7 @@ export default class Anger {
 								this.character.positionOnMap = activeCase;
 							}
 						}
+						console.log(window.grounds);
 					}
 				}
 			});

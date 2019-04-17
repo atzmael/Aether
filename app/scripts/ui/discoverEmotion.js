@@ -1,4 +1,5 @@
 import Anger from "../Anger/Anger";
+import SoundHandler from "./Sound";
 
 const discoverEmotion = {
 	ui: {},
@@ -94,6 +95,7 @@ const discoverEmotion = {
 		switch (this.emotion) {
 			case 'anger':
 				this.ui.win.emotion = new Anger();
+				this.ui.win.sound = new SoundHandler();
 				break;
 		}
 	}
