@@ -11,7 +11,7 @@ export default class Cursor {
         };
         this.params = {
             color: '#fff',
-            size: 50,
+            size: 2.5,
             position: {
                 x: window.innerWidth / 2,
                 y: window.innerHeight / 2

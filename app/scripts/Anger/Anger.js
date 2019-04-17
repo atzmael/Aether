@@ -74,8 +74,8 @@ export default class Anger {
 		this.camera.position.y = 2;
 		this.camera.rotation.x = Math.PI / 180 * -15;
 
-		this.controls = new THREE.OrbitControls(this.camera);
-		this.controls.update();
+		// this.controls = new THREE.OrbitControls(this.camera);
+		// this.controls.update();
 
 		// Vars
 		this.playerPositionThrottle = true;
@@ -100,37 +100,26 @@ export default class Anger {
 			})
 		});
 
-		console.log(window.grounds);
-		console.log(this.scene);
-
 		//this.scene.add(this.floor.mesh);
 
-		// Add physics to the ground
-		let ground = new CANNON.Plane();
-		for (let floor of this.floor.mesh.children) {
+		// Add physics
+		window.grounds.forEach(ground => {
+			let plane = new CANNON.Plane();
 			let body = new CANNON.Body({ mass: 0 });
-			body.addShape(ground);
+			body.addShape(plane);
 			body.quaternion.setFromAxisAngle(new CANNON.Vec3(1, 0, 0), -Math.PI/2);
-			body.position.set(floor.position.x, floor.position.y, floor.position.z+20);
+			body.position.set(ground.elmt.position.x, ground.elmt.position.y, ground.elmt.position.z + 20);
 			this.world.add(body);
-			floor.body = body;
-		}
-
-		// Add physics to the objects
-		let shape = new CANNON.Sphere(10);
-		for (let floor of this.floor.mesh.children) {
-			for (let object of floor.children) {
-				for (let pieces of object.children) {
-					for (let piece of pieces.children) {
-						let body = new CANNON.Body({ mass: 1 });
-						body.position.set(piece.position.x, piece.position.y, 5);
-						body.addShape(shape);
-						this.world.add(body);
-						piece.body = body;
-					}
-				}
-			}
-		}
+			ground.elmt.body = body;
+			ground.objects.forEach(groundObj => {
+				let sphere = new CANNON.Sphere(1);
+				let body = new CANNON.Body({ mass: 1 });
+				body.position.set(groundObj.position.x, 40, groundObj.position.z);
+				body.addShape(sphere);
+				this.world.add(body);
+				groundObj.body = body;
+			})
+		});
 
 		// Light
 		let ambientLight = new THREE.AmbientLight(0x404040, 4);
@@ -159,29 +148,19 @@ export default class Anger {
 
 		requestAnimationFrame(this.update.bind(this));
 
-		this.controls.update();
+		// this.controls.update();
 		
 		this.physicsUpdate();
 
-		// Link physics to the ground
-		let ground = new CANNON.Plane();
-		for (let floor of this.floor.mesh.children) {
-			floor.position.copy(floor.body.position);
-			floor.quaternion.copy(floor.body.quaternion);
-		}
-
-		// Link physics to the objects
-		let shape = new CANNON.Sphere();
-		for (let floor of this.floor.mesh.children) {
-			for (let object of floor.children) {
-				for (let pieces of object.children) {
-					for (let piece of pieces.children) {
-						piece.position.copy(piece.body.position);
-						piece.quaternion.copy(piece.body.quaternion);
-					}
-				}
-			}
-		}
+		// Link physics
+		window.grounds.forEach(ground => {
+			ground.elmt.position.copy(ground.elmt.body.position);
+			ground.elmt.quaternion.copy(ground.elmt.body.quaternion);
+			ground.objects.forEach(groundObj => {
+				groundObj.position.copy(groundObj.body.position);
+				groundObj.quaternion.copy(groundObj.body.quaternion);
+			})
+		});
 
 		// Update du personnage
 		this.character.update();
@@ -247,8 +226,7 @@ export default class Anger {
 
 	initPhysics() {
 		this.world = new CANNON.World();
-		this.world.gravity.set(0, 0, -1);
-		console.log(this.world)
+		this.world.gravity.set(0, -9, 0);
 		this.world.broadphase = new CANNON.NaiveBroadphase();
 		this.world.solver.iterations = 5;
 		this.world.defaultContactMaterial.contactEquationStiffness = 1e6;
@@ -343,6 +321,7 @@ export default class Anger {
 												elmt2.objects = [];
 												new Normal(elmt2.id, {x: elmt2.elmt.position.x, y: elmt2.elmt.position.z});
 												elmt2.objects.forEach(e => {
+													this.addPhysicsObject(e);
 													this.scene.add(e);
 												});
 												elmt2.elmt.material.color.set(0xb32B00);
@@ -353,6 +332,7 @@ export default class Anger {
 												elmt2.objects = [];
 												new River(elmt2.id, {x: elmt2.elmt.position.x, y: elmt2.elmt.position.z});
 												elmt2.objects.forEach(e => {
+													this.addPhysicsObject(e);
 													this.scene.add(e);
 												});
 												elmt2.elmt.material.color.set(0x0c3191);
@@ -364,6 +344,7 @@ export default class Anger {
 											elmt2.objects = [];
 											new River(elmt2.id, {x: elmt2.elmt.position.x, y: elmt2.elmt.position.z});
 											elmt2.objects.forEach(e => {
+												this.addPhysicsObject(e);
 												this.scene.add(e);
 											});
 										}
@@ -400,6 +381,7 @@ export default class Anger {
 												elmt2.objects = [];
 												new Normal(elmt2.id, {x: elmt2.elmt.position.x, y: elmt2.elmt.position.z});
 												elmt2.objects.forEach(e => {
+													this.addPhysicsObject(e);
 													this.scene.add(e);
 												});
 												elmt2.elmt.material.color.set(0xb32B00);
@@ -410,6 +392,7 @@ export default class Anger {
 												elmt2.objects = [];
 												new River(elmt2.id, {x: elmt2.elmt.position.x, y: elmt2.elmt.position.z});
 												elmt2.objects.forEach(e => {
+													this.addPhysicsObject(e);
 													this.scene.add(e);
 												});
 												elmt2.elmt.material.color.set(0x0c3191);
@@ -421,6 +404,7 @@ export default class Anger {
 											elmt2.objects = [];
 											new River(elmt2.id, {x: elmt2.elmt.position.x, y: elmt2.elmt.position.z});
 											elmt2.objects.forEach(e => {
+												this.addPhysicsObject(e);
 												this.scene.add(e);
 											});
 										}
@@ -458,6 +442,7 @@ export default class Anger {
 												elmt2.objects = [];
 												new Normal(elmt2.id, {x: elmt2.elmt.position.x, y: elmt2.elmt.position.z});
 												elmt2.objects.forEach(e => {
+													this.addPhysicsObject(e);
 													this.scene.add(e);
 												});
 											} else {
@@ -467,6 +452,7 @@ export default class Anger {
 												elmt2.objects = [];
 												new River(elmt2.id, {x: elmt2.elmt.position.x, y: elmt2.elmt.position.z});
 												elmt2.objects.forEach(e => {
+													this.addPhysicsObject(e);
 													this.scene.add(e);
 												});
 											}
@@ -477,6 +463,7 @@ export default class Anger {
 											elmt2.objects = [];
 											new River(elmt2.id, {x: elmt2.elmt.position.x, y: elmt2.elmt.position.z});
 											elmt2.objects.forEach(e => {
+												this.addPhysicsObject(e);
 												this.scene.add(e);
 											});
 										}
@@ -509,6 +496,7 @@ export default class Anger {
 												elmt2.objects = [];
 												new River(elmt2.id, {x: elmt2.elmt.position.x, y: elmt2.elmt.position.z});
 												elmt2.objects.forEach(e => {
+													this.addPhysicsObject(e);
 													this.scene.add(e);
 												});
 											} else {
@@ -518,6 +506,7 @@ export default class Anger {
 												elmt2.objects = [];
 												new River(elmt2.id, {x: elmt2.elmt.position.x, y: elmt2.elmt.position.z});
 												elmt2.objects.forEach(e => {
+													this.addPhysicsObject(e);
 													this.scene.add(e);
 												});
 											}
@@ -528,6 +517,7 @@ export default class Anger {
 											elmt2.objects = [];
 											new River(elmt2.id, {x: elmt2.elmt.position.x, y: elmt2.elmt.position.z});
 											elmt2.objects.forEach(e => {
+												this.addPhysicsObject(e);
 												this.scene.add(e);
 											});
 										}
@@ -591,9 +581,9 @@ export default class Anger {
 					objectToInteractCollection.splice(index, 1);
 					this.character.mesh.add(obj.object);
 
-					obj.object.position.x = 0;
-					obj.object.position.z = -5;
-					obj.object.position.y = 0;
+					obj.object.body.position.x = 0;
+					obj.object.body.position.z = -5;
+					obj.object.body.position.y = 0;
 
 					this.character.putObjectInHand(obj.object);
 
@@ -632,6 +622,15 @@ export default class Anger {
 
 	updateUserState() {
 
+	}
+
+	addPhysicsObject(groundObj) {
+		let sphere = new CANNON.Sphere(1);
+		let body = new CANNON.Body({ mass: 1 });
+		body.position.set(groundObj.position.x, 40, groundObj.position.z);
+		body.addShape(sphere);
+		this.world.add(body);
+		groundObj.body = body;
 	}
 }
 
