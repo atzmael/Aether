@@ -307,13 +307,11 @@ export default class Anger {
 										// check if the last is a river
 										isLastRiver = this.checkChunkTemplate(elmt2.elmt.body.position.x);
 
-										// check if the new is a river
-										isNewRiver = this.checkChunkTemplate(elmt2.elmt.body.position.x);
-
-										console.log(isLastRiver, isNewRiver);
-
 										// Move the chunk to his new position
 										elmt2.elmt.body.position.x = ground.elmt.position.x + chunkSize;
+
+										// check if the new is a river
+										isNewRiver = this.checkChunkTemplate(elmt2.elmt.body.position.x);
 
 										// if one of them is not a river
 										if (!isNewRiver || !isLastRiver) {
@@ -369,11 +367,11 @@ export default class Anger {
 										// check if the last is a river
 										isLastRiver = this.checkChunkTemplate(elmt2.elmt.body.position.x);
 
-										// check if the new is a river
-										isNewRiver = this.checkChunkTemplate(elmt2.elmt.body.position.x);
-
 										// Move the chunk to his new position
 										elmt2.elmt.body.position.x = ground.elmt.position.x - chunkSize;
+
+										// check if the new is a river
+										isNewRiver = this.checkChunkTemplate(elmt2.elmt.body.position.x);
 
 										// if one of them is not a river
 										if (!isNewRiver || !isLastRiver) {
@@ -430,11 +428,11 @@ export default class Anger {
 										// check if the last is a river
 										isLastRiver = this.checkChunkTemplate(elmt2.elmt.body.position.x);
 
-										// check if the new is a river
-										isNewRiver = this.checkChunkTemplate(elmt2.elmt.body.position.x);
-
 										// Move the chunk to his new position
 										elmt2.elmt.body.position.z = ground.elmt.position.z + chunkSize;
+
+										// check if the new is a river
+										isNewRiver = this.checkChunkTemplate(elmt2.elmt.body.position.x);
 
 										// if one of them is not a river
 										if (!isNewRiver || !isLastRiver) {
@@ -484,11 +482,11 @@ export default class Anger {
 										// check if the last is a river
 										isLastRiver = this.checkChunkTemplate(elmt2.elmt.body.position.x);
 
-										// check if the new is a river
-										isNewRiver = this.checkChunkTemplate(elmt2.elmt.body.position.x);
-
 										// Move the chunk to his new position
 										elmt2.elmt.body.position.z = ground.elmt.position.z - chunkSize;
+
+										// check if the new is a river
+										isNewRiver = this.checkChunkTemplate(elmt2.elmt.body.position.x);
 
 										// if one of them is not a river
 										if (!isNewRiver || !isLastRiver) {
