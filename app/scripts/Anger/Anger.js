@@ -31,6 +31,8 @@ window.scoreObjectDestroyed = playerState;
 
 window.chunkSize = 100;
 
+window.isObjectLoaded = false;
+
 window.COLORS = {
 	blue: '#0c3191',
 	orange: '#b32b00'
@@ -80,40 +82,6 @@ export default class Anger {
 		// Noise
 		this.noise = new SimplexNoise(Math.random());
 
-		// Floor
-		this.character = new Character();
-		this.character.mesh.add(this.camera);
-		this.scene.add(this.character.mesh);
-
-		this.floor = new Ground();
-		window.grounds.forEach(ground => {
-			this.scene.add(ground.elmt);
-			ground.objects.forEach(groundElmt => {
-				this.scene.add(groundElmt);
-			})
-		});
-
-		//this.scene.add(this.floor.mesh);
-
-		// Add physics
-		window.grounds.forEach(ground => {
-			let plane = new CANNON.Plane();
-			let body = new CANNON.Body({ mass: 0 });
-			body.addShape(plane);
-			body.quaternion.setFromAxisAngle(new CANNON.Vec3(1, 0, 0), -Math.PI/2);
-			body.position.set(ground.elmt.position.x, ground.elmt.position.y, ground.elmt.position.z);
-			this.world.add(body);
-			ground.elmt.body = body;
-			ground.objects.forEach(groundObj => {
-				let sphere = new CANNON.Sphere(1);
-				let body = new CANNON.Body({ mass: 1 });
-				body.position.set(groundObj.position.x, groundObj.position.y, groundObj.position.z);
-				body.addShape(sphere);
-				this.world.add(body);
-				groundObj.body = body;
-			})
-		});
-
 		// Light
 		let ambientLight = new THREE.AmbientLight(0x404040, 4);
 		//this.scene.add(ambientLight);
@@ -122,14 +90,10 @@ export default class Anger {
 		light.position.set(0, 100, -10);
 		this.scene.add(light);
 
-		// Gui init
-		this.guiHandler();
-
 		// Debug things
 
-
-		// First call update
-		this.update();
+		// Gui init
+		this.guiHandler();
 	}
 
 	render() {
@@ -142,7 +106,7 @@ export default class Anger {
 		requestAnimationFrame(this.update.bind(this));
 
 		// this.controls.update();
-		
+
 		this.physicsUpdate();
 
 		// Link physics
@@ -178,12 +142,45 @@ export default class Anger {
 		this.renderer.setSize(window.innerWidth, window.innerHeight);
 	}
 
-	init() {
+	async init() {
 		this.initScene();
 		this.initPhysics();
 		this.helpers();
 
 		this.displayGraphState();
+
+		await this.initObjects();
+
+		this.update();
+	}
+
+	initObjects() {
+		return new Promise(async resolve => {
+			// Floor
+			this.character = new Character();
+			this.character.mesh.add(this.camera);
+			this.scene.add(this.character.mesh);
+
+			await this.loadGround();
+
+			window.grounds.forEach(ground => {
+				this.scene.add(ground.elmt);
+				ground.objects.forEach(groundElmt => {
+					this.scene.add(groundElmt);
+				});
+			});
+
+			this.addPhysics();
+
+			resolve();
+		});
+	}
+
+	loadGround() {
+		return new Promise(async resolve => {
+			await Ground.wait();
+			resolve();
+		});
 	}
 
 	initScene() {
@@ -219,6 +216,7 @@ export default class Anger {
 
 	initPhysics() {
 		this.world = new CANNON.World();
+		window.world = this.world;
 		this.world.gravity.set(0, -9, 0);
 		this.world.broadphase = new CANNON.NaiveBroadphase();
 		this.world.solver.iterations = 5;
@@ -227,8 +225,28 @@ export default class Anger {
 		this.ground = new CANNON.ContactMaterial(new CANNON.Material("groundMaterial"), new CANNON.Material("slipperyMaterial"), {
 			friction: .1,
 			restitution: .55
-		})
+		});
 		this.world.addContactMaterial(this.ground)
+	}
+
+	addPhysics() {
+		window.grounds.forEach(ground => {
+			let plane = new CANNON.Plane();
+			let body = new CANNON.Body({mass: 0});
+			body.addShape(plane);
+			body.quaternion.setFromAxisAngle(new CANNON.Vec3(1, 0, 0), -Math.PI / 2);
+			body.position.set(ground.elmt.position.x, ground.elmt.position.y, ground.elmt.position.z);
+			this.world.add(body);
+			ground.elmt.body = body;
+			ground.objects.forEach(groundObj => {
+				let sphere = new CANNON.Sphere(1);
+				let body = new CANNON.Body({mass: 1});
+				body.position.set(groundObj.position.x, groundObj.position.y, groundObj.position.z);
+				body.addShape(sphere);
+				this.world.add(body);
+				groundObj.body = body;
+			})
+		});
 	}
 
 	helpers() {
@@ -258,10 +276,10 @@ export default class Anger {
 				characterZ = this.character.mesh.position.z;
 
 				// Current chunk limits
-				limitLeft = ground.elmt.position.x - this.floor.size / 2;
-				limitTop = ground.elmt.position.z - this.floor.size / 2;
-				limitRight = ground.elmt.position.x + this.floor.size / 2;
-				limitBottom = ground.elmt.position.z + this.floor.size / 2;
+				limitLeft = ground.elmt.position.x - chunkSize / 2;
+				limitTop = ground.elmt.position.z - chunkSize / 2;
+				limitRight = ground.elmt.position.x + chunkSize / 2;
+				limitBottom = ground.elmt.position.z + chunkSize / 2;
 
 				// If player is in the chunk
 				if (limitLeft < characterX &&
@@ -273,19 +291,13 @@ export default class Anger {
 					// If current chunk is not equals to the player current chunk ID
 					if (activeCase != this.character.positionOnMap) {
 
-						console.log('player changed chunk');
-
 						// If current chunk pos X is not equals to the last chunk pos X
 						if (ground.elmt.position.x != window.grounds[this.character.positionOnMap].elmt.position.x) {
-
-							console.log('player moved on X');
 
 							// If current chunk pos X minus last chunk pos X is superior to 0
 							// This mean that character is going to right
 							// Else you are going to left
 							if (ground.elmt.position.x - window.grounds[this.character.positionOnMap].elmt.position.x > 0) {
-
-								console.log('player moved on right');
 
 								window.grounds.forEach((elmt2, i) => {
 									// If current chunk pos X is inferior to last chunk pos X
@@ -293,13 +305,15 @@ export default class Anger {
 									if (elmt2.elmt.position.x < window.grounds[this.character.positionOnMap].elmt.position.x) {
 
 										// check if the last is a river
-										isLastRiver = this.checkChunkTemplate(elmt2.elmt.position.x);
-
-										// Move the chunk to his new position
-										elmt2.elmt.body.position.x = ground.elmt.position.x + this.floor.size;
+										isLastRiver = this.checkChunkTemplate(elmt2.elmt.body.position.x);
 
 										// check if the new is a river
-										isNewRiver = this.checkChunkTemplate(elmt2.elmt.position.x);
+										isNewRiver = this.checkChunkTemplate(elmt2.elmt.body.position.x);
+
+										console.log(isLastRiver, isNewRiver);
+
+										// Move the chunk to his new position
+										elmt2.elmt.body.position.x = ground.elmt.position.x + chunkSize;
 
 										// if one of them is not a river
 										if (!isNewRiver || !isLastRiver) {
@@ -311,7 +325,7 @@ export default class Anger {
 													this.scene.remove(obj);
 												});
 												elmt2.objects = [];
-												new Normal(elmt2.id, {x: elmt2.elmt.body.position.x, y: elmt2.elmt.body.position.z});
+												this.loadNormalTemplate(elmt2.id, elmt2.elmt.body.position.x, elmt2.elmt.body.position.z);
 												elmt2.objects.forEach(e => {
 													this.addPhysicsObject(e);
 													this.scene.add(e);
@@ -322,7 +336,7 @@ export default class Anger {
 													this.scene.remove(obj);
 												});
 												elmt2.objects = [];
-												new River(elmt2.id, {x: elmt2.elmt.body.position.x, y: elmt2.elmt.body.position.z});
+												this.loadNormalTemplate(elmt2.id, elmt2.elmt.body.position.x, elmt2.elmt.body.position.z);
 												elmt2.objects.forEach(e => {
 													this.addPhysicsObject(e);
 													this.scene.add(e);
@@ -334,7 +348,7 @@ export default class Anger {
 												this.scene.remove(obj);
 											});
 											elmt2.objects = [];
-											new River(elmt2.id, {x: elmt2.elmt.body.position.x, y: elmt2.elmt.body.position.z});
+											this.loadRiverTemplate(elmt2.id, elmt2.elmt.body.position.x, elmt2.elmt.body.position.z);
 											elmt2.objects.forEach(e => {
 												this.addPhysicsObject(e);
 												this.scene.add(e);
@@ -353,13 +367,13 @@ export default class Anger {
 									if (elmt2.elmt.position.x > window.grounds[this.character.positionOnMap].elmt.position.x) {
 
 										// check if the last is a river
-										isLastRiver = this.checkChunkTemplate(elmt2.elmt.position.x);
-
-										// Move the chunk to his new position
-										elmt2.elmt.body.position.x = ground.elmt.position.x - this.floor.size;
+										isLastRiver = this.checkChunkTemplate(elmt2.elmt.body.position.x);
 
 										// check if the new is a river
-										isNewRiver = this.checkChunkTemplate(elmt2.elmt.position.x);
+										isNewRiver = this.checkChunkTemplate(elmt2.elmt.body.position.x);
+
+										// Move the chunk to his new position
+										elmt2.elmt.body.position.x = ground.elmt.position.x - chunkSize;
 
 										// if one of them is not a river
 										if (!isNewRiver || !isLastRiver) {
@@ -371,7 +385,7 @@ export default class Anger {
 													this.scene.remove(obj);
 												});
 												elmt2.objects = [];
-												new Normal(elmt2.id, {x: elmt2.elmt.body.position.x, y: elmt2.elmt.body.position.z});
+												this.loadNormalTemplate(elmt2.id, elmt2.elmt.body.position.x, elmt2.elmt.body.position.z);
 												elmt2.objects.forEach(e => {
 													this.addPhysicsObject(e);
 													this.scene.add(e);
@@ -382,7 +396,7 @@ export default class Anger {
 													this.scene.remove(obj);
 												});
 												elmt2.objects = [];
-												new River(elmt2.id, {x: elmt2.elmt.body.position.x, y: elmt2.elmt.body.position.z});
+												this.loadNormalTemplate(elmt2.id, elmt2.elmt.body.position.x, elmt2.elmt.body.position.z);
 												elmt2.objects.forEach(e => {
 													this.addPhysicsObject(e);
 													this.scene.add(e);
@@ -394,7 +408,7 @@ export default class Anger {
 												this.scene.remove(obj);
 											});
 											elmt2.objects = [];
-											new River(elmt2.id, {x: elmt2.elmt.body.position.x, y: elmt2.elmt.body.position.z});
+											this.loadRiverTemplate(elmt2.id, elmt2.elmt.body.position.x, elmt2.elmt.body.position.z);
 											elmt2.objects.forEach(e => {
 												this.addPhysicsObject(e);
 												this.scene.add(e);
@@ -414,13 +428,13 @@ export default class Anger {
 									if (elmt2.elmt.position.z < window.grounds[this.character.positionOnMap].elmt.position.z) {
 
 										// check if the last is a river
-										isLastRiver = this.checkChunkTemplate(elmt2.elmt.position.x);
-
-										// Move the chunk to his new position
-										elmt2.elmt.body.position.z = ground.elmt.position.z + this.floor.size;
+										isLastRiver = this.checkChunkTemplate(elmt2.elmt.body.position.x);
 
 										// check if the new is a river
-										isNewRiver = this.checkChunkTemplate(elmt2.elmt.position.x);
+										isNewRiver = this.checkChunkTemplate(elmt2.elmt.body.position.x);
+
+										// Move the chunk to his new position
+										elmt2.elmt.body.position.z = ground.elmt.position.z + chunkSize;
 
 										// if one of them is not a river
 										if (!isNewRiver || !isLastRiver) {
@@ -432,7 +446,7 @@ export default class Anger {
 													this.scene.remove(obj);
 												});
 												elmt2.objects = [];
-												new Normal(elmt2.id, {x: elmt2.elmt.body.position.x, y: elmt2.elmt.body.position.z});
+												this.loadNormalTemplate(elmt2.id, elmt2.elmt.body.position.x, elmt2.elmt.body.position.z);
 												elmt2.objects.forEach(e => {
 													this.addPhysicsObject(e);
 													this.scene.add(e);
@@ -442,7 +456,7 @@ export default class Anger {
 													this.scene.remove(obj);
 												});
 												elmt2.objects = [];
-												new River(elmt2.id, {x: elmt2.elmt.body.position.x, y: elmt2.elmt.body.position.z});
+												this.loadNormalTemplate(elmt2.id, elmt2.elmt.body.position.x, elmt2.elmt.body.position.z);
 												elmt2.objects.forEach(e => {
 													this.addPhysicsObject(e);
 													this.scene.add(e);
@@ -453,7 +467,7 @@ export default class Anger {
 												this.scene.remove(obj);
 											});
 											elmt2.objects = [];
-											new River(elmt2.id, {x: elmt2.elmt.body.position.x, y: elmt2.elmt.body.position.z});
+											this.loadRiverTemplate(elmt2.id, elmt2.elmt.body.position.x, elmt2.elmt.body.position.z);
 											elmt2.objects.forEach(e => {
 												this.addPhysicsObject(e);
 												this.scene.add(e);
@@ -468,13 +482,13 @@ export default class Anger {
 									if (elmt2.elmt.position.z > window.grounds[this.character.positionOnMap].elmt.position.z) {
 
 										// check if the last is a river
-										isLastRiver = this.checkChunkTemplate(elmt2.elmt.position.x);
-
-										// Move the chunk to his new position
-										elmt2.elmt.body.position.z = ground.elmt.position.z - this.floor.size;
+										isLastRiver = this.checkChunkTemplate(elmt2.elmt.body.position.x);
 
 										// check if the new is a river
-										isNewRiver = this.checkChunkTemplate(elmt2.elmt.position.x);
+										isNewRiver = this.checkChunkTemplate(elmt2.elmt.body.position.x);
+
+										// Move the chunk to his new position
+										elmt2.elmt.body.position.z = ground.elmt.position.z - chunkSize;
 
 										// if one of them is not a river
 										if (!isNewRiver || !isLastRiver) {
@@ -486,7 +500,7 @@ export default class Anger {
 													this.scene.remove(obj);
 												});
 												elmt2.objects = [];
-												new Normal(elmt2.id, {x: elmt2.elmt.body.position.x, y: elmt2.elmt.body.position.z});
+												this.loadNormalTemplate(elmt2.id, elmt2.elmt.body.position.x, elmt2.elmt.body.position.z);
 												elmt2.objects.forEach(e => {
 													this.addPhysicsObject(e);
 													this.scene.add(e);
@@ -496,7 +510,7 @@ export default class Anger {
 													this.scene.remove(obj);
 												});
 												elmt2.objects = [];
-												new River(elmt2.id, {x: elmt2.elmt.body.position.x, y: elmt2.elmt.body.position.z});
+												this.loadNormalTemplate(elmt2.id, elmt2.elmt.body.position.x, elmt2.elmt.body.position.z);
 												elmt2.objects.forEach(e => {
 													this.addPhysicsObject(e);
 													this.scene.add(e);
@@ -507,7 +521,7 @@ export default class Anger {
 												this.scene.remove(obj);
 											});
 											elmt2.objects = [];
-											new River(elmt2.id, {x: elmt2.elmt.body.position.x, y: elmt2.elmt.body.position.z});
+											this.loadRiverTemplate(elmt2.id, elmt2.elmt.body.position.x, elmt2.elmt.body.position.z);
 											elmt2.objects.forEach(e => {
 												this.addPhysicsObject(e);
 												this.scene.add(e);
@@ -529,7 +543,7 @@ export default class Anger {
 	}
 
 	physicsUpdate() {
-		this.world.step(1/60);
+		this.world.step(1 / 60);
 	}
 
 	guiHandler() {
@@ -544,7 +558,7 @@ export default class Anger {
 	}
 
 	checkChunkTemplate(coord) {
-		return (coord < -chunkSize / 2 && coord > -chunkSize * 1.5)
+		return (coord < -chunkSize / 2 && coord > -chunkSize * 1.5);
 	}
 
 	onMouseMove(event) {
@@ -579,7 +593,6 @@ export default class Anger {
 
 					this.character.putObjectInHand(obj.object);
 
-					//TODO: apply physic to throw the object$
 				} else {
 					//alert(`The object is too far from you, make ${Math.floor(obj.distance - playerHitBox)} more footstep`);
 				}
@@ -601,28 +614,36 @@ export default class Anger {
 			if (posY != lastPosY) {
 
 				posY += diff;
-
 				let dot = new Dot(posX, posY * 10, ctx);
 				dot.init();
 				dotCollection.push(dot);
-
 				lastPosY = posY;
 				posX += 6;
 			}
 		}, 50);
 	}
 
-	updateUserState() {
-
-	}
-
 	addPhysicsObject(groundObj) {
 		let sphere = new CANNON.Sphere(1);
-		let body = new CANNON.Body({ mass: 1 });
+		let body = new CANNON.Body({mass: 1});
 		body.position.set(groundObj.position.x, groundObj.position.y, groundObj.position.z);
 		body.addShape(sphere);
 		this.world.add(body);
 		groundObj.body = body;
+	}
+
+	loadNormalTemplate(piecesNumber, posChunkX, posChunkZ) {
+		return new Promise(async resolve => {
+			await Normal.wait(piecesNumber, {x: posChunkX, y: posChunkZ});
+			resolve();
+		})
+	}
+
+	loadRiverTemplate(piecesNumber, posChunkX, posChunkZ) {
+		return new Promise(async resolve => {
+			await River.wait(piecesNumber, {x: posChunkX, y: posChunkZ});
+			resolve();
+		})
 	}
 }
 

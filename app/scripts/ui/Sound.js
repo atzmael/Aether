@@ -12,6 +12,7 @@ export default class SoundHandler {
 		this.currentEmotion = currEmotion;
 
 		this.init();
+		console.log(this.audio);
 	}
 
 	init() {

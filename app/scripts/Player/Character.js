@@ -127,7 +127,7 @@ export default class Character {
 	}
 
 	controls() {
-		document.addEventListener('keypress', (e) => {
+		document.addEventListener('keydown', (e) => {
 			if (e.key === 'q' || e.key === 'ArrowLeft') {
 				this.direction.left.forward = true;
 				this.direction.left.keydown = true;

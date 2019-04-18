@@ -2,7 +2,7 @@
 import Normal from '../Anger/template/Normal';
 import River from '../Anger/template/River';
 
-export default class Ground {
+class Ground {
 	constructor(size = chunkSize, segments = 1, amp = 0.5) {
 		this.size = size;
 		this.segments = segments;
@@ -28,13 +28,14 @@ export default class Ground {
 			size: {
 				value: 300
 			}
-		}
-		
-		this.init();
+		};
 	}
 
 	init() {
-		this.createGround();
+		return new Promise(async resolve => {
+			await this.createGround();
+			resolve();
+		})
 	}
 
 	/**
@@ -163,48 +164,74 @@ export default class Ground {
 	 *
 	 */
 	createGround() {
-		let piece, template, templateID, templateName, posChunkX, posChunkZ;
-		let piecesNumber = 0;
-		let row = Math.sqrt(this.mapNumber);
-		for (let x = 0; x < row; x++) {
-			for (let y = 0; y < row; y++) {
-				posChunkX = x * this.size - ((this.size * 3) / 2) + (this.size / 2);
-				posChunkZ = y * this.size - ((this.size * 3) / 2) + (this.size / 2);
+		return new Promise(async resolve => {
+			let piece, template, templateID, templateName, posChunkX, posChunkZ;
+			let piecesNumber = 0;
+			let row = Math.sqrt(this.mapNumber);
+			for (let x = 0; x < row; x++) {
+				for (let y = 0; y < row; y++) {
+					posChunkX = x * this.size - ((this.size * 3) / 2) + (this.size / 2);
+					posChunkZ = y * this.size - ((this.size * 3) / 2) + (this.size / 2);
 
-				console.log(posChunkX, posChunkZ);
+					window.grounds.push(
+						{
+							id: piecesNumber,
+							elmt: undefined,
+							posX: posChunkX,
+							posZ: posChunkZ,
+							objects: [],
+						}
+					);
 
-				window.grounds.push(
-					{
-						id: piecesNumber,
-						elmt: undefined,
-						posX: posChunkX,
-						posZ: posChunkZ,
-						objects: [],
+					if (!this.checkChunkTemplate(posChunkX)) {
+						await this.loadNormalTemplate(piecesNumber, posChunkX, posChunkZ);
+						piece = this.createPiece();
+					} else {
+						await this.loadRiverTemplate(piecesNumber, posChunkX, posChunkZ);
+						piece = this.createPiece(COLORS.blue);
 					}
-				);
 
-				if (!this.checkChunkTemplate(posChunkX)) {
-					new Normal(piecesNumber, {x: posChunkX, y: posChunkZ});
-					piece = this.createPiece();
-				} else {
-					new River(piecesNumber, {x: posChunkX, y: posChunkZ});
-					piece = this.createPiece(COLORS.blue);
+					piece.position.x = posChunkX;
+					piece.position.z = posChunkZ;
+					piece.position.y = -1;
+
+					window.grounds[piecesNumber].elmt = piece;
+
+					piecesNumber++;
 				}
-
-				piece.position.x = posChunkX;
-				piece.position.z = posChunkZ;
-				piece.position.y = -1;
-
-				console.log(piece);
-
-				window.grounds[piecesNumber].elmt = piece;
-
-				piecesNumber++;
 			}
-		}
+			resolve();
+		});
 	}
 
 	checkChunkTemplate(coord) {
 		return (coord < -chunkSize / 2 && coord > -chunkSize * 1.5)
 	}
+
+	loadNormalTemplate(piecesNumber, posChunkX, posChunkZ) {
+		return new Promise(async resolve => {
+			await Normal.wait(piecesNumber, {x: posChunkX, y: posChunkZ});
+			resolve();
+		})
+	}
+
+	loadRiverTemplate(piecesNumber, posChunkX, posChunkZ) {
+		return new Promise(async resolve => {
+			await River.wait(piecesNumber, {x: posChunkX, y: posChunkZ});
+			resolve();
+		})
+	}
 }
+
+
+const ground = {
+	wait() {
+		return new Promise(async resolve => {
+			const newGround = new Ground();
+			await newGround.init();
+			resolve();
+		});
+	}
+};
+
+export default ground;

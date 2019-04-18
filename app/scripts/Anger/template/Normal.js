@@ -71,7 +71,7 @@ let rules = {
 	}
 };
 
-export default class Normal {
+class Normal {
 	constructor(groundID, coord) {
 		if(playerState > 0 && playerState < 4) {
 			this.rule = rules[playerState];
@@ -79,22 +79,28 @@ export default class Normal {
 
 		this.groundID = groundID;
 		this.coord = coord;
-
-		this.init();
 	}
 
 	init() {
+		return new Promise(async resolve => {
+			new Stone(this.groundID, this.coord, this.rule.stones.radius, this.rule.stones.details, this.rule.stones.number);
 
-		this.mesh = new THREE.Object3D();
-		this.mesh.name = "template-normal";
-		this.mesh.position.y = 0;
+			new Stalagmite(this.groundID, this.coord, this.rule.stalagmites.radius, this.rule.stalagmites.height, this.rule.stalagmites.segments, this.rule.stalagmites.number);
 
-		let fieldOfStone = new Stone(this.groundID, this.coord, this.rule.stones.radius, this.rule.stones.details, this.rule.stones.number).mesh;
-		this.mesh.add(fieldOfStone);
-
-		let fieldOfStalagmite = new Stalagmite(this.groundID, this.coord, this.rule.stalagmites.radius, this.rule.stalagmites.height, this.rule.stalagmites.segments, this.rule.stalagmites.number).mesh;
-		this.mesh.add(fieldOfStalagmite);
+			//await Coral.wait(this.groundID, this.coord, this.rule.corals);
+			resolve();
+		});
 	}
-
-
 }
+
+const normal = {
+	wait(number, coord) {
+		return new Promise(async resolve => {
+			const newNormal = new Normal(number, coord);
+			await newNormal.init();
+			resolve();
+		});
+	}
+};
+
+export default normal;
