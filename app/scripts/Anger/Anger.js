@@ -263,11 +263,9 @@ export default class Anger {
 
 			let limitLeft, limitRight, limitTop, limitBottom,
 				characterX, characterZ,
-				activeCase, changeZone = 2,
-				newX, newZ,
+				activeCase,
 				isLastRiver = false,
-				isNewRiver = false,
-				newTemplate;
+				isNewRiver = false;
 
 			window.grounds.forEach((ground, i) => {
 
@@ -323,7 +321,7 @@ export default class Anger {
 													this.scene.remove(obj);
 												});
 												elmt2.objects = [];
-												this.loadNormalTemplate(elmt2.id, elmt2.elmt.body.position.x, elmt2.elmt.body.position.z);
+												this.loadNormalTemplate(elmt2.id, elmt2.elmt.body.position.x, elmt2.elmt.body.position.z, false);
 												elmt2.objects.forEach(e => {
 													this.addPhysicsObject(e);
 													this.scene.add(e);
@@ -334,7 +332,7 @@ export default class Anger {
 													this.scene.remove(obj);
 												});
 												elmt2.objects = [];
-												this.loadNormalTemplate(elmt2.id, elmt2.elmt.body.position.x, elmt2.elmt.body.position.z);
+												this.loadNormalTemplate(elmt2.id, elmt2.elmt.body.position.x, elmt2.elmt.body.position.z, false);
 												elmt2.objects.forEach(e => {
 													this.addPhysicsObject(e);
 													this.scene.add(e);
@@ -346,7 +344,7 @@ export default class Anger {
 												this.scene.remove(obj);
 											});
 											elmt2.objects = [];
-											this.loadRiverTemplate(elmt2.id, elmt2.elmt.body.position.x, elmt2.elmt.body.position.z);
+											this.loadRiverTemplate(elmt2.id, elmt2.elmt.body.position.x, elmt2.elmt.body.position.z, false);
 											elmt2.objects.forEach(e => {
 												this.addPhysicsObject(e);
 												this.scene.add(e);
@@ -383,7 +381,7 @@ export default class Anger {
 													this.scene.remove(obj);
 												});
 												elmt2.objects = [];
-												this.loadNormalTemplate(elmt2.id, elmt2.elmt.body.position.x, elmt2.elmt.body.position.z);
+												this.loadNormalTemplate(elmt2.id, elmt2.elmt.body.position.x, elmt2.elmt.body.position.z, false);
 												elmt2.objects.forEach(e => {
 													this.addPhysicsObject(e);
 													this.scene.add(e);
@@ -394,7 +392,7 @@ export default class Anger {
 													this.scene.remove(obj);
 												});
 												elmt2.objects = [];
-												this.loadNormalTemplate(elmt2.id, elmt2.elmt.body.position.x, elmt2.elmt.body.position.z);
+												this.loadNormalTemplate(elmt2.id, elmt2.elmt.body.position.x, elmt2.elmt.body.position.z, false);
 												elmt2.objects.forEach(e => {
 													this.addPhysicsObject(e);
 													this.scene.add(e);
@@ -406,7 +404,7 @@ export default class Anger {
 												this.scene.remove(obj);
 											});
 											elmt2.objects = [];
-											this.loadRiverTemplate(elmt2.id, elmt2.elmt.body.position.x, elmt2.elmt.body.position.z);
+											this.loadRiverTemplate(elmt2.id, elmt2.elmt.body.position.x, elmt2.elmt.body.position.z, false);
 											elmt2.objects.forEach(e => {
 												this.addPhysicsObject(e);
 												this.scene.add(e);
@@ -444,7 +442,7 @@ export default class Anger {
 													this.scene.remove(obj);
 												});
 												elmt2.objects = [];
-												this.loadNormalTemplate(elmt2.id, elmt2.elmt.body.position.x, elmt2.elmt.body.position.z);
+												this.loadNormalTemplate(elmt2.id, elmt2.elmt.body.position.x, elmt2.elmt.body.position.z, false);
 												elmt2.objects.forEach(e => {
 													this.addPhysicsObject(e);
 													this.scene.add(e);
@@ -454,7 +452,7 @@ export default class Anger {
 													this.scene.remove(obj);
 												});
 												elmt2.objects = [];
-												this.loadNormalTemplate(elmt2.id, elmt2.elmt.body.position.x, elmt2.elmt.body.position.z);
+												this.loadNormalTemplate(elmt2.id, elmt2.elmt.body.position.x, elmt2.elmt.body.position.z, false);
 												elmt2.objects.forEach(e => {
 													this.addPhysicsObject(e);
 													this.scene.add(e);
@@ -465,7 +463,7 @@ export default class Anger {
 												this.scene.remove(obj);
 											});
 											elmt2.objects = [];
-											this.loadRiverTemplate(elmt2.id, elmt2.elmt.body.position.x, elmt2.elmt.body.position.z);
+											this.loadRiverTemplate(elmt2.id, elmt2.elmt.body.position.x, elmt2.elmt.body.position.z, false);
 											elmt2.objects.forEach(e => {
 												this.addPhysicsObject(e);
 												this.scene.add(e);
@@ -498,7 +496,7 @@ export default class Anger {
 													this.scene.remove(obj);
 												});
 												elmt2.objects = [];
-												this.loadNormalTemplate(elmt2.id, elmt2.elmt.body.position.x, elmt2.elmt.body.position.z);
+												this.loadNormalTemplate(elmt2.id, elmt2.elmt.body.position.x, elmt2.elmt.body.position.z, false);
 												elmt2.objects.forEach(e => {
 													this.addPhysicsObject(e);
 													this.scene.add(e);
@@ -508,7 +506,7 @@ export default class Anger {
 													this.scene.remove(obj);
 												});
 												elmt2.objects = [];
-												this.loadNormalTemplate(elmt2.id, elmt2.elmt.body.position.x, elmt2.elmt.body.position.z);
+												this.loadNormalTemplate(elmt2.id, elmt2.elmt.body.position.x, elmt2.elmt.body.position.z, false);
 												elmt2.objects.forEach(e => {
 													this.addPhysicsObject(e);
 													this.scene.add(e);
@@ -519,7 +517,7 @@ export default class Anger {
 												this.scene.remove(obj);
 											});
 											elmt2.objects = [];
-											this.loadRiverTemplate(elmt2.id, elmt2.elmt.body.position.x, elmt2.elmt.body.position.z);
+											this.loadRiverTemplate(elmt2.id, elmt2.elmt.body.position.x, elmt2.elmt.body.position.z, false);
 											elmt2.objects.forEach(e => {
 												this.addPhysicsObject(e);
 												this.scene.add(e);
@@ -661,16 +659,16 @@ export default class Anger {
 		groundObj.body = body;
 	}
 
-	loadNormalTemplate(piecesNumber, posChunkX, posChunkZ) {
+	loadNormalTemplate(piecesNumber, posChunkX, posChunkZ, isInit) {
 		return new Promise(async resolve => {
-			await Normal.wait(piecesNumber, {x: posChunkX, y: posChunkZ});
+			await Normal.wait(piecesNumber, {x: posChunkX, y: posChunkZ}, isInit);
 			resolve();
 		})
 	}
 
-	loadRiverTemplate(piecesNumber, posChunkX, posChunkZ) {
+	loadRiverTemplate(piecesNumber, posChunkX, posChunkZ, isInit) {
 		return new Promise(async resolve => {
-			await River.wait(piecesNumber, {x: posChunkX, y: posChunkZ});
+			await River.wait(piecesNumber, {x: posChunkX, y: posChunkZ}, isInit);
 			resolve();
 		})
 	}

@@ -10,17 +10,17 @@ export default class SoundHandler {
 		};
 
 		this.currentEmotion = currEmotion;
+		this.audio = document.querySelector("#audio");
 
 		this.init();
-		console.log(this.audio);
 	}
 
 	init() {
 		this.bindUI();
 		this.bindEvent();
 
-		this.createAudioElement();
-		this.createAudioContext();
+		this.setupAudioElement();
+		this.audio.load();
 		this.play();
 	}
 
@@ -30,20 +30,8 @@ export default class SoundHandler {
 
 	bindEvent() {}
 
-	createAudioElement() {
-		this.audio = document.createElement("AUDIO");
-		if(this.audio.canPlayType("audio/mpeg")){
-			this.audio.setAttribute("src", this.sounds[this.currentEmotion][window.playerState - 1]);
-		}
-		this.audio.style.display = "none";
-		this.ui.body.append(this.audio);
-	}
-
-	createAudioContext() {
-		// Create audio context
-		const AudioContext = window.AudioContext || window.webkitAudioContext;
-		this.audioContext = new AudioContext();
-		this.track = this.audioContext.createMediaElementSource(this.audio);
+	setupAudioElement() {
+		this.audio.src = this.sounds[this.currentEmotion][playerState];
 	}
 
 	play() {

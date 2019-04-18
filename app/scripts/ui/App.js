@@ -9,6 +9,7 @@ import header from "./header";
 import cursor from "./cursor";
 
 import Anger from "../Anger/Anger";
+import SoundHandler from "./Sound";
 
 window.onload = () => {
 
@@ -18,6 +19,8 @@ window.onload = () => {
 	new cursor();
 
 	new Anger();
+
+	new SoundHandler();
 
 	/*
 	// Handle animation in intro pages

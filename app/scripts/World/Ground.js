@@ -184,10 +184,10 @@ class Ground {
 					);
 
 					if (!this.checkChunkTemplate(posChunkX)) {
-						await this.loadNormalTemplate(piecesNumber, posChunkX, posChunkZ);
+						await this.loadNormalTemplate(piecesNumber, posChunkX, posChunkZ, true);
 						piece = this.createPiece();
 					} else {
-						await this.loadRiverTemplate(piecesNumber, posChunkX, posChunkZ);
+						await this.loadRiverTemplate(piecesNumber, posChunkX, posChunkZ, true);
 						piece = this.createPiece(COLORS.blue);
 					}
 
@@ -208,16 +208,16 @@ class Ground {
 		return (coord < -chunkSize / 2 && coord > -chunkSize * 1.5)
 	}
 
-	loadNormalTemplate(piecesNumber, posChunkX, posChunkZ) {
+	loadNormalTemplate(piecesNumber, posChunkX, posChunkZ, isInit) {
 		return new Promise(async resolve => {
-			await Normal.wait(piecesNumber, {x: posChunkX, y: posChunkZ});
+			await Normal.wait(piecesNumber, {x: posChunkX, y: posChunkZ}, isInit);
 			resolve();
 		})
 	}
 
-	loadRiverTemplate(piecesNumber, posChunkX, posChunkZ) {
+	loadRiverTemplate(piecesNumber, posChunkX, posChunkZ, isInit) {
 		return new Promise(async resolve => {
-			await River.wait(piecesNumber, {x: posChunkX, y: posChunkZ});
+			await River.wait(piecesNumber, {x: posChunkX, y: posChunkZ}, isInit);
 			resolve();
 		})
 	}

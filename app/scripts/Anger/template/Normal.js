@@ -72,13 +72,14 @@ let rules = {
 };
 
 class Normal {
-	constructor(groundID, coord) {
+	constructor(groundID, coord, isInit) {
 		if(playerState > 0 && playerState < 4) {
 			this.rule = rules[playerState];
 		}
 
 		this.groundID = groundID;
 		this.coord = coord;
+		this.isInit = isInit;
 	}
 
 	init() {
@@ -87,16 +88,18 @@ class Normal {
 
 			new Stalagmite(this.groundID, this.coord, this.rule.stalagmites.radius, this.rule.stalagmites.height, this.rule.stalagmites.segments, this.rule.stalagmites.number);
 
-			//await Coral.wait(this.groundID, this.coord, this.rule.corals);
+			if(this.isInit) {
+				//await Coral.wait(this.groundID, this.coord, this.rule.corals);
+			}
 			resolve();
 		});
 	}
 }
 
 const normal = {
-	wait(number, coord) {
+	wait(number, coord, isInit) {
 		return new Promise(async resolve => {
-			const newNormal = new Normal(number, coord);
+			const newNormal = new Normal(number, coord, isInit);
 			await newNormal.init();
 			resolve();
 		});
