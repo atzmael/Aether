@@ -11,6 +11,7 @@ export default class SoundHandler {
 
 		this.currentEmotion = currEmotion;
 		this.audio = document.querySelector("#audio");
+		this.source = document.querySelector('#audio source');
 
 		this.init();
 	}
@@ -31,7 +32,7 @@ export default class SoundHandler {
 	bindEvent() {}
 
 	setupAudioElement() {
-		this.audio.src = this.sounds[this.currentEmotion][playerState];
+		this.source.src = this.sounds[this.currentEmotion][playerState];
 	}
 
 	play() {
