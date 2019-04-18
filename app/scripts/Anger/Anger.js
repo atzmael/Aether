@@ -107,6 +107,12 @@ export default class Anger {
 
 		// this.controls.update();
 
+		// --- TEST ANIMATION D'INTRODUCTION ---//
+		// this.test.forEach(stone => {
+		// 	stone.position.copy(stone.body.position)
+		// });
+		// --- FIN DU TEST --- //
+
 		this.physicsUpdate();
 
 		// Link physics
@@ -169,6 +175,40 @@ export default class Anger {
 					this.scene.add(groundElmt);
 				});
 			});
+
+			// --- TEST ANIMATION D'INTRODUCTION ---//
+
+			this.test = [];
+			for (let i = 0; i < 25; i++) {
+				let shapes = Math.round(Math.random()),
+					geom;
+
+				geom = new THREE.IcosahedronGeometry(this.radius, this.details);
+
+				if (shapes == 1) {
+					geom = new THREE.DodecahedronGeometry(this.radius, this.details);
+				}
+
+				let mat = new THREE.MeshLambertMaterial({
+					color: '#720300'
+				});
+				this.stone = new THREE.Mesh(geom, mat);
+
+				this.stone.name = 'stone';
+				// this.stone.position.set(0,0,0);
+				this.stone.position.set(Math.random() * (5 - -5) + -5, Math.random() * (30 - 5) + 5, Math.random() * (-3 - -5) + -5);
+				let sphere = new CANNON.Sphere(1);
+				let body = new CANNON.Body({ mass: 1 });
+				body.position.set(this.stone.position.x, this.stone.position.y, this.stone.position.z);
+				body.addShape(sphere);
+				this.world.add(body);
+				this.stone.body = body;
+
+				window.grounds[4].objects.push(this.stone);
+
+				this.scene.add(this.stone);
+			}
+			// --- FIN DU TEST --- //
 
 			this.addPhysics();
 
