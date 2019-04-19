@@ -208,6 +208,46 @@ export default class Anger {
 
 				this.scene.add(this.stone);
 			}
+
+			setTimeout(function () {
+				var div = document.createElement("div");
+
+				div.innerHTML =
+					'<p>What the ... ?</p>'
+
+				div.classList.add("afterIntroEmo");
+
+				document.getElementById('page-content').appendChild(div);
+
+				setTimeout(function () {
+					div = document.createElement("div");
+					document.querySelector('.afterIntroEmo').style.display = 'none';
+					div.innerHTML =
+						'<p>ARE THOSE STONES ?</p>'
+
+					div.classList.add("afterIntroEmoBis");
+
+					document.getElementById('page-content').appendChild(div);
+
+						setTimeout(function () {
+							div = document.createElement("div");
+							document.querySelector('.afterIntroEmoBis').style.display = 'none';
+							div.innerHTML =
+								'<p>How can I get them out of my way ?</p>'
+
+							div.classList.add("afterIntroEmoBisBis");
+
+							document.getElementById('page-content').appendChild(div);
+
+							setTimeout(function () {
+								document.querySelector('.afterIntroEmoBisBis').style.display = 'none';
+							}, 4000);
+
+						}, 2000);
+
+				}, 2000);
+			}, 2500);
+
 			// --- FIN DU TEST --- //
 
 			this.addPhysics();
@@ -609,6 +649,7 @@ export default class Anger {
 	}
 
 	userInteractionHandler() {
+		window.scene = this.scene;
 		let id = 0, name = '';
 
 		if (this.intersects.length > 0) {
@@ -649,7 +690,14 @@ export default class Anger {
                     x += shootDirection.x * (1*1.02 + 1);
                     y += shootDirection.y * (1*1.02 + 1);
                     z += shootDirection.z * (1*1.02 + 1);
-                    obj.object.body.position.set(x,y,z);
+					obj.object.body.position.set(x,y,z);
+					
+					obj.object.body.addEventListener("collide", function (e) {
+						console.log(obj);
+						setTimeout(function() {
+							window.scene.remove(obj.object);
+						}, 500);
+					});
 
 					// var worldPoint = new CANNON.Vec3(0, 0, 1);
 					// var force = new CANNON.Vec3(vector.x * -100, vector.y * -100, vector.z * -100);
