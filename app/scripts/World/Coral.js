@@ -67,7 +67,7 @@ class Coral {
 		return new Promise(resolve => {
 			this.loader.load(
 				// resource URL
-				"/app/assets/obj/coral.obj",
+				window.DIR + "/assets/obj/coral.obj",
 
 				// onLoad callback
 				// Here the loaded data is assumed to be an object

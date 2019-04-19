@@ -18,11 +18,6 @@ window.onload = () => {
 
 	new cursor();
 
-	new Anger();
-
-	new SoundHandler();
-
-	/*
 	// Handle animation in intro pages
 	if (document.querySelector('body.is-intro')) {
 		introHandler.init();
@@ -46,5 +41,4 @@ window.onload = () => {
 	if(document.querySelector('.js-header')) {
 		header.init();
 	}
-	*/
 };
