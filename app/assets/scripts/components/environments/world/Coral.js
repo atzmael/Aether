@@ -43,7 +43,7 @@ class Coral {
 					posY = (y - (this.corals.length / 2)) * 30 + (Math.sin(Math.random() * Math.PI) * 10) + this.coord.y;
 					coral.position.set(posX, 0, posY);
 					this.corals[x][y] = coral;
-					window.grounds[this.groundID].objects.push(coral);
+					window.grounds[this.groundID].corals.push(coral);
 				}
 			}
 			resolve();

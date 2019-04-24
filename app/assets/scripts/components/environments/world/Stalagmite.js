@@ -55,8 +55,8 @@ export default class Stalagmite {
 	createstalagmite() {
 		let radius, height;
 
-		radius = Helpers.randFloat(this.radius.min, this.radius.max);
-		height = Helpers.randFloat(this.height.min, this.height.max);
+		radius = window.helpers.randFloat(this.radius.min, this.radius.max);
+		height = window.helpers.randFloat(this.height.min, this.height.max);
 
 		let geom = new THREE.ConeBufferGeometry( radius, height, this.segments );
 

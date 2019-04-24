@@ -180,6 +180,7 @@ class Ground {
 							posX: posChunkX,
 							posZ: posChunkZ,
 							objects: [],
+							corals: [],
 						}
 					);
 

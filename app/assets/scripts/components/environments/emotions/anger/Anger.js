@@ -13,7 +13,8 @@ import CANNON from 'cannon';
 
 // Utilities files
 
-import * as Helpers from '../../../../core/helpers';
+import Helpers from '../../../../core/helpers';
+window.helpers = new Helpers();
 
 // Global vars
 window.RATIO = 0.1;
@@ -122,6 +123,10 @@ export default class Anger {
 			ground.objects.forEach(groundObj => {
 				groundObj.position.copy(groundObj.body.position);
 				groundObj.quaternion.copy(groundObj.body.quaternion);
+			});
+			ground.corals.forEach(coralObj => {
+				coralObj.position.copy(coralObj.body.position);
+				coralObj.quaternion.copy(coralObj.body.quaternion);
 			})
 		});
 
@@ -174,6 +179,9 @@ export default class Anger {
 				ground.objects.forEach(groundElmt => {
 					this.scene.add(groundElmt);
 				});
+				ground.corals.forEach(coral => {
+					this.scene.add(coral);
+				})
 			});
 
 			// --- TEST ANIMATION D'INTRODUCTION ---//
@@ -306,7 +314,7 @@ export default class Anger {
 			friction: .1,
 			restitution: .55
 		});
-		this.world.addContactMaterial(this.ground)
+		this.world.addContactMaterial(this.ground);
 	}
 
 	addPhysics() {
@@ -326,6 +334,15 @@ export default class Anger {
 				this.world.add(body);
 				groundObj.body = body;
 			})
+			ground.corals.forEach(coral => {
+				let sphere = new CANNON.Sphere(1);
+				let body = new CANNON.Body({mass: 1});
+				body.position.set(coral.position.x, coral.position.y, coral.position.z);
+				body.addShape(sphere);
+				this.world.add(body);
+				coral.body = body;
+			})
+			console.log(ground.corals);
 		});
 	}
 
@@ -335,6 +352,26 @@ export default class Anger {
 
 		var gridHelper = new THREE.GridHelper(size, divisions);
 		//this.scene.add(gridHelper);
+	}
+
+	updateTemplate(elmt, color = false) {
+		elmt.objects.forEach(obj => {
+			this.scene.remove(obj);
+		});
+		elmt.objects = [];
+		this.loadNormalTemplate(elmt.id, elmt.elmt.body.position.x, elmt.elmt.body.position.z, false);
+		elmt.corals.forEach(coral => {
+			coral.body.position.x = elmt.elmt.body.position.x + helpers.rand(-chunkSize / 2, chunkSize / 2);
+			coral.body.position.z = elmt.elmt.body.position.z + helpers.rand(-chunkSize / 2, chunkSize / 2);
+		});
+		elmt.objects.forEach(e => {
+			this.addPhysicsObject(e);
+			this.scene.add(e);
+		});
+
+		if(color) {
+			elmt.elmt.material.color.set(color);
+		}
 	}
 
 	groundUpdate() {
@@ -397,38 +434,12 @@ export default class Anger {
 											// if the new chunk is not a river
 											if (!isNewRiver) {
 												// Remove the template
-												elmt2.objects.forEach((obj) => {
-													this.scene.remove(obj);
-												});
-												elmt2.objects = [];
-												this.loadNormalTemplate(elmt2.id, elmt2.elmt.body.position.x, elmt2.elmt.body.position.z, false);
-												elmt2.objects.forEach(e => {
-													this.addPhysicsObject(e);
-													this.scene.add(e);
-												});
-												elmt2.elmt.material.color.set(0xb32B00);
+												this.updateTemplate(elmt2, 0xb32B00);
 											} else {
-												elmt2.objects.forEach((obj) => {
-													this.scene.remove(obj);
-												});
-												elmt2.objects = [];
-												this.loadNormalTemplate(elmt2.id, elmt2.elmt.body.position.x, elmt2.elmt.body.position.z, false);
-												elmt2.objects.forEach(e => {
-													this.addPhysicsObject(e);
-													this.scene.add(e);
-												});
-												elmt2.elmt.material.color.set(0x0c3191);
+												this.updateTemplate(elmt2, 0x0c3191);
 											}
 										} else {
-											elmt2.objects.forEach((obj) => {
-												this.scene.remove(obj);
-											});
-											elmt2.objects = [];
-											this.loadRiverTemplate(elmt2.id, elmt2.elmt.body.position.x, elmt2.elmt.body.position.z, false);
-											elmt2.objects.forEach(e => {
-												this.addPhysicsObject(e);
-												this.scene.add(e);
-											});
+											this.updateTemplate(elmt2);
 										}
 
 									}
@@ -457,38 +468,12 @@ export default class Anger {
 											// if the new chunk is not a river
 											if (!isNewRiver) {
 												// Remove the template
-												elmt2.objects.forEach((obj) => {
-													this.scene.remove(obj);
-												});
-												elmt2.objects = [];
-												this.loadNormalTemplate(elmt2.id, elmt2.elmt.body.position.x, elmt2.elmt.body.position.z, false);
-												elmt2.objects.forEach(e => {
-													this.addPhysicsObject(e);
-													this.scene.add(e);
-												});
-												elmt2.elmt.material.color.set(0xb32B00);
+												this.updateTemplate(elmt2, 0xb32B00);
 											} else {
-												elmt2.objects.forEach((obj) => {
-													this.scene.remove(obj);
-												});
-												elmt2.objects = [];
-												this.loadNormalTemplate(elmt2.id, elmt2.elmt.body.position.x, elmt2.elmt.body.position.z, false);
-												elmt2.objects.forEach(e => {
-													this.addPhysicsObject(e);
-													this.scene.add(e);
-												});
-												elmt2.elmt.material.color.set(0x0c3191);
+												this.updateTemplate(elmt2, 0x0c3191);
 											}
 										} else {
-											elmt2.objects.forEach((obj) => {
-												this.scene.remove(obj);
-											});
-											elmt2.objects = [];
-											this.loadRiverTemplate(elmt2.id, elmt2.elmt.body.position.x, elmt2.elmt.body.position.z, false);
-											elmt2.objects.forEach(e => {
-												this.addPhysicsObject(e);
-												this.scene.add(e);
-											});
+											this.updateTemplate(elmt2);
 										}
 
 									}
@@ -518,36 +503,12 @@ export default class Anger {
 											// if the new chunk is not a river
 											if (!isNewRiver) {
 												// Remove the template
-												elmt2.objects.forEach((obj) => {
-													this.scene.remove(obj);
-												});
-												elmt2.objects = [];
-												this.loadNormalTemplate(elmt2.id, elmt2.elmt.body.position.x, elmt2.elmt.body.position.z, false);
-												elmt2.objects.forEach(e => {
-													this.addPhysicsObject(e);
-													this.scene.add(e);
-												});
+												this.updateTemplate(elmt2);
 											} else {
-												elmt2.objects.forEach((obj) => {
-													this.scene.remove(obj);
-												});
-												elmt2.objects = [];
-												this.loadNormalTemplate(elmt2.id, elmt2.elmt.body.position.x, elmt2.elmt.body.position.z, false);
-												elmt2.objects.forEach(e => {
-													this.addPhysicsObject(e);
-													this.scene.add(e);
-												});
+												this.updateTemplate(elmt2);
 											}
 										} else {
-											elmt2.objects.forEach((obj) => {
-												this.scene.remove(obj);
-											});
-											elmt2.objects = [];
-											this.loadRiverTemplate(elmt2.id, elmt2.elmt.body.position.x, elmt2.elmt.body.position.z, false);
-											elmt2.objects.forEach(e => {
-												this.addPhysicsObject(e);
-												this.scene.add(e);
-											});
+											this.updateTemplate(elmt2);
 										}
 									}
 								});
@@ -571,37 +532,12 @@ export default class Anger {
 
 											// if the new chunk is not a river
 											if (!isNewRiver) {
-												// Remove the template
-												elmt2.objects.forEach((obj) => {
-													this.scene.remove(obj);
-												});
-												elmt2.objects = [];
-												this.loadNormalTemplate(elmt2.id, elmt2.elmt.body.position.x, elmt2.elmt.body.position.z, false);
-												elmt2.objects.forEach(e => {
-													this.addPhysicsObject(e);
-													this.scene.add(e);
-												});
+												this.updateTemplate(elmt2);
 											} else {
-												elmt2.objects.forEach((obj) => {
-													this.scene.remove(obj);
-												});
-												elmt2.objects = [];
-												this.loadNormalTemplate(elmt2.id, elmt2.elmt.body.position.x, elmt2.elmt.body.position.z, false);
-												elmt2.objects.forEach(e => {
-													this.addPhysicsObject(e);
-													this.scene.add(e);
-												});
+												this.updateTemplate(elmt2);
 											}
 										} else {
-											elmt2.objects.forEach((obj) => {
-												this.scene.remove(obj);
-											});
-											elmt2.objects = [];
-											this.loadRiverTemplate(elmt2.id, elmt2.elmt.body.position.x, elmt2.elmt.body.position.z, false);
-											elmt2.objects.forEach(e => {
-												this.addPhysicsObject(e);
-												this.scene.add(e);
-											});
+											this.updateTemplate(elmt2);
 										}
 									}
 								});
@@ -691,7 +627,6 @@ export default class Anger {
 					obj.object.body.position.set(x,y,z);
 					
 					obj.object.body.addEventListener("collide", function (e) {
-						console.log(obj);
 						setTimeout(function() {
 							window.scene.remove(obj.object);
 						}, 500);
