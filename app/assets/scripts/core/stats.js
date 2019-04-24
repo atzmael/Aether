@@ -1,4 +1,4 @@
-import Stats from 'stats.js';
+import Stats from './stats';
 
 let stats = new Stats();
 stats.showPanel(0);

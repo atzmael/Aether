@@ -1,4 +1,4 @@
-import Helpers from '../helpers';
+import Helpers from '../../../core/helpers';
 
 export default class Stalagmite {
 	constructor(groundID, coord, radius = 1.6, height = 15, segments = 32, stalagmiteNumber = 0, amp = 0.5) {

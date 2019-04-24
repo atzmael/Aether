@@ -1,6 +1,6 @@
 // Ground elements import
-import Normal from '../Anger/template/Normal';
-import River from '../Anger/template/River';
+import Normal from '../emotions/anger/template/Normal';
+import River from '../emotions/anger/template/River';
 
 class Ground {
 	constructor(size = chunkSize, segments = 1, amp = 0.5) {

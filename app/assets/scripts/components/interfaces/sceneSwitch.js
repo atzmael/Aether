@@ -1,4 +1,4 @@
-import Anger from "../Anger/Anger";
+import Anger from "../environments/emotions/anger/Anger";
 
 const sceneSwitch = {
 	ui: {},

@@ -1,6 +1,6 @@
 import 'three/examples/js/loaders/OBJLoader';
 import CANNON from "cannon";
-import Normal from "../Anger/template/Normal";
+import Normal from "../emotions/anger/template/Normal";
 
 class Coral {
 	constructor(groundID, coord, coralNumber) {
@@ -67,7 +67,7 @@ class Coral {
 		return new Promise(resolve => {
 			this.loader.load(
 				// resource URL
-				window.DIR + "/assets/obj/coral.obj",
+				window.DIR + "/assets/medias/meshes/coral.obj",
 
 				// onLoad callback
 				// Here the loaded data is assumed to be an object

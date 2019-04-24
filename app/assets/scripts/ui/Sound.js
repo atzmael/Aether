@@ -3,9 +3,9 @@ export default class SoundHandler {
 		this.ui = {};
 		this.sounds = {
 			anger: [
-				window.DIR + '/assets/sound/colere_etat1.mp3',
-				window.DIR + '/assets/sound/colere_etat2.mp3',
-				window.DIR + '/assets/sound/colere_etat3.mp3',
+				window.DIR + '/assets/medias/sounds/colere_etat1.mp3',
+				window.DIR + '/assets/medias/sounds/colere_etat2.mp3',
+				window.DIR + '/assets/medias/sounds/colere_etat3.mp3',
 			],
 		};
 

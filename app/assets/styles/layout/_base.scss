@@ -3,7 +3,7 @@ html {
 }
 
 body {
-	background-image: url(/app/assets/img/background.png);
+	background-image: url($dir + 'assets/medias/images/background.png');
 	background-repeat: no-repeat;
 	background-position: center center;
 	background-size: cover;

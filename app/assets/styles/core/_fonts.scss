@@ -1,6 +1,6 @@
 @font-face {
 	font-family: BrownLight;
-	src: url(/app/assets/fonts/brown-light.otf);
+	src: url($dir + 'assets/fonts/brown-light.otf');
 }
 
 %BrownLight {

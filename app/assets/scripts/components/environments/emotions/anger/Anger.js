@@ -13,7 +13,7 @@ import CANNON from 'cannon';
 
 // Utilities files
 
-import * as Helpers from '../helpers';
+import * as Helpers from '../../../../core/helpers';
 
 // Global vars
 window.RATIO = 0.1;
@@ -25,7 +25,7 @@ window.objectToInteractCollection = [];
 window.playerState = 2;
 window.playerHitBox = 12;
 
-window.statesScore = require('../json/states');
+window.statesScore = require('../../../../../datas/states');
 
 window.scoreObjectDestroyed = playerState;
 
@@ -41,8 +41,8 @@ window.COLORS = {
 window.grounds = [];
 
 // Game files
-import Character from '../Player/Character';
-import Ground from '../World/Ground';
+import Character from '../../player/Character';
+import Ground from '../../world/Ground';
 import Normal from './template/Normal';
 import River from './template/River';
 

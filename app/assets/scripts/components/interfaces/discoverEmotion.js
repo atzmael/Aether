@@ -1,5 +1,5 @@
-import Anger from "../Anger/Anger";
-import SoundHandler from "./Sound";
+import Anger from "../environments/emotions/anger/Anger";
+import SoundHandler from "../../ui/Sound";
 
 const discoverEmotion = {
 	ui: {},
@@ -51,7 +51,7 @@ const discoverEmotion = {
 	chooseEmotionToBuild(e) {
 		switch(e.getAttribute('data-emotion')){
 			case 'anger':
-				let source = "/app/assets/img/sphere-medium-anger.png";
+				let source = DIR + "/assets/medias/images/sphere-medium-anger.png";
 				let title = "anger";
 
 				let elImg = this.ui.introductionSection.querySelector('img');

@@ -1,16 +1,16 @@
-import Stone from '../../World/Stone';
-import Stalagmite from '../../World/Stalagmite';
-import Coral from '../../World/Coral';
+import Stone from "../../../world/Stone";
+import Stalagmite from "../../../world/Stalagmite";
+import Coral from "../../../world/Coral";
 
 let rules = {
 	1: {
 		stones: {
-			number: 3,
+			number: 4,
 			radius: 1,
 			details: 0,
 		},
 		rocks: 0,
-		corals: 4,
+		corals: 0,
 		stalagmites: {
 			radius: {
 				min: 1,
@@ -31,8 +31,8 @@ let rules = {
 			radius: 2,
 			details: 0,
 		},
-		rocks: 1,
-		corals: 2,
+		rocks: 0,
+		corals: 0,
 		stalagmites: {
 			radius: {
 				min: 1,
@@ -43,17 +43,17 @@ let rules = {
 				max: 9,
 			},
 			segments: 16,
-			number: 3,
+			number: 0,
 		},
 		geysers: 0,
 	},
 	3: {
 		stones: {
-			number: 10,
+			number: 8,
 			radius: 4,
 			details: 0,
 		},
-		rocks: 2,
+		rocks: 0,
 		corals: 0,
 		stalagmites: {
 			radius: {
@@ -65,15 +65,15 @@ let rules = {
 				max: 13,
 			},
 			segments: 16,
-			number: 5,
+			number: 0,
 		},
-		geysers: 0,
+		geysers: 2,
 	}
 };
 
-class Normal {
+class River {
 	constructor(groundID, coord, isInit) {
-		if(playerState > 0 && playerState < 4) {
+		if (playerState > 0 && playerState < 4) {
 			this.rule = rules[playerState];
 		}
 
@@ -96,14 +96,14 @@ class Normal {
 	}
 }
 
-const normal = {
+const river = {
 	wait(number, coord, isInit) {
 		return new Promise(async resolve => {
-			const newNormal = new Normal(number, coord, isInit);
-			await newNormal.init();
+			const newRiver = new River(number, coord, isInit);
+			await newRiver.init();
 			resolve();
 		});
 	}
 };
 
-export default normal;
+export default river;

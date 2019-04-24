@@ -1,15 +1,15 @@
 import TweenMax from 'gsap';
 
-import sceneSwitch from './sceneSwitch';
-import introHandler from "./introHandler";
-import discoverEmotion from "./discoverEmotion";
-import cookies from "./cookies";
-import header from "./header";
+import sceneSwitch from './components/interfaces/sceneSwitch';
+import introHandler from "./components/interfaces/introHandler";
+import discoverEmotion from "./components/interfaces/discoverEmotion";
+import cookies from "./ui/cookies";
+import header from "./layout/header";
 
-import cursor from "./cursor";
+import cursor from "./ui/Cursor";
 
-import Anger from "../Anger/Anger";
-import SoundHandler from "./Sound";
+import Anger from "./components/environments/emotions/anger/Anger";
+import SoundHandler from "./ui/Sound";
 
 window.onload = () => {
 
@@ -17,6 +17,10 @@ window.onload = () => {
 	window.COOKIES = cookies;
 
 	new cursor();
+
+	new Anger();
+
+	/*
 
 	// Handle animation in intro pages
 	if (document.querySelector('body.is-intro')) {
@@ -41,4 +45,6 @@ window.onload = () => {
 	if(document.querySelector('.js-header')) {
 		header.init();
 	}
+
+	*/
 };

@@ -10,7 +10,7 @@
 
 	overflow: auto;
 
-	background-image: url(/app/assets/img/bg-info.jpg);
+	background-image: url($dir + 'assets/medias/images/bg-info.jpg');
 	background-repeat: no-repeat;
 	background-position: center center;
 	background-size: cover;
