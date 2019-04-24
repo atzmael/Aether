@@ -33,8 +33,8 @@ export default class Stone {
 			y = Math.round(Math.random() * (4 - 1) + 1);
 			if (this.stones[x][y] == undefined) {
 				stone = this.createStone();
-				posX = (x - (this.stones.length / 2)) * 30 + (Math.cos(Math.random() * Math.PI) * 10) + this.coord.x;
-				posY = (y - (this.stones.length / 2)) * 30 + (Math.sin(Math.random() * Math.PI) * 10) + this.coord.y;
+				posX = (x - (this.stones.length / 2)) * 30 + (Math.cos(Math.random() * Math.PI) * 2) + this.coord.x;
+				posY = (y - (this.stones.length / 2)) * 30 + (Math.sin(Math.random() * Math.PI) * 2) + this.coord.y;
 				stone.position.set(posX, 0, posY);
 				this.stones[x][y] = stone;
 				this.mesh.add(stone);

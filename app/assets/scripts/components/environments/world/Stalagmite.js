@@ -38,8 +38,8 @@ export default class Stalagmite {
 			y = Math.round(Math.random() * (4 - 1) + 1);
 			if (this.stalagmites[x][y] == undefined) {
 				stalagmite = this.createstalagmite();
-				posX = (x - (this.stalagmites.length / 2)) * 30 + (Math.cos(Math.random() * Math.PI) * 10) + this.coord.x;
-				posY = (y - (this.stalagmites.length / 2)) * 30 + (Math.sin(Math.random() * Math.PI) * 10) + this.coord.y;
+				posX = (x - (this.stalagmites.length / 2)) * 30 + (Math.cos(Math.random() * Math.PI) * 2) + this.coord.x;
+				posY = (y - (this.stalagmites.length / 2)) * 30 + (Math.sin(Math.random() * Math.PI) * 2) + this.coord.y;
 				stalagmite.position.set(posX, 0, posY);
 				this.stalagmites[x][y] = stalagmite;
 				this.mesh.add(stalagmite);

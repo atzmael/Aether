@@ -223,8 +223,6 @@ export default class Character {
 	throwObject(scene, obj) {
 		if (this.hasObjectInHand && this.objectInHand != undefined) {
 
-			// console.log(scene, obj)
-
 			// scene.add(obj);
 
 			// var worldPoint = new CANNON.Vec3(0, 0, 1);

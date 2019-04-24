@@ -3,11 +3,14 @@ import CANNON from "cannon";
 import Normal from "../emotions/anger/template/Normal";
 
 class Coral {
-	constructor(groundID, coord, coralNumber) {
-		this.coralNumber = coralNumber;
+	constructor(groundID, coord, coralMaxNumber, coralCurrentNumber, unused) {
+		this.coralMaxNumber = coralMaxNumber;
+		this.coralCurrentNumber = coralCurrentNumber;
 
 		this.groundID = groundID;
 		this.coord = coord;
+
+		this.unused = unused;
 
 		this.loader = new THREE.OBJLoader();
 		this.manager = new THREE.LoadingManager();
@@ -16,8 +19,6 @@ class Coral {
 		for(let x = 0; x < 5;x++){
 			this.corals[x] = [];
 		}
-
-		this.init();
 	}
 
 	init() {
@@ -34,16 +35,20 @@ class Coral {
 		return new Promise(async resolve => {
 			let x, y, coral, posX, posY;
 
-			for (let i = 0; i < this.coralNumber; i++) {
+			for (let i = 1; i <= this.coralMaxNumber; i++) {
 				x = Math.round(Math.random() * (4 - 1) + 1);
 				y = Math.round(Math.random() * (4 - 1) + 1);
 				if (this.corals[x][y] == undefined) {
 					coral = this.createCoral();
-					posX = (x - (this.corals.length / 2)) * 30 + (Math.cos(Math.random() * Math.PI) * 10) + this.coord.x;
-					posY = (y - (this.corals.length / 2)) * 30 + (Math.sin(Math.random() * Math.PI) * 10) + this.coord.y;
+					posX = (x - (this.corals.length / 2)) * 30 + (Math.cos(Math.random() * Math.PI) * 2) + this.coord.x;
+					posY = (y - (this.corals.length / 2)) * 30 + (Math.sin(Math.random() * Math.PI) * 2) + this.coord.y;
 					coral.position.set(posX, 0, posY);
 					this.corals[x][y] = coral;
-					window.grounds[this.groundID].corals.push(coral);
+					if(this.unused || i > this.coralCurrentNumber) {
+						window.grounds[this.groundID].unusedCorals.push(coral);
+					} else {
+						window.grounds[this.groundID].corals.push(coral);
+					}
 				}
 			}
 			resolve();
@@ -92,9 +97,9 @@ class Coral {
 }
 
 const coral = {
-	wait(number, coord, coralNumber) {
+	wait(number, coord, coralNumber, unused = false) {
 		return new Promise(async resolve => {
-			const newCoral = new Coral(number, coord, coralNumber);
+			const newCoral = new Coral(number, coord, coralNumber, unused);
 			await newCoral.init();
 			resolve();
 		});

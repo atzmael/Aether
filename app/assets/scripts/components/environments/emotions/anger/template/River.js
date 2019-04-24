@@ -10,7 +10,10 @@ let rules = {
 			details: 0,
 		},
 		rocks: 0,
-		corals: 0,
+		corals: {
+			max: 3,
+			current: 0,
+		},
 		stalagmites: {
 			radius: {
 				min: 1,
@@ -32,7 +35,10 @@ let rules = {
 			details: 0,
 		},
 		rocks: 0,
-		corals: 0,
+		corals: {
+			max: 3,
+			current: 0,
+		},
 		stalagmites: {
 			radius: {
 				min: 1,
@@ -54,7 +60,10 @@ let rules = {
 			details: 0,
 		},
 		rocks: 0,
-		corals: 0,
+		corals: {
+			max: 3,
+			current: 0,
+		},
 		stalagmites: {
 			radius: {
 				min: 1.4,
@@ -74,7 +83,7 @@ let rules = {
 class River {
 	constructor(groundID, coord, isInit) {
 		if (playerState > 0 && playerState < 4) {
-			this.rule = rules[playerState];
+			this.rule = window.rules.river[playerState];
 		}
 
 		this.groundID = groundID;
@@ -89,8 +98,9 @@ class River {
 			new Stalagmite(this.groundID, this.coord, this.rule.stalagmites.radius, this.rule.stalagmites.height, this.rule.stalagmites.segments, this.rule.stalagmites.number);
 
 			if(this.isInit) {
-				await Coral.wait(this.groundID, this.coord, this.rule.corals);
+				await Coral.wait(this.groundID, this.coord, this.rule.corals.max, this.rule.corals.current, true);
 			}
+
 			resolve();
 		});
 	}

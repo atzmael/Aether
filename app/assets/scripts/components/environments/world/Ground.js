@@ -181,6 +181,7 @@ class Ground {
 							posZ: posChunkZ,
 							objects: [],
 							corals: [],
+							unusedCorals: [],
 						}
 					);
 
@@ -201,6 +202,7 @@ class Ground {
 					piecesNumber++;
 				}
 			}
+			console.log(grounds);
 			resolve();
 		});
 	}

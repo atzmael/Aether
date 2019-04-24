@@ -41,6 +41,163 @@ window.COLORS = {
 
 window.grounds = [];
 
+window.rules = {
+	normal: {
+		1: {
+			stones: {
+				number: 3,
+				radius: 1,
+				details: 0,
+			},
+			rocks: 0,
+			corals: {
+				max: 3,
+				current: 3,
+			},
+			stalagmites: {
+				radius: {
+					min: 1,
+					max: 1.4,
+				},
+				height: {
+					min: 7,
+					max: 9,
+				},
+				segments: 16,
+				number: 0,
+			},
+			geysers: 0,
+		},
+		2: {
+			stones: {
+				number: 6,
+				radius: 2,
+				details: 0,
+			},
+			rocks: 1,
+			corals: {
+				max: 3,
+				current: 1,
+			},
+			stalagmites: {
+				radius: {
+					min: 1,
+					max: 1.4,
+				},
+				height: {
+					min: 7,
+					max: 9,
+				},
+				segments: 16,
+				number: 3,
+			},
+			geysers: 0,
+		},
+		3: {
+			stones: {
+				number: 10,
+				radius: 4,
+				details: 0,
+			},
+			rocks: 2,
+			corals: {
+				max: 3,
+				current: 0,
+			},
+			stalagmites: {
+				radius: {
+					min: 1.4,
+					max: 1.8,
+				},
+				height: {
+					min: 11,
+					max: 13,
+				},
+				segments: 16,
+				number: 5,
+			},
+			geysers: 0,
+		}
+	},
+	river: {
+		1: {
+			stones: {
+				number: 4,
+				radius: 1,
+				details: 0,
+			},
+			rocks: 0,
+			corals: {
+				max: 3,
+				current: 0,
+			},
+			stalagmites: {
+				radius: {
+					min: 1,
+					max: 1.4,
+				},
+				height: {
+					min: 7,
+					max: 9,
+				},
+				segments: 16,
+				number: 0,
+			},
+			geysers: 0,
+		},
+		2: {
+			stones: {
+				number: 6,
+				radius: 2,
+				details: 0,
+			},
+			rocks: 0,
+			corals: {
+				max: 3,
+				current: 0,
+			},
+			stalagmites: {
+				radius: {
+					min: 1,
+					max: 1.4,
+				},
+				height: {
+					min: 7,
+					max: 9,
+				},
+				segments: 16,
+				number: 0,
+			},
+			geysers: 0,
+		},
+		3: {
+			stones: {
+				number: 8,
+				radius: 4,
+				details: 0,
+			},
+			rocks: 0,
+			corals: {
+				max: 3,
+				current: 0,
+			},
+			stalagmites: {
+				radius: {
+					min: 1.4,
+					max: 1.8,
+				},
+				height: {
+					min: 11,
+					max: 13,
+				},
+				segments: 16,
+				number: 0,
+			},
+			geysers: 2,
+		}
+	}
+};
+
 // Game files
 import Character from '../../player/Character';
 import Ground from '../../world/Ground';
@@ -221,7 +378,7 @@ export default class Anger {
 				var div = document.createElement("div");
 
 				div.innerHTML =
-					'<p>What the ... ?</p>'
+					'<p>What the ... ?</p>';
 
 				div.classList.add("afterIntroEmo");
 
@@ -231,7 +388,7 @@ export default class Anger {
 					div = document.createElement("div");
 					document.querySelector('.afterIntroEmo').style.display = 'none';
 					div.innerHTML =
-						'<p>ARE THOSE STONES ?</p>'
+						'<p>ARE THOSE STONES ?</p>';
 
 					div.classList.add("afterIntroEmoBis");
 
@@ -333,7 +490,7 @@ export default class Anger {
 				body.addShape(sphere);
 				this.world.add(body);
 				groundObj.body = body;
-			})
+			});
 			ground.corals.forEach(coral => {
 				let sphere = new CANNON.Sphere(1);
 				let body = new CANNON.Body({mass: 1});
@@ -341,8 +498,15 @@ export default class Anger {
 				body.addShape(sphere);
 				this.world.add(body);
 				coral.body = body;
-			})
-			console.log(ground.corals);
+			});
+			ground.unusedCorals.forEach(coral => {
+				let sphere = new CANNON.Sphere(1);
+				let body = new CANNON.Body({mass: 1});
+				body.position.set(coral.position.x, coral.position.y, coral.position.z);
+				body.addShape(sphere);
+				this.world.add(body);
+				coral.body = body;
+			});
 		});
 	}
 
@@ -354,12 +518,41 @@ export default class Anger {
 		//this.scene.add(gridHelper);
 	}
 
-	updateTemplate(elmt, color = false) {
+	updateTemplate(elmt, color = false, templateType) {
+		let usedObjectNumber = elmt.corals.length;
+		console.log(`Object used : ${usedObjectNumber}`);
 		elmt.objects.forEach(obj => {
 			this.scene.remove(obj);
 		});
 		elmt.objects = [];
-		this.loadNormalTemplate(elmt.id, elmt.elmt.body.position.x, elmt.elmt.body.position.z, false);
+		switch(templateType) {
+			case "normal":
+				console.log(`it's a normal template`);
+				this.loadNormalTemplate(elmt.id, elmt.elmt.body.position.x, elmt.elmt.body.position.z, false);
+				if(usedObjectNumber > window.rules.normal[window.playerState].corals.current) {
+					console.log(`Object used on last template : ${usedObjectNumber}`);
+					console.log(`Number of object that must be used : ${window.rules.normal[window.playerState].corals.current}`);
+					for(let i = 0; i <= diff; i++) {
+						console.log(`coral switch from unused to used`);
+						elmt.unusedCorals.push(elmt.corals[i]);
+						this.scene.remove(elmt.corals[i]);
+						elmt.corals.splice(i, 1);
+					}
+				} else if(usedObjectNumber < window.rules.normal[window.playerState].corals.current) {
+					console.log(`Object used on last template : ${usedObjectNumber}`);
+					console.log(`Number of object that must be used : ${window.rules.normal[window.playerState].corals.current}`);
+					for(let i = 0; i < window.rules.normal[window.playerState].corals.current - usedObjectNumber; i++) {
+						console.log(elmt.unusedCorals);
+						console.log(elmt.corals);
+						console.log(`coral ${elmt.unusedCorals[i]} is now used`);
+						elmt.corals.push(elmt.unusedCorals[i]);
+						this.scene.add(elmt.unusedCorals[i]);
+						elmt.unusedCorals.splice(i, 1);
+					}
+				}
+				break;
+		}
+		console.log(elmt);
 		elmt.corals.forEach(coral => {
 			coral.body.position.x = elmt.elmt.body.position.x + helpers.rand(-chunkSize / 2, chunkSize / 2);
 			coral.body.position.z = elmt.elmt.body.position.z + helpers.rand(-chunkSize / 2, chunkSize / 2);
@@ -433,15 +626,13 @@ export default class Anger {
 
 											// if the new chunk is not a river
 											if (!isNewRiver) {
-												// Remove the template
-												this.updateTemplate(elmt2, 0xb32B00);
+												this.updateTemplate(elmt2, 0xb32B00, "normal");
 											} else {
-												this.updateTemplate(elmt2, 0x0c3191);
+												this.updateTemplate(elmt2, 0x0c3191, "newriver");
 											}
 										} else {
-											this.updateTemplate(elmt2);
+											this.updateTemplate(elmt2, false, "oldriver");
 										}
-
 									}
 								});
 
@@ -467,13 +658,12 @@ export default class Anger {
 
 											// if the new chunk is not a river
 											if (!isNewRiver) {
-												// Remove the template
-												this.updateTemplate(elmt2, 0xb32B00);
+												this.updateTemplate(elmt2, 0xb32B00, "normal");
 											} else {
-												this.updateTemplate(elmt2, 0x0c3191);
+												this.updateTemplate(elmt2, 0x0c3191, "newriver");
 											}
 										} else {
-											this.updateTemplate(elmt2);
+											this.updateTemplate(elmt2, false, "oldriver");
 										}
 
 									}
@@ -502,13 +692,12 @@ export default class Anger {
 
 											// if the new chunk is not a river
 											if (!isNewRiver) {
-												// Remove the template
-												this.updateTemplate(elmt2);
+												this.updateTemplate(elmt2, false, "normal");
 											} else {
-												this.updateTemplate(elmt2);
+												this.updateTemplate(elmt2, false, "newriver");
 											}
 										} else {
-											this.updateTemplate(elmt2);
+											this.updateTemplate(elmt2, false, "oldriver");
 										}
 									}
 								});
@@ -532,12 +721,12 @@ export default class Anger {
 
 											// if the new chunk is not a river
 											if (!isNewRiver) {
-												this.updateTemplate(elmt2);
+												this.updateTemplate(elmt2, false, "normal");
 											} else {
-												this.updateTemplate(elmt2);
+												this.updateTemplate(elmt2, false, "newriver");
 											}
 										} else {
-											this.updateTemplate(elmt2);
+											this.updateTemplate(elmt2, false, "oldriver");
 										}
 									}
 								});
@@ -636,7 +825,6 @@ export default class Anger {
 					// var force = new CANNON.Vec3(vector.x * -100, vector.y * -100, vector.z * -100);
 					// obj.object.body.applyForce(force, worldPoint);
 
-					// console.log(this.character.mesh.position)
 					// obj.object.body.position.x = this.character.mesh.position.x;
 					// obj.object.body.position.y = this.character.mesh.position.y;
 					// obj.object.body.position.z = this.character.mesh.position.z - 5;
