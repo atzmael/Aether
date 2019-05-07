@@ -43,14 +43,17 @@ class Ground {
 	 * @param color
 	 * @returns {THREE.Mesh}
 	 */
-	createPiece(color = '#b32b00') {
+	createPiece(isNormal = true, color = '#b32b00') {
 
 		let uniforms = this.uniforms;
 		
 		let geom = new THREE.PlaneBufferGeometry(this.size, this.size, this.segments, this.segments);
-		let mat = new THREE.ShaderMaterial({
-			uniforms,
-			vertexShader: `
+
+		/*
+		if(isNormal) {
+			let mat = new THREE.ShaderMaterial({
+				uniforms,
+				vertexShader: `
                     varying vec3 vPos;
                     uniform float time;
                     uniform vec3 mouse;
@@ -105,7 +108,7 @@ class Ground {
                         gl_Position = projectionMatrix * modelViewMatrix * vec4(vPos, 1.0);
                     }
                 `,
-			fragmentShader: `
+				fragmentShader: `
                     varying vec3 vPos;
 
                     float when_gt(float x, float y) {
@@ -138,12 +141,55 @@ class Ground {
                         if (vPos.z < 0.0) discard;
                     }
                 `,
-			extensions: {
-				derivatives: true
-			}
-		})
+				extensions: {
+					derivatives: true
+				}
+			});
+		}else {
+			let mat = new THREE.ShaderMaterial({
+				uniforms: {
+					"startColor": {
+						type: "c",
+						value: new THREE.Color(COLORS.orange),
+					},
+					"middleColor": {
+						type: "c",
+						value: new THREE.Color(COLORS.blue),
+					},
+					"endColor": {
+						type: "c",
+						value: new THREE.Color(COLORS.orange),
+					},
+				},
+				vertexShader: `
+				varying vec2 vUv;
+				
+				void main() {
+					vUv = uv;
+					gl_Position = projectionMatrix *
+								  modelViewMatrix *
+								  vec4(position, 1.0);
+				}
+ 				`,
+				fragmentShader: `
+				uniform vec3 startColor;
+				uniform vec3 middleColor;
+				uniform vec3 endColor;
+				vec3 color;
+				
+				varying vec2 vUv;
+				
+				void main() {
+				    color = mix(startColor,endColor,vUv.y);
+				
+				    gl_FragColor = vec4(color,1.0);
+				}
+				`,
+			})
+		}
+		*/
 
-		mat = new THREE.MeshBasicMaterial({color: color});
+		let mat = new THREE.MeshBasicMaterial({color: color});
 		let ground = new THREE.Mesh(geom, mat);
 
 		ground.name = "chunk";
@@ -187,10 +233,10 @@ class Ground {
 
 					if (!this.checkChunkTemplate(posChunkX)) {
 						await this.loadNormalTemplate(piecesNumber, posChunkX, posChunkZ, true);
-						piece = this.createPiece();
+						piece = this.createPiece(true);
 					} else {
 						await this.loadRiverTemplate(piecesNumber, posChunkX, posChunkZ, true);
-						piece = this.createPiece(COLORS.blue);
+						piece = this.createPiece(false, COLORS.blue);
 					}
 
 					piece.position.x = posChunkX;
