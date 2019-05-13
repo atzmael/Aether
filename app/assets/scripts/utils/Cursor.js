@@ -1,4 +1,4 @@
-export default class Cursor {
+export default class customCursor {
     constructor() {
         this.obj = document.getElementById('cursor');
         this.elems = {
