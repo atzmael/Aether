@@ -1,5 +1,5 @@
-import Anger from "../environments/emotions/anger/Anger";
-import SoundHandler from "../../ui/Sound";
+import Anger from "../../components/environments/emotions/anger/Anger";
+import SoundHandler from "../../utils/Sound";
 
 const discoverEmotion = {
 	ui: {},

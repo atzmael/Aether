@@ -1,56 +1,13 @@
 .quotation {
-	justify-content: center;
-	align-items: center;
 
-	width: 100vw;
-	height: 100vh;
-
-	&__logo {
-		text-align: center;
-		img {
-			width: auto;
-			height: 390px;
-			max-height: 100%;
-		}
-	}
-
-	&__content {
-		width: 770px;
-		max-width: 100%;
-		margin: 100px 0 0;
-
-		position:relative;
-
-		&::before, &::after {
-			content: "";
-			position:absolute;
-			width: 54px;
-			height: 60px;
-			background-image: url($dir + 'assets/medias/images/quotes.png');
-			background-position:center center;
-			background-repeat: no-repeat;
-			background-size: cover;
-		}
-
-		&::before {
-			top: -26px;
-			left: -100px;
-		}
-
-		&::after {
-			bottom: 30px;
-			right: -100px;
-			transform: rotateZ(-180deg);
-		}
-	}
+	&__content {}
 
 	&__text {
-		@extend .normal-text;
+		@extend .quote-text;
 		color: $white;
 	}
 
 	&__credit {
-		@extend .small-text;
 		color: $white;
 		margin: 20px 0 0;
 		display: inline-block;

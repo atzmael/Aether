@@ -1,0 +1,13 @@
+.intro {
+	&__title {
+		@extend .heading-1;
+	}
+
+	&__text {
+		text-align:center;
+	}
+
+	svg {
+		height:auto!important;
+	}
+}

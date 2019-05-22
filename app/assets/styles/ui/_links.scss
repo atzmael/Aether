@@ -1,4 +1,36 @@
 .link {
-	position:relative;
+	position: relative;
 	text-decoration: none;
+	color: white;
+	overflow: hidden;
+
+	&:hover {
+		&::before {
+			width: 100%;
+		}
+		&::after {
+			width: 0%;
+		}
+	}
+
+	&::before, &::after {
+		content: "";
+		position: absolute;
+		bottom: -2px;
+		height: 1px;
+		background-color: white;
+	}
+
+	&::before {
+		width: 0%;
+		left: 0;
+		transition: width 250ms ease-in-out;
+		transition-delay: 200ms;
+	}
+
+	&::after {
+		width: 100%;
+		right: 0;
+		transition: width 300ms ease-in-out;
+	}
 }

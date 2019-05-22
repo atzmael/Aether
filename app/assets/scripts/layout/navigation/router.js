@@ -1,4 +1,4 @@
-const rooter = {
+const router = {
 	ui: {},
 	current: '',
 	last: '',
@@ -6,12 +6,12 @@ const rooter = {
 	bindUI() {
 		this.ui.body = document.querySelector('body');
 
-		this.ui.rooter = document.querySelectorAll('.js-rooter[data-next]');
+		this.ui.router = document.querySelectorAll('.js-router[data-next]');
 		this.ui.header = document.querySelector('.js-header');
 	},
 
 	bindEvent() {
-		this.ui.rooter.forEach(elmt => {
+		this.ui.router.forEach(elmt => {
 			elmt.addEventListener('click', (e) => this.defineNextSection(e))
 		})
 	},
@@ -20,7 +20,7 @@ const rooter = {
 		this.bindUI();
 		this.bindEvent();
 
-		this.current = this.last = document.querySelector('.js-rooter.is-visible').getAttribute('data-current');
+		this.current = this.last = document.querySelector('.js-router.is-visible').getAttribute('data-current');
 	},
 
 	defineNextSection(e) {
@@ -35,8 +35,8 @@ const rooter = {
 
 		console.log("new", newAttr, "old", oldAttr);
 
-		let oldSection = document.querySelector(`.js-rooter[data-current=${oldAttr}]`);
-		let newSection = document.querySelector(`.js-rooter[data-current=${newAttr}]`);
+		let oldSection = document.querySelector(`.js-router[data-current=${oldAttr}]`);
+		let newSection = document.querySelector(`.js-router[data-current=${newAttr}]`);
 
 		this.changeSection(oldSection, newSection);
 
@@ -95,4 +95,4 @@ const rooter = {
 	}
 };
 
-export default rooter;
+export default router;

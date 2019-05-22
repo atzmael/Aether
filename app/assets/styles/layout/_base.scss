@@ -1,12 +1,25 @@
-html {
-	@extend %BrownLight;
-}
-
 body {
-	background-image: url($dir + 'assets/medias/images/background.png');
+	background-image: url($dir + 'assets/medias/images/background.jpg');
 	background-repeat: no-repeat;
 	background-position: center center;
 	background-size: cover;
+
+	@extend .courant-text;
+	color: $white;
+}
+
+.background-generative {
+	//background-image: url($dir + 'assets/medias/images/background-temp.png');
+	//background-repeat: no-repeat;
+	//background-position: center center;
+	background-size: 65%;
+	opacity: 0.4;
+	width: 100vw;
+	height: 100vh;
+	position:absolute;
+	top:0;
+	left:0;
+	z-index:-1;
 }
 
 .is-menu-open {
@@ -18,5 +31,21 @@ body {
 .is-intro {
 	.header {
 		display: none;
+	}
+}
+
+.is-game {
+	.header {
+		.menu {
+			.item-help {
+				display: inline-block;
+			}
+		}
+	}
+}
+
+.no-generative {
+	.background-generative {
+		display:none;
 	}
 }

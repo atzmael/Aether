@@ -1,10 +1,10 @@
 <html>
 <head>
 	<title>Aether</title>
-	<link rel="icon" href="./assets/medias/images/favicon.ico">
+	<link rel="icon" href="/app/assets/medias/images/favicon.png">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
-<body class="is-intro">
+<body class="">
 
 <div id="cursor">
 	<div id="dot"></div>
@@ -17,110 +17,69 @@
 	</svg> -->
 </div>
 
-<header class="header js-header">
+<header class="header js-header is-secondary">
 	<nav class="menu js-menu">
 		<ul class="menu__container">
-			<li class="menu__item js-menu-item active"><a href="#" class="btn menu__btn js-btn-anger"
-			                                              data-emotion="anger"><img
-					src="/app/assets/medias/images/sphere-small-anger.png" alt=""></a></li>
-			<li class="menu__item js-menu-item"><a href="#" class="btn menu__btn js-btn-sadness" data-emotion="sadness"><img
-					src="/app/assets/medias/images/sphere-small-sadness.png" alt=""></a></li>
-			<li class="menu__item js-menu-item"><a href="#" class="btn menu__btn js-btn-joy" data-emotion="joy"><img
-					src="/app/assets/medias/images/sphere-small-joy.png" alt=""></a></li>
-			<li class="menu__item js-menu-item"><a href="#" class="btn menu__btn js-btn-fear" data-emotion="fear"><img
-					src="/app/assets/medias/images/sphere-small-fear.png" alt=""></a></li>
-			<li class="menu__item js-menu-item"><a href="#" class="btn menu__btn js-open-infos"><img
-					src="/app/assets/medias/images/info.png"
-					alt="Information menu link"></a>
+			<li class="menu__item item-about js-menu-item js-about-hover">
+				<a href="#" class="btn menu__link js-menu-about js-router" data-next="about">
+					<img src="/app/assets/medias/svgs/plus-bas.svg" alt="" class="item-about__icon">
+					<img src="/app/assets/medias/svgs/plus-haut.svg" alt="" class="item-about__icon icon-move">
+					<span class="item-about__tooltip js-menu-about-tooltip">ABOUT the project</span>
+				</a>
 			</li>
+			<li class="menu__item item-menu js-menu-item"><a href="#" class="btn menu__link js-menu">Menu</a></li>
+			<li class="menu__item item-help js-menu-item"><a href="#" class="btn menu__link js-help">Help</a></li>
 		</ul>
 	</nav>
-	<div class="header__progression">
-		<div class="header__progression-round"></div>
-		<div class="graph js-graph">
-			<canvas class="js-graph-canvas" width="100" height="50"></canvas>
-		</div>
-	</div>
 </header>
 
+
 <div id="page-content" class="page-content js-page-content">
-	<section id="home" class="section home js-home" style="display:none;">
-		<div class="home__part is-visible js-home-first">
-			<img src="/app/assets/medias/images/aether-logo-home.png" alt="">
-		</div>
-		<div class="home__part home-end js-home-end">
-			<h3>End of home</h3>
+
+	<!-- Main sections -->
+	<section id="landing" class="section landing js-router" data-current="landing" data-next="quotation" data-page="0">
+		<div class="landing__container">
+			<div class="landing__media">
+				<p>Landing debug text</p>
+			</div>
 		</div>
 	</section>
 
-	<section id="quotation" class="section quotation js-quotation">
+	<section id="quotation" class="section quotation js-router js-anim-logo" data-current="quotation" data-next="intro"
+	         data-page="0">
 		<div class="quotation__container">
-			<div class="quotation__logo">
-				<img src="/app/assets/medias/images/aether-logo-home.png" alt="Logo">
-			</div>
 			<div class="quotation__content">
-				<p class="quotation__text">The appearance of things changes according to the emotions; and thus we see
-					magic
-					and beauty in them, while the magic and beauty are really in ourselves.</p>
+				<p class="quotation__text">The appearance of things changes according to the emotions&nbsp;;<br>and thus
+					we see
+					magic and beauty in them,<br>while the magic and beauty are really in ourselves.</p>
 				<span class="quotation__credit">― Gibran Khalil Gibran, The Broken Wings</span>
 			</div>
 		</div>
 	</section>
 
-	<section id="emotion-choice" class="section emotion-choice js-emotion-choice">
-		<div class="emotion-choice__container">
-			<div class="emotion-choice__question">
-				<h2 class="emotion-choice__title">Which strong emotion did you feel lately ?</h2>
-				<div class="emotion-choice__logo">
-					<img src="/app/assets/medias/images/aether-logo-typo.svg" alt="Logo">
-				</div>
-			</div>
-			<div class="emotion-choice__list">
-				<div class="emotion-choice__single">
-					<a href="#" class="emotion-choice__link js-emotion-link" data-emotion="anger">
-						<div class="emotion-choice__img">
-							<img src="/app/assets/medias/images/sphere-medium-anger.png" alt="">
-						</div>
-						<p class="emotion-choice__name js-emotion-link">Anger</p>
-					</a>
-				</div>
-				<div class="emotion-choice__single">
-					<a href="#" class="emotion-choice__link js-emotion-link" data-emotion="sadness">
-						<div class="emotion-choice__img">
-							<img src="/app/assets/medias/images/sphere-medium-sadness.png" alt="">
-						</div>
-						<p class="emotion-choice__name">Sadness</p>
-					</a>
-				</div>
-				<div class="emotion-choice__single">
-					<a href="#" class="emotion-choice__link js-emotion-link" data-emotion="joy">
-						<div class="emotion-choice__img">
-							<img src="/app/assets/medias/images/sphere-medium-joy.png" alt="">
-						</div>
-						<p class="emotion-choice__name">Joy</p>
-					</a>
-				</div>
-				<div class="emotion-choice__single">
-					<a href="#" class="emotion-choice__link js-emotion-link" data-emotion="fear">
-						<div class="emotion-choice__img">
-							<img src="/app/assets/medias/images/sphere-medium-fear.png" alt="">
-						</div>
-						<p class="emotion-choice__name">Fear</p>
-					</a>
-				</div>
-				<div class="emotion-choice__single">
-					<a href="#" class="emotion-choice__link js-emotion-link" data-emotion="random">
-						<div class="emotion-choice__img">
-							<img src="/app/assets/medias/images/sphere-medium-random.png" alt="">
-						</div>
-						<p class="emotion-choice__name">Why should I care ?</p>
-					</a>
-				</div>
+	<section id="intro" class="intro section js-router" data-current="intro" data-next="choice" data-page="0">
+		<div class="intro__container">
+			<div class="intro__content">
+				<div class="js-intro-logo"></div>
+				<p class="intro__text">WHAT DRIVES YOU THROUGH YOUR JOURNEY ?</p>
 			</div>
 		</div>
 	</section>
 
-	<section id="intro-emotion" class="section js-intro-emotion">
+	<section id="choice" class="choice section js-router is-visible" data-current="choice" data-next="intro-emotion"
+	         data-page="1">
+		<div class="choice__container">
+			<div class="choice__blob">
+				<h2 class="choice__title">whatever</h2>
+			</div>
+			<div class="choice__content">
+				<p class="choice__text">Which strong emotion did you feel lately ?</p>
+				<p class="choice__help">click & hold to select an emotion</p>
+			</div>
+		</div>
+	</section>
+
+	<section id="intro-emotion" class="section js-intro-emotion" data-current="intro-emotion" data-page="2">
 		<div class="intro-head js-intro-head">
 			<div class="emotion-img">
 				<img src="" alt="">
@@ -148,7 +107,9 @@
 		</div>
 	</section>
 
-	<section id="welcome-back" class="section welcome-back js-welcome-back">
+	<!-- Others sections -->
+
+	<section id="welcome-back" class="section welcome-back js-router" data-current="welcome-back" data-page="0">
 		<div class="welcome-back__container">
 			<h2 class="welcome-back__title">
 				You are back !<br>
@@ -156,97 +117,295 @@
 			</h2>
 		</div>
 	</section>
-</div>
-<div id="main" class="scene-container js-scene-container"></div>
 
-<div class="infos js-infos">
-	<div class="infos__close-btn js-close-infos">
-		<img src="/app/assets/medias/images/croix.png" alt="Close infos">
-	</div>
-	<div class="infos__logo">
-		<img class="infos__logo-img" src="/app/assets/medias/images/aether-logo-typo.svg" alt="Logo">
-	</div>
-	<div class="infos__container">
-		<div class="infos__section accordion-item js-infos-accordion-item">
-			<h4 class="infos__title js-infos-accordion-btn">The project</h4>
-			<div class="infos__content js-infos-accordion-content">
-				<p class="infos__content__inner js-infos-content-inner">Lorem ipsum dolor sit amet, consectetur
-					adipisicing elit. Consequatur deserunt dicta ducimus, explicabo facilis fugit quia quod. Ab amet
-					assumenda, at corporis cupiditate iure, iusto laudantium nam necessitatibus quas, suscipit?</p>
-			</div>
+	<div id="about" class="section about js-router" data-current="about" data-page="3">
+		<div class="about__close-btn js-router" data-next="previous">
+			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 145.03 147.43">
+				<defs>
+					<style>
+						.cls-2 {
+							fill: #fff
+						}
+					</style>
+				</defs>
+				<g id="fleche">
+					<circle class="circle-1" cx="72.52" cy="73.71" r="61.5" fill="#fff" opacity=".3"/>
+					<path d="M102.43 44l-.6.82a.31.31 0 0 1-.43.07.31.31 0 0 1-.07-.44.23.23 0 0 1 .07-.07l.82-.6a.15.15 0 0 1 .21 0 .17.17 0 0 1 0 .22zM100.6 46.43l-.63.79a.68.68 0 0 1-1 .1.67.67 0 0 1-.1-1l.1-.11.79-.63a.56.56 0 0 1 .8.09.57.57 0 0 1 .04.76zM98.69 48.76l-.65.77a1 1 0 0 1-1.45-1.23.57.57 0 0 1 .11-.11l.77-.65a.87.87 0 0 1 1.22 1.22zM96.72 51l-.66.75a1.15 1.15 0 0 1-1.62.05 1.14 1.14 0 0 1 0-1.61l.75-.67A1.08 1.08 0 0 1 96.72 51z"
+					      class="cls-2"/>
+					<path d="M94.7 53.26L94 54a1.27 1.27 0 0 1-1.88-1.72l.08-.08.74-.67a1.22 1.22 0 0 1 1.73 1.73z"
+					      class="cls-2"/>
+					<path d="M92.64 55.44l-.69.73A1.33 1.33 0 0 1 90 54.32l.72-.69a1.31 1.31 0 0 1 1.85 1.85z"
+					      class="cls-2"/>
+					<path d="M90.55 57.59l-.72.7a1.34 1.34 0 0 1-1.89-1.89l.7-.72a1.35 1.35 0 0 1 1.94 1.88z"
+					      class="cls-2"/>
+					<path d="M88.36 59.64l-.75.67a1.2 1.2 0 0 1-1.69-1.69l.67-.75a1.25 1.25 0 1 1 1.82 1.72.12.12 0 0 1-.05.05z"
+					      class="cls-2"/>
+					<path d="M86.08 61.61l-.77.65A1 1 0 0 1 84 60.92l.65-.77a1 1 0 0 1 1.59 1.33.53.53 0 0 1-.16.13zM83.77 63.55l-.77.65a.7.7 0 0 1-1-1l.66-.76a.77.77 0 1 1 1.17 1zM81.5 65.52l-.74.67a.51.51 0 0 1-.72 0 .52.52 0 0 1 0-.68l.67-.74a.56.56 0 1 1 .83.75s-.02-.01-.04 0zM79.31 67.57l-.71.7a.45.45 0 0 1-.64-.64l.7-.71a.46.46 0 0 1 .65.65zM77.2 69.7l-.68.74a.51.51 0 0 1-.75-.7l.74-.68a.47.47 0 0 1 .67 0 .47.47 0 0 1 .02.64zM75.17 71.92l-.66.74a.67.67 0 1 1-1-.88l.06-.06.75-.66a.6.6 0 0 1 .85 0 .61.61 0 0 1 0 .86zM73.2 74.18l-.66.76a.88.88 0 0 1-1.25.1.9.9 0 0 1-.1-1.26l.1-.09.76-.65a.81.81 0 0 1 1.15.08.83.83 0 0 1 0 1.06z"
+					      class="cls-2"/>
+					<path d="M71.24 76.47l-.66.76a1.12 1.12 0 1 1-1.7-1.46 1.36 1.36 0 0 1 .12-.12l.77-.66a1 1 0 0 1 1.47 1.48z"
+					      class="cls-2"/>
+					<path d="M69.26 78.73l-.68.74a1.29 1.29 0 1 1-1.9-1.74l.08-.08.74-.65a1.25 1.25 0 0 1 1.76.07 1.27 1.27 0 0 1 0 1.66z"
+					      class="cls-2"/>
+					<path d="M67.22 80.94l-.68.73a1.4 1.4 0 0 1-2-1.91l.06-.07.73-.68a1.37 1.37 0 0 1 1.93 1.93z"
+					      class="cls-2"/>
+					<path d="M65.17 83.13l-.68.73a1.5 1.5 0 0 1-2.18-2l.07-.06.73-.69a1.46 1.46 0 0 1 2.06 2.07z"
+					      class="cls-2"/>
+					<path d="M63.11 85.31l-.69.72a1.57 1.57 0 0 1-2.28-2.16l.06-.06.72-.69a1.55 1.55 0 0 1 2.19 2.19z"
+					      class="cls-2"/>
+					<path d="M61 87.47l-.7.71a1.6 1.6 0 0 1-2.27-2.26l.71-.7A1.59 1.59 0 0 1 61 87.47z" class="cls-2"/>
+					<path d="M58.91 89.59l-.72.7A1.59 1.59 0 0 1 55.94 88l.7-.72A1.61 1.61 0 0 1 59 89.55z"
+					      class="cls-2"/>
+					<path d="M56.74 91.67l-.73.69a1.51 1.51 0 0 1-2.13-2.14l.68-.73a1.55 1.55 0 1 1 2.25 2.12z"
+					      class="cls-2"/>
+					<path d="M54.54 93.71l-.74.68a1.39 1.39 0 0 1-2-2l.68-.74a1.43 1.43 0 0 1 2.11 1.93.76.76 0 0 1-.05.13z"
+					      class="cls-2"/>
+					<path d="M52.32 95.73l-.75.67a1.23 1.23 0 0 1-1.74-1.74l.67-.75a1.29 1.29 0 1 1 1.93 1.71.57.57 0 0 1-.11.11z"
+					      class="cls-2"/>
+					<path d="M50.07 97.72l-.76.65a1 1 0 0 1-1.45-.11 1 1 0 0 1 0-1.33l.65-.77a1.11 1.11 0 1 1 1.68 1.44 1.36 1.36 0 0 1-.12.12z"
+					      class="cls-2"/>
+					<path d="M47.78 99.67l-.78.65a.77.77 0 0 1-1.08-.11.75.75 0 0 1 0-1l.64-.78a.87.87 0 1 1 1.33 1.11.57.57 0 0 1-.11.13zM45.45 101.59l-.79.63a.46.46 0 0 1-.64-.08.44.44 0 0 1 0-.57l.62-.79a.58.58 0 0 1 .9.72zM43.06 103.44l-.24.19a.15.15 0 0 1-.21 0 .14.14 0 0 1 0-.18l.18-.24a.19.19 0 0 1 .27 0 .19.19 0 0 1 0 .27s.01-.05 0-.04zM42.82 43.8l.82.6a.32.32 0 1 1-.37.51.46.46 0 0 1-.07-.07l-.59-.84a.16.16 0 0 1 0-.22.17.17 0 0 1 .21.02zM45.23 45.63l.79.63a.69.69 0 0 1 .11 1 .68.68 0 0 1-1 .1.52.52 0 0 1-.11-.1l-.63-.79a.58.58 0 0 1 .09-.8.57.57 0 0 1 .75-.04zM47.57 47.54l.76.65a1 1 0 0 1-1.23 1.45l-.1-.11-.65-.77a.87.87 0 0 1 1.23-1.22z"
+					      class="cls-2"/>
+					<path d="M49.84 49.51l.75.67A1.14 1.14 0 0 1 49 51.84l-.05-.05-.64-.79a1.08 1.08 0 0 1 1.53-1.53z"
+					      class="cls-2"/>
+					<path d="M52.07 51.53l.73.67a1.27 1.27 0 1 1-1.72 1.88L51 54l-.68-.74a1.23 1.23 0 0 1 1.74-1.73z"
+					      class="cls-2"/>
+					<path d="M54.25 53.59l.72.69a1.33 1.33 0 1 1-1.85 1.92l-.69-.73a1.31 1.31 0 0 1 1.86-1.85z"
+					      class="cls-2"/>
+					<path d="M56.39 55.68l.7.72a1.34 1.34 0 0 1-1.89 1.89l-.71-.7a1.35 1.35 0 1 1 1.87-1.94z"
+					      class="cls-2"/>
+					<path d="M58.45 57.87l.66.75a1.19 1.19 0 0 1-1.68 1.69c-.26-.22-.51-.44-.75-.67a1.25 1.25 0 1 1 1.71-1.82z"
+					      class="cls-2"/>
+					<path d="M60.42 60.15l.64.77a1 1 0 0 1-1.34 1.34l-.72-.65a1 1 0 0 1-.13-1.46 1 1 0 0 1 1.42-.15zM62.35 62.46l.65.76a.7.7 0 0 1-.08 1 .71.71 0 0 1-.9 0l-.76-.65a.79.79 0 0 1-.09-1.09.78.78 0 0 1 1.09-.09zM64.32 64.73l.67.74a.51.51 0 0 1-.72.72l-.74-.67a.56.56 0 0 1 .75-.83zM66.37 66.92l.7.71a.45.45 0 0 1-.64.64l-.71-.7a.47.47 0 0 1 0-.65.46.46 0 0 1 .65 0zM68.51 69l.73.68a.51.51 0 0 1-.7.75l-.68-.74a.47.47 0 0 1 0-.67.49.49 0 0 1 .65-.02zM70.72 71.06l.75.66a.67.67 0 0 1-.89 1v-.06l-.67-.74a.61.61 0 0 1 .86-.86zM73 73l.76.65A.89.89 0 0 1 72.59 75a.94.94 0 0 1-.1-.1l-.65-.76a.81.81 0 0 1 .09-1.14.79.79 0 0 1 1.07 0z"
+					      class="cls-2"/>
+					<path d="M75.27 75l.76.66a1.12 1.12 0 0 1-1.46 1.7l-.12-.12-.65-.76A1 1 0 0 1 75.27 75z"
+					      class="cls-2"/>
+					<path d="M77.53 77l.74.67a1.29 1.29 0 0 1-1.74 1.9.3.3 0 0 0-.08-.08l-.67-.74A1.24 1.24 0 0 1 77.53 77z"
+					      class="cls-2"/>
+					<path d="M79.74 79l.73.68a1.4 1.4 0 0 1-1.91 2l-.07-.06-.68-.73A1.37 1.37 0 0 1 79.74 79z"
+					      class="cls-2"/>
+					<path d="M81.93 81.06l.73.69a1.49 1.49 0 1 1-2 2.17l-.07-.06-.69-.73a1.46 1.46 0 0 1 2.07-2.07z"
+					      class="cls-2"/>
+					<path d="M84.11 83.12l.72.69a1.57 1.57 0 0 1-2.16 2.28v-.06l-.69-.72a1.55 1.55 0 0 1 2.18-2.19z"
+					      class="cls-2"/>
+					<path d="M86.27 85.21l.71.7a1.6 1.6 0 1 1-2.26 2.27l-.7-.71a1.6 1.6 0 0 1 2.26-2.26z"
+					      class="cls-2"/>
+					<path d="M88.4 87.32l.69.72a1.59 1.59 0 0 1-2.25 2.25l-.72-.7a1.61 1.61 0 0 1 2.24-2.31z"
+					      class="cls-2"/>
+					<path d="M90.47 89.49l.69.73A1.51 1.51 0 0 1 89 92.36l-.73-.69a1.55 1.55 0 0 1 2.12-2.25z"
+					      class="cls-2"/>
+					<path d="M92.51 91.69l.68.74a1.39 1.39 0 0 1-2 2l-.74-.68a1.43 1.43 0 1 1 1.94-2.11z"
+					      class="cls-2"/>
+					<path d="M94.53 93.91l.67.75a1.23 1.23 0 0 1-1.74 1.74l-.75-.67a1.29 1.29 0 1 1 1.71-1.93z"
+					      class="cls-2"/>
+					<path d="M96.52 96.16l.66.77a1 1 0 0 1-1.45 1.44l-.73-.65A1.1 1.1 0 0 1 96.4 96a.68.68 0 0 1 .12.16z"
+					      class="cls-2"/>
+					<path d="M98.48 98.45l.64.78a.77.77 0 0 1-1.12 1.09l-.77-.65a.86.86 0 1 1 1.1-1.33zM100.39 100.78l.63.79a.47.47 0 0 1-.07.65.48.48 0 0 1-.58 0l-.78-.63a.57.57 0 1 1 .71-.89zM102.25 103.17l.18.24a.17.17 0 0 1 0 .22.17.17 0 0 1-.18 0l-.25-.19a.2.2 0 0 1 0-.27.2.2 0 0 1 .28 0z"
+					      class="cls-2"/>
+				</g>
+			</svg>
 		</div>
-		<div class="infos__section accordion-item js-infos-accordion-item">
-			<h4 class="infos__title js-infos-accordion-btn">The context</h4>
-			<div class="infos__content js-infos-accordion-content">
-				<p class="infos__content__inner js-infos-content-inner">Lorem ipsum dolor sit amet, consectetur
-					adipisicing elit. Consequatur deserunt dicta ducimus, explicabo facilis fugit quia quod. Ab amet
-					assumenda, at corporis cupiditate iure, iusto laudantium nam necessitatibus quas, suscipit?</p>
-			</div>
+		<div class="about__logo">
+			<img class="about__logo-img" src="/app/assets/medias/images/aether-logo.png" alt="Logo">
 		</div>
-		<div class="infos__section accordion-item js-infos-accordion-item">
-			<h4 class="infos__title js-infos-accordion-btn">The team</h4>
-			<div class="infos__content js-infos-accordion-content">
-				<p class="infos__content__inner js-infos-content-inner">Lorem ipsum dolor sit amet, consectetur
-					adipisicing elit. Consequatur deserunt dicta ducimus, explicabo facilis fugit quia quod. Ab amet
-					assumenda, at corporis cupiditate iure, iusto laudantium nam necessitatibus quas, suscipit?</p>
+		<div class="about__container">
+			<div class="about__head">
+				<div class="about__head-name">
+					<h3 class="about__subtitle"><span
+							class="about__subtitle__inner js-about-section-name">the context</span></h3>
+				</div>
 			</div>
-		</div>
-		<div class="infos__section infos__references js-infos-accordion-item">
-			<h4 class="infos__title js-infos-accordion-btn">References</h4>
-			<div class="infos__content infos__references__content js-infos-accordion-content">
-				<div class="infos__content__inner js-infos-content-inner">
-					<p class="infos__references__desc">Amazing books, videos and website we based our researches on.</p>
-					<div class="infos__references__list">
-						<div class="infos__references__item">
-							<div class="infos__references__media">
-								<img class="infos__references__img" src="https://placehold.it/247x160" alt="">
-								<p class="infos__references__figcaption">VIDEO — 2018</p>
-								<p class="infos__references__figcaption"> Why Beautiful Things Make us Happy</p>
-							</div>
-						</div>
-						<div class="infos__references__item">
-							<div class="infos__references__media">
-								<img class="infos__references__img" src="https://placehold.it/247x160" alt="">
-								<p class="infos__references__figcaption">VIDEO — 2018</p>
-								<p class="infos__references__figcaption"> Why Beautiful Things Make us Happy</p>
-							</div>
-						</div>
-						<div class="infos__references__item">
-							<div class="infos__references__media">
-								<img class="infos__references__img" src="https://placehold.it/247x160" alt="">
-								<p class="infos__references__figcaption">VIDEO — 2018</p>
-								<p class="infos__references__figcaption">Why Beautiful Things Make us Happy</p>
-							</div>
-						</div>
-						<div class="infos__references__item">
-							<div class="infos__references__media">
-								<img class="infos__references__img" src="https://placehold.it/247x160" alt="">
-								<p class="infos__references__figcaption">VIDEO — 2018</p>
-								<p class="infos__references__figcaption">Why Beautiful Things Make us Happy</p>
-							</div>
-						</div>
-						<div class="infos__references__item">
-							<div class="infos__references__media">
-								<img class="infos__references__img" src="https://placehold.it/247x160" alt="">
-								<p class="infos__references__figcaption">VIDEO — 2018</p>
-								<p class="infos__references__figcaption">Why Beautiful Things Make us Happy</p>
-							</div>
-						</div>
-						<div class="infos__references__item">
-							<div class="infos__references__media">
-								<img class="infos__references__img" src="https://placehold.it/247x160" alt="">
-								<p class="infos__references__figcaption">VIDEO — 2018</p>
-								<p class="infos__references__figcaption">Why Beautiful Things Make us Happy</p>
-							</div>
-						</div>
+			<div class="about__content">
+				<div class="about__section js-about-section active" data-index="1" data-title="the context">
+					<p>
+						School project made in 2019 based on the theme "&nbsp;Beauty&nbsp;/&nbsp;Digital
+						Beauty&nbsp;".<br><br>
+						The obvious common point between Beauty (&nbsp;what we learn to appreciate&nbsp;/&nbsp;what
+						subjectively moves
+						us&nbsp;) and digital beauty (&nbsp;Who makes the rules&nbsp;? How is digital implied&nbsp;?
+						etc..&nbsp;) is the Human
+						Being.<br><br>
+						What is beautiful and very specific to him is the emotions he feels. Neuroscientists and
+						psychologists say that emotions influence the way we see the world, hence its beauty. Therefore,
+						we focused on emotions and how they can blur and intensify at the same time our unique
+						perception.
+					</p>
+				</div>
+				<div class="about__section js-about-section" data-index="2" data-title="the project">
+					<p>
+						Aether’s aim is to make one think about his emotions and try to understand its system. We chose
+						to focus on 4 of them&nbsp;: joy, sadness, fear and anger. We looked up to how we can visually
+						translate emotions and we developed a world with its own rules for each one. The user is invited
+						to interact as much as possible with the environment.
+						Easter eggs are waiting for the most curious&nbsp;/&nbsp;daring ones.
+					</p>
+				</div>
+				<div class="about__section js-about-section" data-index="3" data-title="the team">
+					<p>
+						We are a team of 4, studying in a bachelor of interactive Design at The Gobelins School in
+						Paris.
+						Amongst us, two are specialised in development (&nbsp;<a href="" target="_blank" class="link">Rémy</a> and <a
+							href="https://mael-atzorimaltete.fr" target="_blank" class="link">Maël</a>&nbsp;) and the two other in
+						design (&nbsp;<a
+							href="https://mradz.io" target="_blank" class="link">Zohra</a> and <a href="https://amelievorms.fr"
+						                                                             target="_blank" class="link">Amélie</a>&nbsp;).
+					</p>
+				</div>
+				<div class="about__section about__references js-about-section" data-index="4" data-title="references">
+					<h4 class="about__references-bold">Books</h4>
+					<p>
+						Design émotionnel, Aarron Walter, éditions Eyrolles - décembre 2011 <br>
+						L’intelligence émotionnelle, Daniel Goleman, éditions J’ai lu - octobre 2014 <br>
+						L'Intelligence Émotionnelle de Daniel GOLEMAN <br>
+						<a href="https://feg.univ-amu.fr/sites/feg.univ-amu.fr/files/intelligence_emotionnelle_-_rossano_et_di_nunzio_2011.pdf" target="_blank" class="link">Fiche de Lecture</a> Présentée par Viviane Rossano-Beaudoin et Marie-Gabrielle Di Nunzio&nbsp;:
+					</p>
+					<h4 class="about__references-bold">Podcast</h4>
+					<p>
+						<a href="https://louiemedia.com/emotions" target="_blank" class="link">Émotions</a>, Louie Média, 2019 (french)
+					</p>
+					<h4 class="about__references-bold">Articles</h4>
+					<p>
+						<a href="https://inside.dogstudio.be/how-to-design-for-emotions-a-starters-guide-5652073b7a65" class="link">How
+							to design for emotions: a starter’s guide</a>, Henry Daubrez, mai 2017 <br>
+						<a href="https://la-philosophie.com/emotion-philosophie" class="link">L’émotion en philosophie</a><br>
+						<a href="https://medium.com/google-design/design-for-emotion-7ba0cf40e05b" class="link">Design for Emotion</a>,
+						Daniel Ruston, mai 2017 <br>
+						Le dossier : <a href="https://cabinet-terrehappy.fr/?s=Guide+pratique+sur+les+%C3%A9motions" class="link">Guide
+							pratique sur les émotions</a>, du cabinet de psychologie Terre Happy
+					</p>
+				</div>
+				<div class="about__section about__media js-about-section" data-index="5" data-title="media">
+					<div class="about__media__container">
+						<video controls>
+							<source src="https://www.youtube.com/watch?v=ScMzIvxBSi4">
+						</video>
+						<img src="https://placehold.it/240x380" alt="Project poster">
 					</div>
+				</div>
+			</div>
+			<div class="about__nav">
+				<div class="about__nav-dot js-about-nav active" data-index="1">
+					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 39.01 37.42">
+						<defs>
+							<style>
+								.cls-2 {
+									fill: #fff
+								}
+							</style>
+						</defs>
+						<g id="etapes">
+							<g opacity=".3" class="groupe-1">
+								<circle cx="17.84" cy="19.49" r="15.66" class="cls-2"/>
+								<path d="M17.84 35.21a15.72 15.72 0 1 1 15.71-15.72 15.73 15.73 0 0 1-15.71 15.72zm0-31.32a15.61 15.61 0 1 0 15.61 15.6 15.63 15.63 0 0 0-15.61-15.6z"
+								      class="cls-2"/>
+							</g>
+							<path d="M10.81 5.57l-.35.24a.12.12 0 0 1-.16 0 .12.12 0 0 1 0-.16l.4-.15a.07.07 0 0 1 .09 0 .07.07 0 0 1 .02.07zM9.1 6.81l-.32.27a.29.29 0 0 1-.41 0 .3.3 0 0 1 0-.41l.37-.22a.25.25 0 0 1 .35.08.27.27 0 0 1-.05.34zM7.56 8.21l-.29.3a.41.41 0 1 1-.59-.58l.32-.3a.39.39 0 0 1 .55 0 .39.39 0 0 1 0 .53zM6.19 9.77l-.25.33a.5.5 0 0 1-.8-.61l.29-.34a.49.49 0 0 1 .75.62zM5 11.46l-.21.36a.55.55 0 0 1-.76.19.54.54 0 0 1-.19-.75l.23-.37a.54.54 0 0 1 .75-.18.55.55 0 0 1 .18.74zM4.09 13.28l-.17.38a.57.57 0 0 1-1-.45l.08-.4a.58.58 0 0 1 1.06.45zM3.35 15.19l-.12.4a.54.54 0 0 1-1-.29l.11-.43a.55.55 0 1 1 1.06.27zM2.81 17.18l-.08.41a.43.43 0 0 1-.51.34.44.44 0 0 1-.35-.46v-.44a.46.46 0 1 1 .91.08v.05zM2.51 19.24v.41a.31.31 0 0 1-.33.29.3.3 0 0 1-.28-.29v-.43a.33.33 0 0 1 .32-.35.32.32 0 0 1 .34.31zM2.52 21.33v.42a.22.22 0 0 1-.19.24.22.22 0 0 1-.24-.18l-.07-.43a.23.23 0 0 1 .19-.26.22.22 0 0 1 .27.19zM2.87 23.4l.11.4H3a.21.21 0 0 1-.14.24.19.19 0 0 1-.24-.14l-.11-.42a.19.19 0 0 1 .13-.23.19.19 0 0 1 .24.13zM3.56 25.38l.18.38a.23.23 0 1 1-.42.2l-.16-.4a.22.22 0 0 1 .12-.29.23.23 0 0 1 .28.11zM4.55 27.22l.24.35a.32.32 0 0 1-.08.44.31.31 0 0 1-.44-.09l-.2-.39a.28.28 0 0 1 .12-.39.3.3 0 0 1 .38.09zM5.81 28.88l.28.31a.42.42 0 0 1-.63.56l-.25-.36a.4.4 0 0 1 .62-.5zM7.26 30.35l.31.27a.52.52 0 1 1-.68.78l-.31-.31a.5.5 0 0 1 0-.71.5.5 0 0 1 .68 0zM8.87 31.63l.34.23a.58.58 0 0 1 .15.81.59.59 0 0 1-.81.15l-.35-.26a.57.57 0 0 1 .67-.93zM10.62 32.69l.36.18a.63.63 0 1 1-.55 1.13l-.43-.23a.62.62 0 0 1 .58-1.09zM12.48 33.51l.39.13a.66.66 0 0 1 .41.85.67.67 0 0 1-.84.41l-.44-.16a.66.66 0 0 1-.38-.85.67.67 0 0 1 .83-.39zM14.43 34.08l.4.09a.69.69 0 0 1-.29 1.34l-.43-.1a.68.68 0 1 1 .29-1.33zM16.44 34.42h.41a.67.67 0 0 1 .6.72.68.68 0 0 1-.71.61h-.44a.68.68 0 0 1-.63-.72.67.67 0 0 1 .71-.63zM18.48 34.5h.42a.63.63 0 0 1 .1 1.24h-.44a.64.64 0 0 1-.1-1.28h.05zM20.52 34.34l.4-.07a.57.57 0 0 1 .21 1.11l-.43.1a.58.58 0 1 1-.25-1.13h.05zM22.53 33.92l.39-.12a.47.47 0 0 1 .59.32.49.49 0 0 1-.29.59l-.41.15a.5.5 0 0 1-.64-.28.49.49 0 0 1 .29-.64zM24.48 33.25l.39-.17a.36.36 0 0 1 .48.19.37.37 0 0 1-.16.46l-.38.22a.39.39 0 0 1-.53-.15.39.39 0 0 1 .14-.53zM26.36 32.33l.37-.21a.22.22 0 0 1 .3.08.22.22 0 0 1-.05.28l-.34.27a.26.26 0 0 1-.36 0 .25.25 0 0 1 0-.35zM28.14 31.19l.11-.08a.06.06 0 0 1 .09 0 .06.06 0 0 1 0 .08l-.1.11a.08.08 0 0 1-.11-.11zM21 32.74h.42a.07.07 0 0 1 .07.07.07.07 0 0 1-.06.07H21a.06.06 0 0 1-.06-.06.07.07 0 0 1 .06-.08zM23.08 32.59l.42-.07a.07.07 0 0 1 .09.07.08.08 0 0 1-.06.09l-.43.06a.07.07 0 0 1-.08-.07.06.06 0 0 1 .06-.08zM25.14 32.13l.41-.13a.12.12 0 0 1 .07.23l-.41.11a.11.11 0 0 1-.14-.08.1.1 0 0 1 .07-.13zM27.11 31.37l.38-.19a.19.19 0 0 1 .17.34l-.4.16a.17.17 0 0 1-.23-.09.18.18 0 0 1 .09-.22zM28.94 30.34l.34-.24a.27.27 0 1 1 .3.44l-.37.22a.26.26 0 0 1-.34-.1.25.25 0 0 1 .07-.33zM30.6 29.07l.31-.28a.36.36 0 0 1 .5 0 .35.35 0 0 1 0 .5l-.34.26a.33.33 0 0 1-.47-.06.33.33 0 0 1 0-.45zM32.06 27.6l.27-.32a.44.44 0 1 1 .66.57l-.31.31a.41.41 0 0 1-.59 0 .42.42 0 0 1 0-.57zM33.31 26l.23-.35a.5.5 0 1 1 .84.56l-.26.35a.5.5 0 0 1-.69.11.48.48 0 0 1-.12-.67zM34.35 24.18l.18-.37a.56.56 0 0 1 .74-.25.55.55 0 0 1 .24.74l-.21.39a.53.53 0 0 1-.73.23.55.55 0 0 1-.24-.72zM35.16 22.3l.13-.39a.57.57 0 0 1 1.09.36l-.15.42a.58.58 0 0 1-.73.34.56.56 0 0 1-.35-.71zM35.72 20.33l.09-.4a.57.57 0 0 1 1.11.23l-.08.43a.57.57 0 0 1-1.12-.22zM36 18.31v-.41a.54.54 0 0 1 1.08.07v.44a.54.54 0 0 1-.57.52.55.55 0 0 1-.53-.57zM36.09 16.25v-.43a.48.48 0 0 1 .47-.51.51.51 0 0 1 .52.44v.44a.51.51 0 0 1-.46.56.5.5 0 0 1-.55-.46zM35.9 14.2l-.08-.41a.45.45 0 0 1 .35-.51.44.44 0 0 1 .5.33l.1.42a.44.44 0 0 1-.33.54.45.45 0 0 1-.54-.33zM35.42 12.18l-.13-.39a.36.36 0 0 1 .24-.47.37.37 0 0 1 .46.22l.16.4a.39.39 0 0 1-.22.5.38.38 0 0 1-.5-.22zM34.67 10.24l-.18-.37a.31.31 0 0 1 .51-.3l.21.38a.32.32 0 0 1-.56.32zM33.66 8.41l-.24-.34a.24.24 0 0 1 .07-.34.23.23 0 0 1 .33.06l.26.34a.26.26 0 0 1 0 .36.25.25 0 0 1-.36-.05zM32.39 6.75l-.28-.31a.21.21 0 0 1 .31-.28l.3.31a.22.22 0 0 1 0 .31.21.21 0 0 1-.3 0zM30.89 5.29L30.56 5a.2.2 0 0 1 0-.28.21.21 0 0 1 .28 0l.33.27a.2.2 0 0 1-.25.31zM29.19 4.05l-.36-.22a.2.2 0 1 1 .2-.34l.37.23a.19.19 0 0 1 .06.27.18.18 0 0 1-.26.06zM27.34 3.07L27 2.91a.21.21 0 1 1 .16-.39l.39.18a.21.21 0 0 1 .11.27.22.22 0 0 1-.28.11zM25.37 2.36l-.37-.1a.25.25 0 0 1 .13-.49l.41.12a.24.24 0 0 1-.13.47zM23.32 2l-.42-.05a.3.3 0 0 1 .07-.6l.42.07a.29.29 0 0 1 .24.34.28.28 0 0 1-.32.24zM21.24 1.83h-.43a.34.34 0 0 1-.36-.34.34.34 0 0 1 .34-.36h.46a.33.33 0 0 1 .33.35.34.34 0 0 1-.33.33zM19.16 2l-.41.06a.41.41 0 1 1-.13-.81h.43a.4.4 0 0 1 .44.36.4.4 0 0 1-.33.43zM17.14 2.44l-.39.12a.46.46 0 0 1-.59-.31.48.48 0 0 1 .31-.6l.42-.11a.46.46 0 0 1 .25.89zM15.2 3.13l-.37.17a.5.5 0 0 1-.68-.25.51.51 0 0 1 .25-.68l.41-.16a.5.5 0 0 1 .66.27.51.51 0 0 1-.26.65zM13.38 4.08l-.38.21a.55.55 0 0 1-.59-.94l.38-.22a.55.55 0 0 1 .56.94z"
+							      class="cls-2"/>
+							<path d="M11.7 5.25l-.32.26a.58.58 0 0 1-.82-.08.58.58 0 0 1 .08-.82l.36-.27a.58.58 0 0 1 .72.9zM10.19 6.63l-.28.3V7A.61.61 0 0 1 9 6.12l.31-.32a.6.6 0 0 1 .85 0 .59.59 0 0 1 0 .84zM8.88 8.2l-.23.34a.64.64 0 0 1-.88.15.63.63 0 0 1-.15-.87l.26-.35a.62.62 0 0 1 .87-.13.62.62 0 0 1 .15.86zM7.8 9.93l-.18.36a.66.66 0 0 1-.88.28.65.65 0 0 1-.28-.88l.21-.39a.64.64 0 0 1 1.14.6zM7 11.79l-.14.38a.69.69 0 0 1-.86.43.68.68 0 0 1-.41-.86l.16-.41a.67.67 0 0 1 1.25.44zM6.38 13.73l-.08.4a.68.68 0 0 1-.81.52.68.68 0 0 1-.49-.79l.1-.43a.68.68 0 0 1 .81-.52.68.68 0 0 1 .52.81zM6.06 15.74v.41a.69.69 0 0 1-1.37-.11v-.44a.68.68 0 1 1 1.36.1zM6 17.78v.4a.67.67 0 0 1-1.34.07v-.44A.68.68 0 0 1 6 17.75zM6.2 19.8l.08.4a.65.65 0 0 1-.53.76.64.64 0 0 1-.75-.49L4.91 20a.66.66 0 0 1 1.29-.26zM6.68 21.78l.12.39a.63.63 0 0 1-1.2.4l-.15-.41a.66.66 0 0 1 .39-.82.64.64 0 0 1 .82.38zM7.4 23.69l.18.37a.58.58 0 0 1-.27.78.59.59 0 0 1-.78-.26l-.2-.39a.59.59 0 1 1 1-.55zM8.37 25.5l.22.35a.53.53 0 0 1-.17.73.51.51 0 0 1-.7-.14l-.26-.35a.54.54 0 0 1 .87-.64zM9.56 27.18l.26.32a.46.46 0 0 1-.06.63.45.45 0 0 1-.6 0l-.31-.31a.47.47 0 0 1 0-.65.45.45 0 0 1 .65 0zM11 28.7l.31.28a.36.36 0 0 1-.46.54l-.35-.26a.38.38 0 0 1-.06-.53.37.37 0 0 1 .52-.06zM12.57 30l.34.24a.27.27 0 0 1 .07.37.28.28 0 0 1-.36.08l-.37-.22a.28.28 0 0 1-.1-.39.28.28 0 0 1 .38-.1zM14.35 31.12l.38.19a.19.19 0 0 1 .09.25.19.19 0 0 1-.24.09l-.4-.17a.2.2 0 0 1-.11-.26.21.21 0 0 1 .27-.11zM16.29 32l.4.13a.12.12 0 0 1 .08.15.12.12 0 0 1-.15.08l-.41-.11a.15.15 0 0 1-.1-.17.14.14 0 0 1 .17-.09zM18.33 32.5l.41.06a.08.08 0 0 1 0 .16l-.42-.06a.1.1 0 0 1-.08-.1.09.09 0 0 1 .1-.07zM20.43 32.73h.42a.07.07 0 0 1 .07.07.07.07 0 0 1-.07.06h-.43a.06.06 0 0 1-.06-.06.07.07 0 0 1 .07-.07z"
+							      class="cls-2"/>
+						</g>
+					</svg>
+				</div>
+				<div class="about__nav-dot js-about-nav" data-index="2">
+					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 39.01 37.42">
+						<defs>
+							<style>
+								.cls-2 {
+									fill: #fff
+								}
+							</style>
+						</defs>
+						<g id="etapes">
+							<g opacity=".3" class="groupe-1">
+								<circle cx="17.84" cy="19.49" r="15.66" class="cls-2"/>
+								<path d="M17.84 35.21a15.72 15.72 0 1 1 15.71-15.72 15.73 15.73 0 0 1-15.71 15.72zm0-31.32a15.61 15.61 0 1 0 15.61 15.6 15.63 15.63 0 0 0-15.61-15.6z"
+								      class="cls-2"/>
+							</g>
+							<path d="M10.81 5.57l-.35.24a.12.12 0 0 1-.16 0 .12.12 0 0 1 0-.16l.4-.15a.07.07 0 0 1 .09 0 .07.07 0 0 1 .02.07zM9.1 6.81l-.32.27a.29.29 0 0 1-.41 0 .3.3 0 0 1 0-.41l.37-.22a.25.25 0 0 1 .35.08.27.27 0 0 1-.05.34zM7.56 8.21l-.29.3a.41.41 0 1 1-.59-.58l.32-.3a.39.39 0 0 1 .55 0 .39.39 0 0 1 0 .53zM6.19 9.77l-.25.33a.5.5 0 0 1-.8-.61l.29-.34a.49.49 0 0 1 .75.62zM5 11.46l-.21.36a.55.55 0 0 1-.76.19.54.54 0 0 1-.19-.75l.23-.37a.54.54 0 0 1 .75-.18.55.55 0 0 1 .18.74zM4.09 13.28l-.17.38a.57.57 0 0 1-1-.45l.08-.4a.58.58 0 0 1 1.06.45zM3.35 15.19l-.12.4a.54.54 0 0 1-1-.29l.11-.43a.55.55 0 1 1 1.06.27zM2.81 17.18l-.08.41a.43.43 0 0 1-.51.34.44.44 0 0 1-.35-.46v-.44a.46.46 0 1 1 .91.08v.05zM2.51 19.24v.41a.31.31 0 0 1-.33.29.3.3 0 0 1-.28-.29v-.43a.33.33 0 0 1 .32-.35.32.32 0 0 1 .34.31zM2.52 21.33v.42a.22.22 0 0 1-.19.24.22.22 0 0 1-.24-.18l-.07-.43a.23.23 0 0 1 .19-.26.22.22 0 0 1 .27.19zM2.87 23.4l.11.4H3a.21.21 0 0 1-.14.24.19.19 0 0 1-.24-.14l-.11-.42a.19.19 0 0 1 .13-.23.19.19 0 0 1 .24.13zM3.56 25.38l.18.38a.23.23 0 1 1-.42.2l-.16-.4a.22.22 0 0 1 .12-.29.23.23 0 0 1 .28.11zM4.55 27.22l.24.35a.32.32 0 0 1-.08.44.31.31 0 0 1-.44-.09l-.2-.39a.28.28 0 0 1 .12-.39.3.3 0 0 1 .38.09zM5.81 28.88l.28.31a.42.42 0 0 1-.63.56l-.25-.36a.4.4 0 0 1 .62-.5zM7.26 30.35l.31.27a.52.52 0 1 1-.68.78l-.31-.31a.5.5 0 0 1 0-.71.5.5 0 0 1 .68 0zM8.87 31.63l.34.23a.58.58 0 0 1 .15.81.59.59 0 0 1-.81.15l-.35-.26a.57.57 0 0 1 .67-.93zM10.62 32.69l.36.18a.63.63 0 1 1-.55 1.13l-.43-.23a.62.62 0 0 1 .58-1.09zM12.48 33.51l.39.13a.66.66 0 0 1 .41.85.67.67 0 0 1-.84.41l-.44-.16a.66.66 0 0 1-.38-.85.67.67 0 0 1 .83-.39zM14.43 34.08l.4.09a.69.69 0 0 1-.29 1.34l-.43-.1a.68.68 0 1 1 .29-1.33zM16.44 34.42h.41a.67.67 0 0 1 .6.72.68.68 0 0 1-.71.61h-.44a.68.68 0 0 1-.63-.72.67.67 0 0 1 .71-.63zM18.48 34.5h.42a.63.63 0 0 1 .1 1.24h-.44a.64.64 0 0 1-.1-1.28h.05zM20.52 34.34l.4-.07a.57.57 0 0 1 .21 1.11l-.43.1a.58.58 0 1 1-.25-1.13h.05zM22.53 33.92l.39-.12a.47.47 0 0 1 .59.32.49.49 0 0 1-.29.59l-.41.15a.5.5 0 0 1-.64-.28.49.49 0 0 1 .29-.64zM24.48 33.25l.39-.17a.36.36 0 0 1 .48.19.37.37 0 0 1-.16.46l-.38.22a.39.39 0 0 1-.53-.15.39.39 0 0 1 .14-.53zM26.36 32.33l.37-.21a.22.22 0 0 1 .3.08.22.22 0 0 1-.05.28l-.34.27a.26.26 0 0 1-.36 0 .25.25 0 0 1 0-.35zM28.14 31.19l.11-.08a.06.06 0 0 1 .09 0 .06.06 0 0 1 0 .08l-.1.11a.08.08 0 0 1-.11-.11zM21 32.74h.42a.07.07 0 0 1 .07.07.07.07 0 0 1-.06.07H21a.06.06 0 0 1-.06-.06.07.07 0 0 1 .06-.08zM23.08 32.59l.42-.07a.07.07 0 0 1 .09.07.08.08 0 0 1-.06.09l-.43.06a.07.07 0 0 1-.08-.07.06.06 0 0 1 .06-.08zM25.14 32.13l.41-.13a.12.12 0 0 1 .07.23l-.41.11a.11.11 0 0 1-.14-.08.1.1 0 0 1 .07-.13zM27.11 31.37l.38-.19a.19.19 0 0 1 .17.34l-.4.16a.17.17 0 0 1-.23-.09.18.18 0 0 1 .09-.22zM28.94 30.34l.34-.24a.27.27 0 1 1 .3.44l-.37.22a.26.26 0 0 1-.34-.1.25.25 0 0 1 .07-.33zM30.6 29.07l.31-.28a.36.36 0 0 1 .5 0 .35.35 0 0 1 0 .5l-.34.26a.33.33 0 0 1-.47-.06.33.33 0 0 1 0-.45zM32.06 27.6l.27-.32a.44.44 0 1 1 .66.57l-.31.31a.41.41 0 0 1-.59 0 .42.42 0 0 1 0-.57zM33.31 26l.23-.35a.5.5 0 1 1 .84.56l-.26.35a.5.5 0 0 1-.69.11.48.48 0 0 1-.12-.67zM34.35 24.18l.18-.37a.56.56 0 0 1 .74-.25.55.55 0 0 1 .24.74l-.21.39a.53.53 0 0 1-.73.23.55.55 0 0 1-.24-.72zM35.16 22.3l.13-.39a.57.57 0 0 1 1.09.36l-.15.42a.58.58 0 0 1-.73.34.56.56 0 0 1-.35-.71zM35.72 20.33l.09-.4a.57.57 0 0 1 1.11.23l-.08.43a.57.57 0 0 1-1.12-.22zM36 18.31v-.41a.54.54 0 0 1 1.08.07v.44a.54.54 0 0 1-.57.52.55.55 0 0 1-.53-.57zM36.09 16.25v-.43a.48.48 0 0 1 .47-.51.51.51 0 0 1 .52.44v.44a.51.51 0 0 1-.46.56.5.5 0 0 1-.55-.46zM35.9 14.2l-.08-.41a.45.45 0 0 1 .35-.51.44.44 0 0 1 .5.33l.1.42a.44.44 0 0 1-.33.54.45.45 0 0 1-.54-.33zM35.42 12.18l-.13-.39a.36.36 0 0 1 .24-.47.37.37 0 0 1 .46.22l.16.4a.39.39 0 0 1-.22.5.38.38 0 0 1-.5-.22zM34.67 10.24l-.18-.37a.31.31 0 0 1 .51-.3l.21.38a.32.32 0 0 1-.56.32zM33.66 8.41l-.24-.34a.24.24 0 0 1 .07-.34.23.23 0 0 1 .33.06l.26.34a.26.26 0 0 1 0 .36.25.25 0 0 1-.36-.05zM32.39 6.75l-.28-.31a.21.21 0 0 1 .31-.28l.3.31a.22.22 0 0 1 0 .31.21.21 0 0 1-.3 0zM30.89 5.29L30.56 5a.2.2 0 0 1 0-.28.21.21 0 0 1 .28 0l.33.27a.2.2 0 0 1-.25.31zM29.19 4.05l-.36-.22a.2.2 0 1 1 .2-.34l.37.23a.19.19 0 0 1 .06.27.18.18 0 0 1-.26.06zM27.34 3.07L27 2.91a.21.21 0 1 1 .16-.39l.39.18a.21.21 0 0 1 .11.27.22.22 0 0 1-.28.11zM25.37 2.36l-.37-.1a.25.25 0 0 1 .13-.49l.41.12a.24.24 0 0 1-.13.47zM23.32 2l-.42-.05a.3.3 0 0 1 .07-.6l.42.07a.29.29 0 0 1 .24.34.28.28 0 0 1-.32.24zM21.24 1.83h-.43a.34.34 0 0 1-.36-.34.34.34 0 0 1 .34-.36h.46a.33.33 0 0 1 .33.35.34.34 0 0 1-.33.33zM19.16 2l-.41.06a.41.41 0 1 1-.13-.81h.43a.4.4 0 0 1 .44.36.4.4 0 0 1-.33.43zM17.14 2.44l-.39.12a.46.46 0 0 1-.59-.31.48.48 0 0 1 .31-.6l.42-.11a.46.46 0 0 1 .25.89zM15.2 3.13l-.37.17a.5.5 0 0 1-.68-.25.51.51 0 0 1 .25-.68l.41-.16a.5.5 0 0 1 .66.27.51.51 0 0 1-.26.65zM13.38 4.08l-.38.21a.55.55 0 0 1-.59-.94l.38-.22a.55.55 0 0 1 .56.94z"
+							      class="cls-2"/>
+							<path d="M11.7 5.25l-.32.26a.58.58 0 0 1-.82-.08.58.58 0 0 1 .08-.82l.36-.27a.58.58 0 0 1 .72.9zM10.19 6.63l-.28.3V7A.61.61 0 0 1 9 6.12l.31-.32a.6.6 0 0 1 .85 0 .59.59 0 0 1 0 .84zM8.88 8.2l-.23.34a.64.64 0 0 1-.88.15.63.63 0 0 1-.15-.87l.26-.35a.62.62 0 0 1 .87-.13.62.62 0 0 1 .15.86zM7.8 9.93l-.18.36a.66.66 0 0 1-.88.28.65.65 0 0 1-.28-.88l.21-.39a.64.64 0 0 1 1.14.6zM7 11.79l-.14.38a.69.69 0 0 1-.86.43.68.68 0 0 1-.41-.86l.16-.41a.67.67 0 0 1 1.25.44zM6.38 13.73l-.08.4a.68.68 0 0 1-.81.52.68.68 0 0 1-.49-.79l.1-.43a.68.68 0 0 1 .81-.52.68.68 0 0 1 .52.81zM6.06 15.74v.41a.69.69 0 0 1-1.37-.11v-.44a.68.68 0 1 1 1.36.1zM6 17.78v.4a.67.67 0 0 1-1.34.07v-.44A.68.68 0 0 1 6 17.75zM6.2 19.8l.08.4a.65.65 0 0 1-.53.76.64.64 0 0 1-.75-.49L4.91 20a.66.66 0 0 1 1.29-.26zM6.68 21.78l.12.39a.63.63 0 0 1-1.2.4l-.15-.41a.66.66 0 0 1 .39-.82.64.64 0 0 1 .82.38zM7.4 23.69l.18.37a.58.58 0 0 1-.27.78.59.59 0 0 1-.78-.26l-.2-.39a.59.59 0 1 1 1-.55zM8.37 25.5l.22.35a.53.53 0 0 1-.17.73.51.51 0 0 1-.7-.14l-.26-.35a.54.54 0 0 1 .87-.64zM9.56 27.18l.26.32a.46.46 0 0 1-.06.63.45.45 0 0 1-.6 0l-.31-.31a.47.47 0 0 1 0-.65.45.45 0 0 1 .65 0zM11 28.7l.31.28a.36.36 0 0 1-.46.54l-.35-.26a.38.38 0 0 1-.06-.53.37.37 0 0 1 .52-.06zM12.57 30l.34.24a.27.27 0 0 1 .07.37.28.28 0 0 1-.36.08l-.37-.22a.28.28 0 0 1-.1-.39.28.28 0 0 1 .38-.1zM14.35 31.12l.38.19a.19.19 0 0 1 .09.25.19.19 0 0 1-.24.09l-.4-.17a.2.2 0 0 1-.11-.26.21.21 0 0 1 .27-.11zM16.29 32l.4.13a.12.12 0 0 1 .08.15.12.12 0 0 1-.15.08l-.41-.11a.15.15 0 0 1-.1-.17.14.14 0 0 1 .17-.09zM18.33 32.5l.41.06a.08.08 0 0 1 0 .16l-.42-.06a.1.1 0 0 1-.08-.1.09.09 0 0 1 .1-.07zM20.43 32.73h.42a.07.07 0 0 1 .07.07.07.07 0 0 1-.07.06h-.43a.06.06 0 0 1-.06-.06.07.07 0 0 1 .07-.07z"
+							      class="cls-2"/>
+						</g>
+					</svg>
+				</div>
+				<div class="about__nav-dot js-about-nav" data-index="3">
+					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 39.01 37.42">
+						<defs>
+							<style>
+								.cls-2 {
+									fill: #fff
+								}
+							</style>
+						</defs>
+						<g id="etapes">
+							<g opacity=".3" class="groupe-1">
+								<circle cx="17.84" cy="19.49" r="15.66" class="cls-2"/>
+								<path d="M17.84 35.21a15.72 15.72 0 1 1 15.71-15.72 15.73 15.73 0 0 1-15.71 15.72zm0-31.32a15.61 15.61 0 1 0 15.61 15.6 15.63 15.63 0 0 0-15.61-15.6z"
+								      class="cls-2"/>
+							</g>
+							<path d="M10.81 5.57l-.35.24a.12.12 0 0 1-.16 0 .12.12 0 0 1 0-.16l.4-.15a.07.07 0 0 1 .09 0 .07.07 0 0 1 .02.07zM9.1 6.81l-.32.27a.29.29 0 0 1-.41 0 .3.3 0 0 1 0-.41l.37-.22a.25.25 0 0 1 .35.08.27.27 0 0 1-.05.34zM7.56 8.21l-.29.3a.41.41 0 1 1-.59-.58l.32-.3a.39.39 0 0 1 .55 0 .39.39 0 0 1 0 .53zM6.19 9.77l-.25.33a.5.5 0 0 1-.8-.61l.29-.34a.49.49 0 0 1 .75.62zM5 11.46l-.21.36a.55.55 0 0 1-.76.19.54.54 0 0 1-.19-.75l.23-.37a.54.54 0 0 1 .75-.18.55.55 0 0 1 .18.74zM4.09 13.28l-.17.38a.57.57 0 0 1-1-.45l.08-.4a.58.58 0 0 1 1.06.45zM3.35 15.19l-.12.4a.54.54 0 0 1-1-.29l.11-.43a.55.55 0 1 1 1.06.27zM2.81 17.18l-.08.41a.43.43 0 0 1-.51.34.44.44 0 0 1-.35-.46v-.44a.46.46 0 1 1 .91.08v.05zM2.51 19.24v.41a.31.31 0 0 1-.33.29.3.3 0 0 1-.28-.29v-.43a.33.33 0 0 1 .32-.35.32.32 0 0 1 .34.31zM2.52 21.33v.42a.22.22 0 0 1-.19.24.22.22 0 0 1-.24-.18l-.07-.43a.23.23 0 0 1 .19-.26.22.22 0 0 1 .27.19zM2.87 23.4l.11.4H3a.21.21 0 0 1-.14.24.19.19 0 0 1-.24-.14l-.11-.42a.19.19 0 0 1 .13-.23.19.19 0 0 1 .24.13zM3.56 25.38l.18.38a.23.23 0 1 1-.42.2l-.16-.4a.22.22 0 0 1 .12-.29.23.23 0 0 1 .28.11zM4.55 27.22l.24.35a.32.32 0 0 1-.08.44.31.31 0 0 1-.44-.09l-.2-.39a.28.28 0 0 1 .12-.39.3.3 0 0 1 .38.09zM5.81 28.88l.28.31a.42.42 0 0 1-.63.56l-.25-.36a.4.4 0 0 1 .62-.5zM7.26 30.35l.31.27a.52.52 0 1 1-.68.78l-.31-.31a.5.5 0 0 1 0-.71.5.5 0 0 1 .68 0zM8.87 31.63l.34.23a.58.58 0 0 1 .15.81.59.59 0 0 1-.81.15l-.35-.26a.57.57 0 0 1 .67-.93zM10.62 32.69l.36.18a.63.63 0 1 1-.55 1.13l-.43-.23a.62.62 0 0 1 .58-1.09zM12.48 33.51l.39.13a.66.66 0 0 1 .41.85.67.67 0 0 1-.84.41l-.44-.16a.66.66 0 0 1-.38-.85.67.67 0 0 1 .83-.39zM14.43 34.08l.4.09a.69.69 0 0 1-.29 1.34l-.43-.1a.68.68 0 1 1 .29-1.33zM16.44 34.42h.41a.67.67 0 0 1 .6.72.68.68 0 0 1-.71.61h-.44a.68.68 0 0 1-.63-.72.67.67 0 0 1 .71-.63zM18.48 34.5h.42a.63.63 0 0 1 .1 1.24h-.44a.64.64 0 0 1-.1-1.28h.05zM20.52 34.34l.4-.07a.57.57 0 0 1 .21 1.11l-.43.1a.58.58 0 1 1-.25-1.13h.05zM22.53 33.92l.39-.12a.47.47 0 0 1 .59.32.49.49 0 0 1-.29.59l-.41.15a.5.5 0 0 1-.64-.28.49.49 0 0 1 .29-.64zM24.48 33.25l.39-.17a.36.36 0 0 1 .48.19.37.37 0 0 1-.16.46l-.38.22a.39.39 0 0 1-.53-.15.39.39 0 0 1 .14-.53zM26.36 32.33l.37-.21a.22.22 0 0 1 .3.08.22.22 0 0 1-.05.28l-.34.27a.26.26 0 0 1-.36 0 .25.25 0 0 1 0-.35zM28.14 31.19l.11-.08a.06.06 0 0 1 .09 0 .06.06 0 0 1 0 .08l-.1.11a.08.08 0 0 1-.11-.11zM21 32.74h.42a.07.07 0 0 1 .07.07.07.07 0 0 1-.06.07H21a.06.06 0 0 1-.06-.06.07.07 0 0 1 .06-.08zM23.08 32.59l.42-.07a.07.07 0 0 1 .09.07.08.08 0 0 1-.06.09l-.43.06a.07.07 0 0 1-.08-.07.06.06 0 0 1 .06-.08zM25.14 32.13l.41-.13a.12.12 0 0 1 .07.23l-.41.11a.11.11 0 0 1-.14-.08.1.1 0 0 1 .07-.13zM27.11 31.37l.38-.19a.19.19 0 0 1 .17.34l-.4.16a.17.17 0 0 1-.23-.09.18.18 0 0 1 .09-.22zM28.94 30.34l.34-.24a.27.27 0 1 1 .3.44l-.37.22a.26.26 0 0 1-.34-.1.25.25 0 0 1 .07-.33zM30.6 29.07l.31-.28a.36.36 0 0 1 .5 0 .35.35 0 0 1 0 .5l-.34.26a.33.33 0 0 1-.47-.06.33.33 0 0 1 0-.45zM32.06 27.6l.27-.32a.44.44 0 1 1 .66.57l-.31.31a.41.41 0 0 1-.59 0 .42.42 0 0 1 0-.57zM33.31 26l.23-.35a.5.5 0 1 1 .84.56l-.26.35a.5.5 0 0 1-.69.11.48.48 0 0 1-.12-.67zM34.35 24.18l.18-.37a.56.56 0 0 1 .74-.25.55.55 0 0 1 .24.74l-.21.39a.53.53 0 0 1-.73.23.55.55 0 0 1-.24-.72zM35.16 22.3l.13-.39a.57.57 0 0 1 1.09.36l-.15.42a.58.58 0 0 1-.73.34.56.56 0 0 1-.35-.71zM35.72 20.33l.09-.4a.57.57 0 0 1 1.11.23l-.08.43a.57.57 0 0 1-1.12-.22zM36 18.31v-.41a.54.54 0 0 1 1.08.07v.44a.54.54 0 0 1-.57.52.55.55 0 0 1-.53-.57zM36.09 16.25v-.43a.48.48 0 0 1 .47-.51.51.51 0 0 1 .52.44v.44a.51.51 0 0 1-.46.56.5.5 0 0 1-.55-.46zM35.9 14.2l-.08-.41a.45.45 0 0 1 .35-.51.44.44 0 0 1 .5.33l.1.42a.44.44 0 0 1-.33.54.45.45 0 0 1-.54-.33zM35.42 12.18l-.13-.39a.36.36 0 0 1 .24-.47.37.37 0 0 1 .46.22l.16.4a.39.39 0 0 1-.22.5.38.38 0 0 1-.5-.22zM34.67 10.24l-.18-.37a.31.31 0 0 1 .51-.3l.21.38a.32.32 0 0 1-.56.32zM33.66 8.41l-.24-.34a.24.24 0 0 1 .07-.34.23.23 0 0 1 .33.06l.26.34a.26.26 0 0 1 0 .36.25.25 0 0 1-.36-.05zM32.39 6.75l-.28-.31a.21.21 0 0 1 .31-.28l.3.31a.22.22 0 0 1 0 .31.21.21 0 0 1-.3 0zM30.89 5.29L30.56 5a.2.2 0 0 1 0-.28.21.21 0 0 1 .28 0l.33.27a.2.2 0 0 1-.25.31zM29.19 4.05l-.36-.22a.2.2 0 1 1 .2-.34l.37.23a.19.19 0 0 1 .06.27.18.18 0 0 1-.26.06zM27.34 3.07L27 2.91a.21.21 0 1 1 .16-.39l.39.18a.21.21 0 0 1 .11.27.22.22 0 0 1-.28.11zM25.37 2.36l-.37-.1a.25.25 0 0 1 .13-.49l.41.12a.24.24 0 0 1-.13.47zM23.32 2l-.42-.05a.3.3 0 0 1 .07-.6l.42.07a.29.29 0 0 1 .24.34.28.28 0 0 1-.32.24zM21.24 1.83h-.43a.34.34 0 0 1-.36-.34.34.34 0 0 1 .34-.36h.46a.33.33 0 0 1 .33.35.34.34 0 0 1-.33.33zM19.16 2l-.41.06a.41.41 0 1 1-.13-.81h.43a.4.4 0 0 1 .44.36.4.4 0 0 1-.33.43zM17.14 2.44l-.39.12a.46.46 0 0 1-.59-.31.48.48 0 0 1 .31-.6l.42-.11a.46.46 0 0 1 .25.89zM15.2 3.13l-.37.17a.5.5 0 0 1-.68-.25.51.51 0 0 1 .25-.68l.41-.16a.5.5 0 0 1 .66.27.51.51 0 0 1-.26.65zM13.38 4.08l-.38.21a.55.55 0 0 1-.59-.94l.38-.22a.55.55 0 0 1 .56.94z"
+							      class="cls-2"/>
+							<path d="M11.7 5.25l-.32.26a.58.58 0 0 1-.82-.08.58.58 0 0 1 .08-.82l.36-.27a.58.58 0 0 1 .72.9zM10.19 6.63l-.28.3V7A.61.61 0 0 1 9 6.12l.31-.32a.6.6 0 0 1 .85 0 .59.59 0 0 1 0 .84zM8.88 8.2l-.23.34a.64.64 0 0 1-.88.15.63.63 0 0 1-.15-.87l.26-.35a.62.62 0 0 1 .87-.13.62.62 0 0 1 .15.86zM7.8 9.93l-.18.36a.66.66 0 0 1-.88.28.65.65 0 0 1-.28-.88l.21-.39a.64.64 0 0 1 1.14.6zM7 11.79l-.14.38a.69.69 0 0 1-.86.43.68.68 0 0 1-.41-.86l.16-.41a.67.67 0 0 1 1.25.44zM6.38 13.73l-.08.4a.68.68 0 0 1-.81.52.68.68 0 0 1-.49-.79l.1-.43a.68.68 0 0 1 .81-.52.68.68 0 0 1 .52.81zM6.06 15.74v.41a.69.69 0 0 1-1.37-.11v-.44a.68.68 0 1 1 1.36.1zM6 17.78v.4a.67.67 0 0 1-1.34.07v-.44A.68.68 0 0 1 6 17.75zM6.2 19.8l.08.4a.65.65 0 0 1-.53.76.64.64 0 0 1-.75-.49L4.91 20a.66.66 0 0 1 1.29-.26zM6.68 21.78l.12.39a.63.63 0 0 1-1.2.4l-.15-.41a.66.66 0 0 1 .39-.82.64.64 0 0 1 .82.38zM7.4 23.69l.18.37a.58.58 0 0 1-.27.78.59.59 0 0 1-.78-.26l-.2-.39a.59.59 0 1 1 1-.55zM8.37 25.5l.22.35a.53.53 0 0 1-.17.73.51.51 0 0 1-.7-.14l-.26-.35a.54.54 0 0 1 .87-.64zM9.56 27.18l.26.32a.46.46 0 0 1-.06.63.45.45 0 0 1-.6 0l-.31-.31a.47.47 0 0 1 0-.65.45.45 0 0 1 .65 0zM11 28.7l.31.28a.36.36 0 0 1-.46.54l-.35-.26a.38.38 0 0 1-.06-.53.37.37 0 0 1 .52-.06zM12.57 30l.34.24a.27.27 0 0 1 .07.37.28.28 0 0 1-.36.08l-.37-.22a.28.28 0 0 1-.1-.39.28.28 0 0 1 .38-.1zM14.35 31.12l.38.19a.19.19 0 0 1 .09.25.19.19 0 0 1-.24.09l-.4-.17a.2.2 0 0 1-.11-.26.21.21 0 0 1 .27-.11zM16.29 32l.4.13a.12.12 0 0 1 .08.15.12.12 0 0 1-.15.08l-.41-.11a.15.15 0 0 1-.1-.17.14.14 0 0 1 .17-.09zM18.33 32.5l.41.06a.08.08 0 0 1 0 .16l-.42-.06a.1.1 0 0 1-.08-.1.09.09 0 0 1 .1-.07zM20.43 32.73h.42a.07.07 0 0 1 .07.07.07.07 0 0 1-.07.06h-.43a.06.06 0 0 1-.06-.06.07.07 0 0 1 .07-.07z"
+							      class="cls-2"/>
+						</g>
+					</svg>
+				</div>
+				<div class="about__nav-dot js-about-nav" data-index="4">
+					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 39.01 37.42">
+						<defs>
+							<style>
+								.cls-2 {
+									fill: #fff
+								}
+							</style>
+						</defs>
+						<g id="etapes">
+							<g opacity=".3" class="groupe-1">
+								<circle cx="17.84" cy="19.49" r="15.66" class="cls-2"/>
+								<path d="M17.84 35.21a15.72 15.72 0 1 1 15.71-15.72 15.73 15.73 0 0 1-15.71 15.72zm0-31.32a15.61 15.61 0 1 0 15.61 15.6 15.63 15.63 0 0 0-15.61-15.6z"
+								      class="cls-2"/>
+							</g>
+							<path d="M10.81 5.57l-.35.24a.12.12 0 0 1-.16 0 .12.12 0 0 1 0-.16l.4-.15a.07.07 0 0 1 .09 0 .07.07 0 0 1 .02.07zM9.1 6.81l-.32.27a.29.29 0 0 1-.41 0 .3.3 0 0 1 0-.41l.37-.22a.25.25 0 0 1 .35.08.27.27 0 0 1-.05.34zM7.56 8.21l-.29.3a.41.41 0 1 1-.59-.58l.32-.3a.39.39 0 0 1 .55 0 .39.39 0 0 1 0 .53zM6.19 9.77l-.25.33a.5.5 0 0 1-.8-.61l.29-.34a.49.49 0 0 1 .75.62zM5 11.46l-.21.36a.55.55 0 0 1-.76.19.54.54 0 0 1-.19-.75l.23-.37a.54.54 0 0 1 .75-.18.55.55 0 0 1 .18.74zM4.09 13.28l-.17.38a.57.57 0 0 1-1-.45l.08-.4a.58.58 0 0 1 1.06.45zM3.35 15.19l-.12.4a.54.54 0 0 1-1-.29l.11-.43a.55.55 0 1 1 1.06.27zM2.81 17.18l-.08.41a.43.43 0 0 1-.51.34.44.44 0 0 1-.35-.46v-.44a.46.46 0 1 1 .91.08v.05zM2.51 19.24v.41a.31.31 0 0 1-.33.29.3.3 0 0 1-.28-.29v-.43a.33.33 0 0 1 .32-.35.32.32 0 0 1 .34.31zM2.52 21.33v.42a.22.22 0 0 1-.19.24.22.22 0 0 1-.24-.18l-.07-.43a.23.23 0 0 1 .19-.26.22.22 0 0 1 .27.19zM2.87 23.4l.11.4H3a.21.21 0 0 1-.14.24.19.19 0 0 1-.24-.14l-.11-.42a.19.19 0 0 1 .13-.23.19.19 0 0 1 .24.13zM3.56 25.38l.18.38a.23.23 0 1 1-.42.2l-.16-.4a.22.22 0 0 1 .12-.29.23.23 0 0 1 .28.11zM4.55 27.22l.24.35a.32.32 0 0 1-.08.44.31.31 0 0 1-.44-.09l-.2-.39a.28.28 0 0 1 .12-.39.3.3 0 0 1 .38.09zM5.81 28.88l.28.31a.42.42 0 0 1-.63.56l-.25-.36a.4.4 0 0 1 .62-.5zM7.26 30.35l.31.27a.52.52 0 1 1-.68.78l-.31-.31a.5.5 0 0 1 0-.71.5.5 0 0 1 .68 0zM8.87 31.63l.34.23a.58.58 0 0 1 .15.81.59.59 0 0 1-.81.15l-.35-.26a.57.57 0 0 1 .67-.93zM10.62 32.69l.36.18a.63.63 0 1 1-.55 1.13l-.43-.23a.62.62 0 0 1 .58-1.09zM12.48 33.51l.39.13a.66.66 0 0 1 .41.85.67.67 0 0 1-.84.41l-.44-.16a.66.66 0 0 1-.38-.85.67.67 0 0 1 .83-.39zM14.43 34.08l.4.09a.69.69 0 0 1-.29 1.34l-.43-.1a.68.68 0 1 1 .29-1.33zM16.44 34.42h.41a.67.67 0 0 1 .6.72.68.68 0 0 1-.71.61h-.44a.68.68 0 0 1-.63-.72.67.67 0 0 1 .71-.63zM18.48 34.5h.42a.63.63 0 0 1 .1 1.24h-.44a.64.64 0 0 1-.1-1.28h.05zM20.52 34.34l.4-.07a.57.57 0 0 1 .21 1.11l-.43.1a.58.58 0 1 1-.25-1.13h.05zM22.53 33.92l.39-.12a.47.47 0 0 1 .59.32.49.49 0 0 1-.29.59l-.41.15a.5.5 0 0 1-.64-.28.49.49 0 0 1 .29-.64zM24.48 33.25l.39-.17a.36.36 0 0 1 .48.19.37.37 0 0 1-.16.46l-.38.22a.39.39 0 0 1-.53-.15.39.39 0 0 1 .14-.53zM26.36 32.33l.37-.21a.22.22 0 0 1 .3.08.22.22 0 0 1-.05.28l-.34.27a.26.26 0 0 1-.36 0 .25.25 0 0 1 0-.35zM28.14 31.19l.11-.08a.06.06 0 0 1 .09 0 .06.06 0 0 1 0 .08l-.1.11a.08.08 0 0 1-.11-.11zM21 32.74h.42a.07.07 0 0 1 .07.07.07.07 0 0 1-.06.07H21a.06.06 0 0 1-.06-.06.07.07 0 0 1 .06-.08zM23.08 32.59l.42-.07a.07.07 0 0 1 .09.07.08.08 0 0 1-.06.09l-.43.06a.07.07 0 0 1-.08-.07.06.06 0 0 1 .06-.08zM25.14 32.13l.41-.13a.12.12 0 0 1 .07.23l-.41.11a.11.11 0 0 1-.14-.08.1.1 0 0 1 .07-.13zM27.11 31.37l.38-.19a.19.19 0 0 1 .17.34l-.4.16a.17.17 0 0 1-.23-.09.18.18 0 0 1 .09-.22zM28.94 30.34l.34-.24a.27.27 0 1 1 .3.44l-.37.22a.26.26 0 0 1-.34-.1.25.25 0 0 1 .07-.33zM30.6 29.07l.31-.28a.36.36 0 0 1 .5 0 .35.35 0 0 1 0 .5l-.34.26a.33.33 0 0 1-.47-.06.33.33 0 0 1 0-.45zM32.06 27.6l.27-.32a.44.44 0 1 1 .66.57l-.31.31a.41.41 0 0 1-.59 0 .42.42 0 0 1 0-.57zM33.31 26l.23-.35a.5.5 0 1 1 .84.56l-.26.35a.5.5 0 0 1-.69.11.48.48 0 0 1-.12-.67zM34.35 24.18l.18-.37a.56.56 0 0 1 .74-.25.55.55 0 0 1 .24.74l-.21.39a.53.53 0 0 1-.73.23.55.55 0 0 1-.24-.72zM35.16 22.3l.13-.39a.57.57 0 0 1 1.09.36l-.15.42a.58.58 0 0 1-.73.34.56.56 0 0 1-.35-.71zM35.72 20.33l.09-.4a.57.57 0 0 1 1.11.23l-.08.43a.57.57 0 0 1-1.12-.22zM36 18.31v-.41a.54.54 0 0 1 1.08.07v.44a.54.54 0 0 1-.57.52.55.55 0 0 1-.53-.57zM36.09 16.25v-.43a.48.48 0 0 1 .47-.51.51.51 0 0 1 .52.44v.44a.51.51 0 0 1-.46.56.5.5 0 0 1-.55-.46zM35.9 14.2l-.08-.41a.45.45 0 0 1 .35-.51.44.44 0 0 1 .5.33l.1.42a.44.44 0 0 1-.33.54.45.45 0 0 1-.54-.33zM35.42 12.18l-.13-.39a.36.36 0 0 1 .24-.47.37.37 0 0 1 .46.22l.16.4a.39.39 0 0 1-.22.5.38.38 0 0 1-.5-.22zM34.67 10.24l-.18-.37a.31.31 0 0 1 .51-.3l.21.38a.32.32 0 0 1-.56.32zM33.66 8.41l-.24-.34a.24.24 0 0 1 .07-.34.23.23 0 0 1 .33.06l.26.34a.26.26 0 0 1 0 .36.25.25 0 0 1-.36-.05zM32.39 6.75l-.28-.31a.21.21 0 0 1 .31-.28l.3.31a.22.22 0 0 1 0 .31.21.21 0 0 1-.3 0zM30.89 5.29L30.56 5a.2.2 0 0 1 0-.28.21.21 0 0 1 .28 0l.33.27a.2.2 0 0 1-.25.31zM29.19 4.05l-.36-.22a.2.2 0 1 1 .2-.34l.37.23a.19.19 0 0 1 .06.27.18.18 0 0 1-.26.06zM27.34 3.07L27 2.91a.21.21 0 1 1 .16-.39l.39.18a.21.21 0 0 1 .11.27.22.22 0 0 1-.28.11zM25.37 2.36l-.37-.1a.25.25 0 0 1 .13-.49l.41.12a.24.24 0 0 1-.13.47zM23.32 2l-.42-.05a.3.3 0 0 1 .07-.6l.42.07a.29.29 0 0 1 .24.34.28.28 0 0 1-.32.24zM21.24 1.83h-.43a.34.34 0 0 1-.36-.34.34.34 0 0 1 .34-.36h.46a.33.33 0 0 1 .33.35.34.34 0 0 1-.33.33zM19.16 2l-.41.06a.41.41 0 1 1-.13-.81h.43a.4.4 0 0 1 .44.36.4.4 0 0 1-.33.43zM17.14 2.44l-.39.12a.46.46 0 0 1-.59-.31.48.48 0 0 1 .31-.6l.42-.11a.46.46 0 0 1 .25.89zM15.2 3.13l-.37.17a.5.5 0 0 1-.68-.25.51.51 0 0 1 .25-.68l.41-.16a.5.5 0 0 1 .66.27.51.51 0 0 1-.26.65zM13.38 4.08l-.38.21a.55.55 0 0 1-.59-.94l.38-.22a.55.55 0 0 1 .56.94z"
+							      class="cls-2"/>
+							<path d="M11.7 5.25l-.32.26a.58.58 0 0 1-.82-.08.58.58 0 0 1 .08-.82l.36-.27a.58.58 0 0 1 .72.9zM10.19 6.63l-.28.3V7A.61.61 0 0 1 9 6.12l.31-.32a.6.6 0 0 1 .85 0 .59.59 0 0 1 0 .84zM8.88 8.2l-.23.34a.64.64 0 0 1-.88.15.63.63 0 0 1-.15-.87l.26-.35a.62.62 0 0 1 .87-.13.62.62 0 0 1 .15.86zM7.8 9.93l-.18.36a.66.66 0 0 1-.88.28.65.65 0 0 1-.28-.88l.21-.39a.64.64 0 0 1 1.14.6zM7 11.79l-.14.38a.69.69 0 0 1-.86.43.68.68 0 0 1-.41-.86l.16-.41a.67.67 0 0 1 1.25.44zM6.38 13.73l-.08.4a.68.68 0 0 1-.81.52.68.68 0 0 1-.49-.79l.1-.43a.68.68 0 0 1 .81-.52.68.68 0 0 1 .52.81zM6.06 15.74v.41a.69.69 0 0 1-1.37-.11v-.44a.68.68 0 1 1 1.36.1zM6 17.78v.4a.67.67 0 0 1-1.34.07v-.44A.68.68 0 0 1 6 17.75zM6.2 19.8l.08.4a.65.65 0 0 1-.53.76.64.64 0 0 1-.75-.49L4.91 20a.66.66 0 0 1 1.29-.26zM6.68 21.78l.12.39a.63.63 0 0 1-1.2.4l-.15-.41a.66.66 0 0 1 .39-.82.64.64 0 0 1 .82.38zM7.4 23.69l.18.37a.58.58 0 0 1-.27.78.59.59 0 0 1-.78-.26l-.2-.39a.59.59 0 1 1 1-.55zM8.37 25.5l.22.35a.53.53 0 0 1-.17.73.51.51 0 0 1-.7-.14l-.26-.35a.54.54 0 0 1 .87-.64zM9.56 27.18l.26.32a.46.46 0 0 1-.06.63.45.45 0 0 1-.6 0l-.31-.31a.47.47 0 0 1 0-.65.45.45 0 0 1 .65 0zM11 28.7l.31.28a.36.36 0 0 1-.46.54l-.35-.26a.38.38 0 0 1-.06-.53.37.37 0 0 1 .52-.06zM12.57 30l.34.24a.27.27 0 0 1 .07.37.28.28 0 0 1-.36.08l-.37-.22a.28.28 0 0 1-.1-.39.28.28 0 0 1 .38-.1zM14.35 31.12l.38.19a.19.19 0 0 1 .09.25.19.19 0 0 1-.24.09l-.4-.17a.2.2 0 0 1-.11-.26.21.21 0 0 1 .27-.11zM16.29 32l.4.13a.12.12 0 0 1 .08.15.12.12 0 0 1-.15.08l-.41-.11a.15.15 0 0 1-.1-.17.14.14 0 0 1 .17-.09zM18.33 32.5l.41.06a.08.08 0 0 1 0 .16l-.42-.06a.1.1 0 0 1-.08-.1.09.09 0 0 1 .1-.07zM20.43 32.73h.42a.07.07 0 0 1 .07.07.07.07 0 0 1-.07.06h-.43a.06.06 0 0 1-.06-.06.07.07 0 0 1 .07-.07z"
+							      class="cls-2"/>
+						</g>
+					</svg>
+				</div>
+				<div class="about__nav-dot js-about-nav" data-index="5">
+					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 39.01 37.42">
+						<defs>
+							<style>
+								.cls-2 {
+									fill: #fff
+								}
+							</style>
+						</defs>
+						<g id="etapes">
+							<g opacity=".3" class="groupe-1">
+								<circle cx="17.84" cy="19.49" r="15.66" class="cls-2"/>
+								<path d="M17.84 35.21a15.72 15.72 0 1 1 15.71-15.72 15.73 15.73 0 0 1-15.71 15.72zm0-31.32a15.61 15.61 0 1 0 15.61 15.6 15.63 15.63 0 0 0-15.61-15.6z"
+								      class="cls-2"/>
+							</g>
+							<path d="M10.81 5.57l-.35.24a.12.12 0 0 1-.16 0 .12.12 0 0 1 0-.16l.4-.15a.07.07 0 0 1 .09 0 .07.07 0 0 1 .02.07zM9.1 6.81l-.32.27a.29.29 0 0 1-.41 0 .3.3 0 0 1 0-.41l.37-.22a.25.25 0 0 1 .35.08.27.27 0 0 1-.05.34zM7.56 8.21l-.29.3a.41.41 0 1 1-.59-.58l.32-.3a.39.39 0 0 1 .55 0 .39.39 0 0 1 0 .53zM6.19 9.77l-.25.33a.5.5 0 0 1-.8-.61l.29-.34a.49.49 0 0 1 .75.62zM5 11.46l-.21.36a.55.55 0 0 1-.76.19.54.54 0 0 1-.19-.75l.23-.37a.54.54 0 0 1 .75-.18.55.55 0 0 1 .18.74zM4.09 13.28l-.17.38a.57.57 0 0 1-1-.45l.08-.4a.58.58 0 0 1 1.06.45zM3.35 15.19l-.12.4a.54.54 0 0 1-1-.29l.11-.43a.55.55 0 1 1 1.06.27zM2.81 17.18l-.08.41a.43.43 0 0 1-.51.34.44.44 0 0 1-.35-.46v-.44a.46.46 0 1 1 .91.08v.05zM2.51 19.24v.41a.31.31 0 0 1-.33.29.3.3 0 0 1-.28-.29v-.43a.33.33 0 0 1 .32-.35.32.32 0 0 1 .34.31zM2.52 21.33v.42a.22.22 0 0 1-.19.24.22.22 0 0 1-.24-.18l-.07-.43a.23.23 0 0 1 .19-.26.22.22 0 0 1 .27.19zM2.87 23.4l.11.4H3a.21.21 0 0 1-.14.24.19.19 0 0 1-.24-.14l-.11-.42a.19.19 0 0 1 .13-.23.19.19 0 0 1 .24.13zM3.56 25.38l.18.38a.23.23 0 1 1-.42.2l-.16-.4a.22.22 0 0 1 .12-.29.23.23 0 0 1 .28.11zM4.55 27.22l.24.35a.32.32 0 0 1-.08.44.31.31 0 0 1-.44-.09l-.2-.39a.28.28 0 0 1 .12-.39.3.3 0 0 1 .38.09zM5.81 28.88l.28.31a.42.42 0 0 1-.63.56l-.25-.36a.4.4 0 0 1 .62-.5zM7.26 30.35l.31.27a.52.52 0 1 1-.68.78l-.31-.31a.5.5 0 0 1 0-.71.5.5 0 0 1 .68 0zM8.87 31.63l.34.23a.58.58 0 0 1 .15.81.59.59 0 0 1-.81.15l-.35-.26a.57.57 0 0 1 .67-.93zM10.62 32.69l.36.18a.63.63 0 1 1-.55 1.13l-.43-.23a.62.62 0 0 1 .58-1.09zM12.48 33.51l.39.13a.66.66 0 0 1 .41.85.67.67 0 0 1-.84.41l-.44-.16a.66.66 0 0 1-.38-.85.67.67 0 0 1 .83-.39zM14.43 34.08l.4.09a.69.69 0 0 1-.29 1.34l-.43-.1a.68.68 0 1 1 .29-1.33zM16.44 34.42h.41a.67.67 0 0 1 .6.72.68.68 0 0 1-.71.61h-.44a.68.68 0 0 1-.63-.72.67.67 0 0 1 .71-.63zM18.48 34.5h.42a.63.63 0 0 1 .1 1.24h-.44a.64.64 0 0 1-.1-1.28h.05zM20.52 34.34l.4-.07a.57.57 0 0 1 .21 1.11l-.43.1a.58.58 0 1 1-.25-1.13h.05zM22.53 33.92l.39-.12a.47.47 0 0 1 .59.32.49.49 0 0 1-.29.59l-.41.15a.5.5 0 0 1-.64-.28.49.49 0 0 1 .29-.64zM24.48 33.25l.39-.17a.36.36 0 0 1 .48.19.37.37 0 0 1-.16.46l-.38.22a.39.39 0 0 1-.53-.15.39.39 0 0 1 .14-.53zM26.36 32.33l.37-.21a.22.22 0 0 1 .3.08.22.22 0 0 1-.05.28l-.34.27a.26.26 0 0 1-.36 0 .25.25 0 0 1 0-.35zM28.14 31.19l.11-.08a.06.06 0 0 1 .09 0 .06.06 0 0 1 0 .08l-.1.11a.08.08 0 0 1-.11-.11zM21 32.74h.42a.07.07 0 0 1 .07.07.07.07 0 0 1-.06.07H21a.06.06 0 0 1-.06-.06.07.07 0 0 1 .06-.08zM23.08 32.59l.42-.07a.07.07 0 0 1 .09.07.08.08 0 0 1-.06.09l-.43.06a.07.07 0 0 1-.08-.07.06.06 0 0 1 .06-.08zM25.14 32.13l.41-.13a.12.12 0 0 1 .07.23l-.41.11a.11.11 0 0 1-.14-.08.1.1 0 0 1 .07-.13zM27.11 31.37l.38-.19a.19.19 0 0 1 .17.34l-.4.16a.17.17 0 0 1-.23-.09.18.18 0 0 1 .09-.22zM28.94 30.34l.34-.24a.27.27 0 1 1 .3.44l-.37.22a.26.26 0 0 1-.34-.1.25.25 0 0 1 .07-.33zM30.6 29.07l.31-.28a.36.36 0 0 1 .5 0 .35.35 0 0 1 0 .5l-.34.26a.33.33 0 0 1-.47-.06.33.33 0 0 1 0-.45zM32.06 27.6l.27-.32a.44.44 0 1 1 .66.57l-.31.31a.41.41 0 0 1-.59 0 .42.42 0 0 1 0-.57zM33.31 26l.23-.35a.5.5 0 1 1 .84.56l-.26.35a.5.5 0 0 1-.69.11.48.48 0 0 1-.12-.67zM34.35 24.18l.18-.37a.56.56 0 0 1 .74-.25.55.55 0 0 1 .24.74l-.21.39a.53.53 0 0 1-.73.23.55.55 0 0 1-.24-.72zM35.16 22.3l.13-.39a.57.57 0 0 1 1.09.36l-.15.42a.58.58 0 0 1-.73.34.56.56 0 0 1-.35-.71zM35.72 20.33l.09-.4a.57.57 0 0 1 1.11.23l-.08.43a.57.57 0 0 1-1.12-.22zM36 18.31v-.41a.54.54 0 0 1 1.08.07v.44a.54.54 0 0 1-.57.52.55.55 0 0 1-.53-.57zM36.09 16.25v-.43a.48.48 0 0 1 .47-.51.51.51 0 0 1 .52.44v.44a.51.51 0 0 1-.46.56.5.5 0 0 1-.55-.46zM35.9 14.2l-.08-.41a.45.45 0 0 1 .35-.51.44.44 0 0 1 .5.33l.1.42a.44.44 0 0 1-.33.54.45.45 0 0 1-.54-.33zM35.42 12.18l-.13-.39a.36.36 0 0 1 .24-.47.37.37 0 0 1 .46.22l.16.4a.39.39 0 0 1-.22.5.38.38 0 0 1-.5-.22zM34.67 10.24l-.18-.37a.31.31 0 0 1 .51-.3l.21.38a.32.32 0 0 1-.56.32zM33.66 8.41l-.24-.34a.24.24 0 0 1 .07-.34.23.23 0 0 1 .33.06l.26.34a.26.26 0 0 1 0 .36.25.25 0 0 1-.36-.05zM32.39 6.75l-.28-.31a.21.21 0 0 1 .31-.28l.3.31a.22.22 0 0 1 0 .31.21.21 0 0 1-.3 0zM30.89 5.29L30.56 5a.2.2 0 0 1 0-.28.21.21 0 0 1 .28 0l.33.27a.2.2 0 0 1-.25.31zM29.19 4.05l-.36-.22a.2.2 0 1 1 .2-.34l.37.23a.19.19 0 0 1 .06.27.18.18 0 0 1-.26.06zM27.34 3.07L27 2.91a.21.21 0 1 1 .16-.39l.39.18a.21.21 0 0 1 .11.27.22.22 0 0 1-.28.11zM25.37 2.36l-.37-.1a.25.25 0 0 1 .13-.49l.41.12a.24.24 0 0 1-.13.47zM23.32 2l-.42-.05a.3.3 0 0 1 .07-.6l.42.07a.29.29 0 0 1 .24.34.28.28 0 0 1-.32.24zM21.24 1.83h-.43a.34.34 0 0 1-.36-.34.34.34 0 0 1 .34-.36h.46a.33.33 0 0 1 .33.35.34.34 0 0 1-.33.33zM19.16 2l-.41.06a.41.41 0 1 1-.13-.81h.43a.4.4 0 0 1 .44.36.4.4 0 0 1-.33.43zM17.14 2.44l-.39.12a.46.46 0 0 1-.59-.31.48.48 0 0 1 .31-.6l.42-.11a.46.46 0 0 1 .25.89zM15.2 3.13l-.37.17a.5.5 0 0 1-.68-.25.51.51 0 0 1 .25-.68l.41-.16a.5.5 0 0 1 .66.27.51.51 0 0 1-.26.65zM13.38 4.08l-.38.21a.55.55 0 0 1-.59-.94l.38-.22a.55.55 0 0 1 .56.94z"
+							      class="cls-2"/>
+							<path d="M11.7 5.25l-.32.26a.58.58 0 0 1-.82-.08.58.58 0 0 1 .08-.82l.36-.27a.58.58 0 0 1 .72.9zM10.19 6.63l-.28.3V7A.61.61 0 0 1 9 6.12l.31-.32a.6.6 0 0 1 .85 0 .59.59 0 0 1 0 .84zM8.88 8.2l-.23.34a.64.64 0 0 1-.88.15.63.63 0 0 1-.15-.87l.26-.35a.62.62 0 0 1 .87-.13.62.62 0 0 1 .15.86zM7.8 9.93l-.18.36a.66.66 0 0 1-.88.28.65.65 0 0 1-.28-.88l.21-.39a.64.64 0 0 1 1.14.6zM7 11.79l-.14.38a.69.69 0 0 1-.86.43.68.68 0 0 1-.41-.86l.16-.41a.67.67 0 0 1 1.25.44zM6.38 13.73l-.08.4a.68.68 0 0 1-.81.52.68.68 0 0 1-.49-.79l.1-.43a.68.68 0 0 1 .81-.52.68.68 0 0 1 .52.81zM6.06 15.74v.41a.69.69 0 0 1-1.37-.11v-.44a.68.68 0 1 1 1.36.1zM6 17.78v.4a.67.67 0 0 1-1.34.07v-.44A.68.68 0 0 1 6 17.75zM6.2 19.8l.08.4a.65.65 0 0 1-.53.76.64.64 0 0 1-.75-.49L4.91 20a.66.66 0 0 1 1.29-.26zM6.68 21.78l.12.39a.63.63 0 0 1-1.2.4l-.15-.41a.66.66 0 0 1 .39-.82.64.64 0 0 1 .82.38zM7.4 23.69l.18.37a.58.58 0 0 1-.27.78.59.59 0 0 1-.78-.26l-.2-.39a.59.59 0 1 1 1-.55zM8.37 25.5l.22.35a.53.53 0 0 1-.17.73.51.51 0 0 1-.7-.14l-.26-.35a.54.54 0 0 1 .87-.64zM9.56 27.18l.26.32a.46.46 0 0 1-.06.63.45.45 0 0 1-.6 0l-.31-.31a.47.47 0 0 1 0-.65.45.45 0 0 1 .65 0zM11 28.7l.31.28a.36.36 0 0 1-.46.54l-.35-.26a.38.38 0 0 1-.06-.53.37.37 0 0 1 .52-.06zM12.57 30l.34.24a.27.27 0 0 1 .07.37.28.28 0 0 1-.36.08l-.37-.22a.28.28 0 0 1-.1-.39.28.28 0 0 1 .38-.1zM14.35 31.12l.38.19a.19.19 0 0 1 .09.25.19.19 0 0 1-.24.09l-.4-.17a.2.2 0 0 1-.11-.26.21.21 0 0 1 .27-.11zM16.29 32l.4.13a.12.12 0 0 1 .08.15.12.12 0 0 1-.15.08l-.41-.11a.15.15 0 0 1-.1-.17.14.14 0 0 1 .17-.09zM18.33 32.5l.41.06a.08.08 0 0 1 0 .16l-.42-.06a.1.1 0 0 1-.08-.1.09.09 0 0 1 .1-.07zM20.43 32.73h.42a.07.07 0 0 1 .07.07.07.07 0 0 1-.07.06h-.43a.06.06 0 0 1-.06-.06.07.07 0 0 1 .07-.07z"
+							      class="cls-2"/>
+						</g>
+					</svg>
 				</div>
 			</div>
 		</div>
 	</div>
 </div>
+
+<div class="background-generative js-generative"></div>
+
+<div id="main" class="scene-container js-scene-container"></div>
+
+
 <audio id="audio">
 	<source src="" type="audio/mpeg">
 </audio>
+
 </body>
 </html>
