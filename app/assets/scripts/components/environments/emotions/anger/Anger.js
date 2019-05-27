@@ -315,7 +315,7 @@ export default class Anger {
 		this.initPhysics();
 		this.helpers();
 
-		this.displayGraphState();
+		//this.displayGraphState();
 
 		await this.initObjects();
 
@@ -398,7 +398,7 @@ export default class Anger {
 							div = document.createElement("div");
 							document.querySelector('.afterIntroEmoBis').style.display = 'none';
 							div.innerHTML =
-								'<p>How can I get them out of my way ?</p>'
+								'<p>How can I get them out of my way ?</p>';
 
 							div.classList.add("afterIntroEmoBisBis");
 

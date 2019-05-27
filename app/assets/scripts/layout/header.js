@@ -23,12 +23,12 @@ const header = {
 
 		if(elmt.classList.contains('active')) {
 			elmt.classList.remove('active');
-			new TimelineMax().to(elmt, 0.2, {opacity: 0, x: -10, ease: "ease-in"})
+			new TimelineMax().to(elmt, 0.2, {opacity: 0, x: -30, ease: "ease-in"})
 				.to(elmt, 0.2, {display: 'none'});
 		} else {
 			elmt.classList.add('active');
 			new TimelineMax().to(elmt, 0.2, {display: 'inline'})
-				.to(elmt, 0.2, {opacity: 1, x: 10, ease: "ease-in"});
+				.to(elmt, 0.2, {opacity: 1, x: -10, ease: "ease-in"});
 		}
 	}
 };

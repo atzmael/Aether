@@ -1,4 +1,5 @@
 body {
+	background-color: $blue;
 	background-image: url($dir + 'assets/medias/images/background.jpg');
 	background-repeat: no-repeat;
 	background-position: center center;
@@ -6,6 +7,27 @@ body {
 
 	@extend .courant-text;
 	color: $white;
+}
+
+a {
+	@extend .courant-text;
+	color: white;
+	text-decoration: none;
+}
+
+h1, h2, h3, h4, p {
+	cursor: default;
+	user-select: none;
+	-moz-user-select: none;
+	-webkit-user-select: none;
+	-ms-user-select: none;
+}
+
+.scene-container {
+	display: none;
+	opacity: 0;
+	width: 100vw;
+	height: 100vh;
 }
 
 .background-generative {
@@ -17,6 +39,9 @@ body {
 	width: 100vw;
 	height: 100vh;
 	position:absolute;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 	top:0;
 	left:0;
 	z-index:-1;
@@ -31,16 +56,6 @@ body {
 .is-intro {
 	.header {
 		display: none;
-	}
-}
-
-.is-game {
-	.header {
-		.menu {
-			.item-help {
-				display: inline-block;
-			}
-		}
 	}
 }
 

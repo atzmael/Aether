@@ -1,6 +1,11 @@
 .about {
+	justify-content: space-around;
 	flex-flow:column;
-	justify-content: flex-start;
+
+	background-image: url($dir + 'assets/medias/images/background.jpg');
+	background-repeat: no-repeat;
+	background-position: center center;
+	background-size: cover;
 
 	&__container {
 		background-color: rgba(9,9,43, 0.6);
@@ -8,7 +13,7 @@
 		max-width: 90%;
 		height:100%;
 		max-height: 75%;
-		margin: 10px auto 0;
+		margin: 0 auto;
 
 		display: flex;
 		justify-content: space-around;
@@ -66,14 +71,12 @@
 		}
 	}
 
-	&__logo {
-		margin-top: 60px;
-
-		&-img {
-			width: 100%;
-			max-width: 100%;
-		}
+	&__title {
+		@extend .heading-2;
+		margin-top: 10px;
 	}
+
+
 
 	&__subtitle {
 		white-space: nowrap;

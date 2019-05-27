@@ -13,11 +13,21 @@
 
 	&__text {
 		@extend .question-text;
+		overflow:hidden;
+
+		span {
+			display: inline-block;
+			transform: translateY(40px);
+		}
 	}
 
 	&__help {
 		margin-top: 5px;
-		opacity: 0.6;
+		overflow:hidden;
+
+		span {
+			opacity: 0;
+		}
 	}
 
 	&__blob {

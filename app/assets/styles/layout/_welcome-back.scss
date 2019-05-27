@@ -4,9 +4,79 @@
 	justify-content: center;
 	align-items: center;
 
+	&__container {
+		position: relative;
+	}
+
 	&__title {
-		@extend .courant-text;
-		text-align:center;
+		@extend .heading-1;
+		text-align: center;
 		color: $white;
+	}
+
+	&__btn {
+		text-align: right;
+		display: block;
+		position:relative;
+
+		&-container {
+			position: absolute;
+			top: 100%;
+			right: 0;
+		}
+
+		&-refresh {
+			padding-right: 35px;
+
+			.icon-container {
+				right: 0;
+			}
+			.icon-move {
+				top: 0;
+				right: 2px;
+			}
+
+			&:hover {
+				.icon-move {
+					transform: translate(2px, 1px);
+				}
+			}
+		}
+
+		&-continue {
+			padding-left: 35px;
+			margin: 30px 50px 0 0;
+
+			.icon-container {
+				left: 0;
+			}
+
+			.icon-move {
+				top:0;
+				left:0;
+			}
+
+			&:hover {
+				.icon-move {
+					transform: translate(-2px, 1px);
+				}
+			}
+		}
+
+		.icon {
+			width: 25px;
+			height: 25px;
+		}
+
+		.icon-container {
+			position:absolute;
+			top:50%;
+			transform: translateY(-50%);
+		}
+
+		.icon-move {
+			position: absolute;
+			transition: 200ms transform ease-in-out;
+		}
 	}
 }

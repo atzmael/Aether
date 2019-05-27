@@ -28,6 +28,7 @@ const discoverEmotion = {
 		this.ui.btnEmotion.forEach(e => {e.addEventListener('click', this.buildEmotion.bind(this));});
 		this.ui.btnSlider.addEventListener('click', function(e) {
 			e.preventDefault();
+			console.log('click');
 			this.introductionNextSlide(this.increment);
 		}.bind(this));
 		

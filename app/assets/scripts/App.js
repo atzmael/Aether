@@ -4,9 +4,13 @@ import lottie from 'lottie-web';
 import sceneSwitch from './layout/navigation/sceneSwitch';
 import router from "./layout/navigation/router";
 import discoverEmotion from "./layout/navigation/discoverEmotion";
-import cookies from "./utils/cookies";
+import storage from "./utils/storage";
 import header from "./layout/header";
 import aboutNav from "./layout/navigation/aboutNav";
+import introEmotion from "./layout/navigation/introEmotion";
+import panel from './layout/navigation/panel';
+import animations from './layout/animations';
+
 import generativeCircle from "./utils/generative-circle";
 
 import cursor from "./utils/Cursor";
@@ -16,8 +20,8 @@ import SoundHandler from "./utils/Sound";
 
 window.onload = () => {
 
-	// Cookies handler
-	window.COOKIES = cookies;
+	// Storage handler
+	storage.init();
 
 	new cursor();
 
@@ -30,47 +34,46 @@ window.onload = () => {
 		aboutNav.init();
 	}
 
-	// Fast switch scene in menu
+	/*
 	if (document.querySelector('.js-scene-container')) {
 		sceneSwitch.init();
+	}
+	*/
+
+	if (document.querySelector('.js-intro-emotion')) {
+		introEmotion.init();
+	}
+
+	if(document.querySelector('.js-panel')) {
+		panel.init();
 	}
 
 	if (document.querySelector('.js-emotion-choice')) {
 		discoverEmotion.init();
 	}
 
-	if(document.querySelector('.js-generative')) {
-		//generativeCircle.init();
-	}
-
-	// Skip intro if you already saw it
-	/*
-	if(COOKIES.read('intro-is-finished')) {
-		rooter.skipIntro();
-	}
-	*/
-
 	// Build navigation controller
 	if(document.querySelector('.js-header')) {
 		header.init();
 	}
 
+	animations.init();
 
-	/** SVGs animation handler **/
+	/** Dev only **/
+	//router.defineNextSection('', 'intro-emotion');
+	//new Anger();
+	/** **/
 
-	// Logo
+	// Skip intro if you already saw it
 
-	let logoAnim = lottie.loadAnimation({
-		container: document.querySelector('.js-intro-logo'), // the dom element that will contain the animation
-		renderer: 'svg',
-		loop: false,
-		autoplay: false,
-		path: `${DIR}/assets/datas/logo.json` // the path to the animation json
-	});
 
-	document.querySelector('.js-anim-logo').addEventListener('click', () => {
+	if(storage.read('skipintro') == 'true') {
+		router.defineNextSection('','welcome-back');
+	} else {
 		setTimeout(() => {
-			logoAnim.play();
-		}, 600);
-	});
+			TweenMax.to(document.querySelector('.js-loading-landing'), 0.2, {opacity: 0, ease: 'ease-out'});
+			new p5(generativeCircle);
+		}, 2000);
+	}
+
 };

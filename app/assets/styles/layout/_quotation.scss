@@ -5,15 +5,20 @@
 	&__text {
 		@extend .quote-text;
 		color: $white;
+
+		&-anim {
+			overflow: hidden;
+			span {
+				display: inline-block;
+				transform: translateY(30px);
+			}
+		}
 	}
 
 	&__credit {
 		color: $white;
 		margin: 20px 0 0;
 		display: inline-block;
-	}
-
-	&__container {
-
+		opacity: 0;
 	}
 }

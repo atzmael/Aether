@@ -25,6 +25,20 @@
 			}
 		}
 
+		.item-menu {
+			.menu__link {
+				width: 50px;
+				height: 50px;
+				border-radius: 50%;
+				display:inline-block;
+
+				img {
+					width: 50px;
+					height: 50px;
+				}
+			}
+		}
+
 		.item-help {
 			display: none;
 		}
@@ -47,17 +61,20 @@
 				top: 50%;
 				left: 100%;
 				opacity: 0;
-				transform: translateX(-10px) translateY(-19px);
+				padding-left: 20px;
+				transform: translateX(-30px) translateY(-14px);
 				width: 200px;
 			}
 
 			&__icon {
-
+				width:85px;
+				height:85px;
 			}
 
 			.icon-move {
 				position:absolute;
-				top:0;
+				top:-1px;
+				left:0;
 				transition: 200ms transform ease-in-out;
 			}
 		}
@@ -65,10 +82,18 @@
 
 	&.is-secondary {
 		.menu {
-			.item-menu, .item-help {
+			.item-menu {
 				display: none;
 			}
 			.item-about {
+				display: block;
+			}
+		}
+	}
+
+	&.is-third {
+		.menu {
+			.item-help {
 				display: block;
 			}
 		}

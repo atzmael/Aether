@@ -1,10 +1,11 @@
 <html>
 <head>
 	<title>Aether</title>
-	<link rel="icon" href="/app/assets/medias/images/favicon.png">
+	<link rel="icon" href="/projects/aether/assets/medias/images/favicon.png">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta charset="UTF-8">
 </head>
-<body class="">
+<body class="is-intro">
 
 <div id="cursor">
 	<div id="dot"></div>
@@ -17,18 +18,21 @@
 	</svg> -->
 </div>
 
-<header class="header js-header is-secondary">
+<header class="header js-header">
 	<nav class="menu js-menu">
 		<ul class="menu__container">
 			<li class="menu__item item-about js-menu-item js-about-hover">
-				<a href="#" class="btn menu__link js-menu-about js-router" data-next="about">
-					<img src="/app/assets/medias/svgs/plus-bas.svg" alt="" class="item-about__icon">
-					<img src="/app/assets/medias/svgs/plus-haut.svg" alt="" class="item-about__icon icon-move">
+				<a href="#" class="btn menu__link js-menu-about js-panel-btn" data-panel="about">
+					<img src="/projects/aether/assets/medias/svgs/plus-bas.svg" alt="" class="item-about__icon">
+					<img src="/projects/aether/assets/medias/svgs/plus-haut.svg" alt="" class="item-about__icon icon-move">
 					<span class="item-about__tooltip js-menu-about-tooltip">ABOUT the project</span>
 				</a>
 			</li>
-			<li class="menu__item item-menu js-menu-item"><a href="#" class="btn menu__link js-menu">Menu</a></li>
-			<li class="menu__item item-help js-menu-item"><a href="#" class="btn menu__link js-help">Help</a></li>
+			<li class="menu__item item-menu js-menu-item"><a href="#" class="btn menu__link js-main-menu">
+				<img src="/projects/aether/assets/medias/svgs/picto-menu.svg" alt="">
+			</a></li>
+			<li class="menu__item item-help js-menu-item"><a href="#" class="btn menu__link js-help js-panel-btn"
+			                                                 data-panel="game-help">Help</a></li>
 		</ul>
 	</nav>
 </header>
@@ -37,73 +41,81 @@
 <div id="page-content" class="page-content js-page-content">
 
 	<!-- Main sections -->
-	<section id="landing" class="section landing js-router" data-current="landing" data-next="quotation" data-page="0">
+	<section id="landing" class="section landing js-router js-landing is-visible" data-current="landing"
+	         data-next="quotation" data-page="0">
 		<div class="landing__container">
 			<div class="landing__media">
-				<p>Landing debug text</p>
+				<p class="js-loading-landing">Loading...</p>
 			</div>
 		</div>
 	</section>
 
-	<section id="quotation" class="section quotation js-router js-anim-logo" data-current="quotation" data-next="intro"
+	<section id="quotation" class="section quotation js-router js-quotation" data-current="quotation" data-next="intro"
 	         data-page="0">
 		<div class="quotation__container">
 			<div class="quotation__content">
-				<p class="quotation__text">The appearance of things changes according to the emotions&nbsp;;<br>and thus
-					we see
-					magic and beauty in them,<br>while the magic and beauty are really in ourselves.</p>
-				<span class="quotation__credit">― Gibran Khalil Gibran, The Broken Wings</span>
+				<div class="quotation__text">
+					<p class="quotation__text-anim"><span class="js-quotation-anim-text">The appearance of things changes according to the emotions&nbsp;;</span>
+					</p>
+					<p class="quotation__text-anim"><span class="js-quotation-anim-text">and thus we see magic and beauty in them,</span>
+					</p>
+					<p class="quotation__text-anim"><span class="js-quotation-anim-text">while the magic and beauty are really in ourselves.</span>
+					</p>
+				</div>
+				<span class="quotation__credit js-quotation-credit">&#9472; Gibran Khalil Gibran, The Broken Wings</span>
 			</div>
 		</div>
 	</section>
 
-	<section id="intro" class="intro section js-router" data-current="intro" data-next="choice" data-page="0">
+	<section id="intro" class="intro section js-router js-intro" data-current="intro" data-next="choice" data-page="0">
 		<div class="intro__container">
 			<div class="intro__content">
 				<div class="js-intro-logo"></div>
-				<p class="intro__text">WHAT DRIVES YOU THROUGH YOUR JOURNEY ?</p>
+				<p class="intro__text js-intro-text-container"><span class="js-intro-text">WHAT DRIVES YOU THROUGH YOUR JOURNEY ?</span>
+				</p>
 			</div>
 		</div>
 	</section>
 
-	<section id="choice" class="choice section js-router is-visible" data-current="choice" data-next="intro-emotion"
+	<section id="choice" class="choice section js-router js-choice" data-current="choice" data-next="intro-emotion"
 	         data-page="1">
 		<div class="choice__container">
 			<div class="choice__blob">
 				<h2 class="choice__title">whatever</h2>
 			</div>
 			<div class="choice__content">
-				<p class="choice__text">Which strong emotion did you feel lately ?</p>
-				<p class="choice__help">click & hold to select an emotion</p>
+				<p class="choice__text"><span class="js-choice-text">Which strong emotion did you feel lately ?</span></p>
+				<p class="choice__help"><span class="js-choice-help">click & hold to select an emotion</span></p>
 			</div>
 		</div>
 	</section>
 
-	<section id="intro-emotion" class="section js-intro-emotion" data-current="intro-emotion" data-page="2">
+	<section id="intro-emotion" class="section js-router js-intro-emotion" data-current="intro-emotion" data-page="2">
 		<div class="intro-head js-intro-head">
-			<div class="emotion-img">
-				<img src="" alt="">
+			<div class="intro-emotion__container">
+				<div class="intro-emotion__blob js-bubble">
+					<h2 class="intro-emotion__title">anger</h2>
+					<div class="intro-emotion__loader js-emotion-loader"></div>
+				</div>
 			</div>
-			<p class="emotion-name"></p>
 		</div>
-		<div class="intro-timeline js-intro-timeline"></div>
 		<div class="intro-off">
 			<ul class="off-list js-intro-off-list">
 				<li class="list-voice js-list-voice">
-					03
+					Put your headphones on
 				</li>
 				<li class="list-voice js-list-voice">
-					02
+					Don't explode
 				</li>
 				<li class="list-voice js-list-voice">
-					01
+					<span class="help">Go you were born ready !</span>
+					<span class="help">Dive in, ponder and try to understand</span>
+					<span class="help grey">Drag & drop the anger buble to launch your experience</span>
 				</li>
-				<li class="list-voice js-list-voice">
-					GO
-				</li>
+
 			</ul>
-			<div class="off-btn js-off-btn"></div>
-			<p class="off-ready js-off-ready">You were born ready&nbsp;! Dive in, ponder and try to understand</p>
+			<div class="off-btn js-off-btn js-pulse-btn"><span class="off-btn-bg"></span><span
+					class="off-btn-wave js-pulse-wave"></span></div>
 		</div>
 	</section>
 
@@ -111,15 +123,30 @@
 
 	<section id="welcome-back" class="section welcome-back js-router" data-current="welcome-back" data-page="0">
 		<div class="welcome-back__container">
-			<h2 class="welcome-back__title">
-				You are back !<br>
-				Feel free to try another emotion :)
-			</h2>
+			<h2 class="welcome-back__title">welcome back</h2>
+			<div class="welcome-back__btn-container">
+				<a href="#" class="welcome-back__btn welcome-back__btn-refresh js-router-reset">
+					Refresh the whole experience
+					<div class="icon-container">
+						<img class="icon" src="/projects/aether/assets/medias/svgs/fleche-droite-bas.svg" alt="">
+						<img class="icon icon-move" src="/projects/aether/assets/medias/svgs/fleche-droite-haut.svg" alt="">
+					</div>
+				</a>
+				<a href="#" class="welcome-back__btn welcome-back__btn-continue js-wb-choice js-router" data-next="choice">
+					<div class="icon-container">
+						<img class="icon" src="/projects/aether/assets/medias/svgs/fleche-gauche-bas.svg" alt="">
+						<img class="icon icon-move" src="/projects/aether/assets/medias/svgs/fleche-gauche-haut.svg" alt="">
+					</div>
+
+					Continue with the previous session
+				</a>
+			</div>
 		</div>
 	</section>
 
-	<div id="about" class="section about js-router" data-current="about" data-page="3">
-		<div class="about__close-btn js-router" data-next="previous">
+	<section id="change-emotion" class="section change-emotion js-router" data-current="change-emotion"
+	         data-page="1">
+		<div class="change-emotion__close-btn js-router" data-next="previous">
 			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 145.03 147.43">
 				<defs>
 					<style>
@@ -204,9 +231,102 @@
 				</g>
 			</svg>
 		</div>
-		<div class="about__logo">
-			<img class="about__logo-img" src="/app/assets/medias/images/aether-logo.png" alt="Logo">
+		<div class="change-emotion__container">
+			<div class="change-emotion__blob">
+				<h2 class="change-emotion__title">whatever</h2>
+			</div>
 		</div>
+	</section>
+
+	<!-- Panels -->
+
+	<div id="about" class="panel panel-about about js-panel" data-panel="about">
+		<div class="about__close-btn js-panel-btn" data-panel="0">
+			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 145.03 147.43">
+				<defs>
+					<style>
+						.cls-2 {
+							fill: #fff
+						}
+					</style>
+				</defs>
+				<g id="fleche">
+					<circle class="circle-1" cx="72.52" cy="73.71" r="61.5" fill="#fff" opacity=".3"/>
+					<path d="M102.43 44l-.6.82a.31.31 0 0 1-.43.07.31.31 0 0 1-.07-.44.23.23 0 0 1 .07-.07l.82-.6a.15.15 0 0 1 .21 0 .17.17 0 0 1 0 .22zM100.6 46.43l-.63.79a.68.68 0 0 1-1 .1.67.67 0 0 1-.1-1l.1-.11.79-.63a.56.56 0 0 1 .8.09.57.57 0 0 1 .04.76zM98.69 48.76l-.65.77a1 1 0 0 1-1.45-1.23.57.57 0 0 1 .11-.11l.77-.65a.87.87 0 0 1 1.22 1.22zM96.72 51l-.66.75a1.15 1.15 0 0 1-1.62.05 1.14 1.14 0 0 1 0-1.61l.75-.67A1.08 1.08 0 0 1 96.72 51z"
+					      class="cls-2"/>
+					<path d="M94.7 53.26L94 54a1.27 1.27 0 0 1-1.88-1.72l.08-.08.74-.67a1.22 1.22 0 0 1 1.73 1.73z"
+					      class="cls-2"/>
+					<path d="M92.64 55.44l-.69.73A1.33 1.33 0 0 1 90 54.32l.72-.69a1.31 1.31 0 0 1 1.85 1.85z"
+					      class="cls-2"/>
+					<path d="M90.55 57.59l-.72.7a1.34 1.34 0 0 1-1.89-1.89l.7-.72a1.35 1.35 0 0 1 1.94 1.88z"
+					      class="cls-2"/>
+					<path d="M88.36 59.64l-.75.67a1.2 1.2 0 0 1-1.69-1.69l.67-.75a1.25 1.25 0 1 1 1.82 1.72.12.12 0 0 1-.05.05z"
+					      class="cls-2"/>
+					<path d="M86.08 61.61l-.77.65A1 1 0 0 1 84 60.92l.65-.77a1 1 0 0 1 1.59 1.33.53.53 0 0 1-.16.13zM83.77 63.55l-.77.65a.7.7 0 0 1-1-1l.66-.76a.77.77 0 1 1 1.17 1zM81.5 65.52l-.74.67a.51.51 0 0 1-.72 0 .52.52 0 0 1 0-.68l.67-.74a.56.56 0 1 1 .83.75s-.02-.01-.04 0zM79.31 67.57l-.71.7a.45.45 0 0 1-.64-.64l.7-.71a.46.46 0 0 1 .65.65zM77.2 69.7l-.68.74a.51.51 0 0 1-.75-.7l.74-.68a.47.47 0 0 1 .67 0 .47.47 0 0 1 .02.64zM75.17 71.92l-.66.74a.67.67 0 1 1-1-.88l.06-.06.75-.66a.6.6 0 0 1 .85 0 .61.61 0 0 1 0 .86zM73.2 74.18l-.66.76a.88.88 0 0 1-1.25.1.9.9 0 0 1-.1-1.26l.1-.09.76-.65a.81.81 0 0 1 1.15.08.83.83 0 0 1 0 1.06z"
+					      class="cls-2"/>
+					<path d="M71.24 76.47l-.66.76a1.12 1.12 0 1 1-1.7-1.46 1.36 1.36 0 0 1 .12-.12l.77-.66a1 1 0 0 1 1.47 1.48z"
+					      class="cls-2"/>
+					<path d="M69.26 78.73l-.68.74a1.29 1.29 0 1 1-1.9-1.74l.08-.08.74-.65a1.25 1.25 0 0 1 1.76.07 1.27 1.27 0 0 1 0 1.66z"
+					      class="cls-2"/>
+					<path d="M67.22 80.94l-.68.73a1.4 1.4 0 0 1-2-1.91l.06-.07.73-.68a1.37 1.37 0 0 1 1.93 1.93z"
+					      class="cls-2"/>
+					<path d="M65.17 83.13l-.68.73a1.5 1.5 0 0 1-2.18-2l.07-.06.73-.69a1.46 1.46 0 0 1 2.06 2.07z"
+					      class="cls-2"/>
+					<path d="M63.11 85.31l-.69.72a1.57 1.57 0 0 1-2.28-2.16l.06-.06.72-.69a1.55 1.55 0 0 1 2.19 2.19z"
+					      class="cls-2"/>
+					<path d="M61 87.47l-.7.71a1.6 1.6 0 0 1-2.27-2.26l.71-.7A1.59 1.59 0 0 1 61 87.47z" class="cls-2"/>
+					<path d="M58.91 89.59l-.72.7A1.59 1.59 0 0 1 55.94 88l.7-.72A1.61 1.61 0 0 1 59 89.55z"
+					      class="cls-2"/>
+					<path d="M56.74 91.67l-.73.69a1.51 1.51 0 0 1-2.13-2.14l.68-.73a1.55 1.55 0 1 1 2.25 2.12z"
+					      class="cls-2"/>
+					<path d="M54.54 93.71l-.74.68a1.39 1.39 0 0 1-2-2l.68-.74a1.43 1.43 0 0 1 2.11 1.93.76.76 0 0 1-.05.13z"
+					      class="cls-2"/>
+					<path d="M52.32 95.73l-.75.67a1.23 1.23 0 0 1-1.74-1.74l.67-.75a1.29 1.29 0 1 1 1.93 1.71.57.57 0 0 1-.11.11z"
+					      class="cls-2"/>
+					<path d="M50.07 97.72l-.76.65a1 1 0 0 1-1.45-.11 1 1 0 0 1 0-1.33l.65-.77a1.11 1.11 0 1 1 1.68 1.44 1.36 1.36 0 0 1-.12.12z"
+					      class="cls-2"/>
+					<path d="M47.78 99.67l-.78.65a.77.77 0 0 1-1.08-.11.75.75 0 0 1 0-1l.64-.78a.87.87 0 1 1 1.33 1.11.57.57 0 0 1-.11.13zM45.45 101.59l-.79.63a.46.46 0 0 1-.64-.08.44.44 0 0 1 0-.57l.62-.79a.58.58 0 0 1 .9.72zM43.06 103.44l-.24.19a.15.15 0 0 1-.21 0 .14.14 0 0 1 0-.18l.18-.24a.19.19 0 0 1 .27 0 .19.19 0 0 1 0 .27s.01-.05 0-.04zM42.82 43.8l.82.6a.32.32 0 1 1-.37.51.46.46 0 0 1-.07-.07l-.59-.84a.16.16 0 0 1 0-.22.17.17 0 0 1 .21.02zM45.23 45.63l.79.63a.69.69 0 0 1 .11 1 .68.68 0 0 1-1 .1.52.52 0 0 1-.11-.1l-.63-.79a.58.58 0 0 1 .09-.8.57.57 0 0 1 .75-.04zM47.57 47.54l.76.65a1 1 0 0 1-1.23 1.45l-.1-.11-.65-.77a.87.87 0 0 1 1.23-1.22z"
+					      class="cls-2"/>
+					<path d="M49.84 49.51l.75.67A1.14 1.14 0 0 1 49 51.84l-.05-.05-.64-.79a1.08 1.08 0 0 1 1.53-1.53z"
+					      class="cls-2"/>
+					<path d="M52.07 51.53l.73.67a1.27 1.27 0 1 1-1.72 1.88L51 54l-.68-.74a1.23 1.23 0 0 1 1.74-1.73z"
+					      class="cls-2"/>
+					<path d="M54.25 53.59l.72.69a1.33 1.33 0 1 1-1.85 1.92l-.69-.73a1.31 1.31 0 0 1 1.86-1.85z"
+					      class="cls-2"/>
+					<path d="M56.39 55.68l.7.72a1.34 1.34 0 0 1-1.89 1.89l-.71-.7a1.35 1.35 0 1 1 1.87-1.94z"
+					      class="cls-2"/>
+					<path d="M58.45 57.87l.66.75a1.19 1.19 0 0 1-1.68 1.69c-.26-.22-.51-.44-.75-.67a1.25 1.25 0 1 1 1.71-1.82z"
+					      class="cls-2"/>
+					<path d="M60.42 60.15l.64.77a1 1 0 0 1-1.34 1.34l-.72-.65a1 1 0 0 1-.13-1.46 1 1 0 0 1 1.42-.15zM62.35 62.46l.65.76a.7.7 0 0 1-.08 1 .71.71 0 0 1-.9 0l-.76-.65a.79.79 0 0 1-.09-1.09.78.78 0 0 1 1.09-.09zM64.32 64.73l.67.74a.51.51 0 0 1-.72.72l-.74-.67a.56.56 0 0 1 .75-.83zM66.37 66.92l.7.71a.45.45 0 0 1-.64.64l-.71-.7a.47.47 0 0 1 0-.65.46.46 0 0 1 .65 0zM68.51 69l.73.68a.51.51 0 0 1-.7.75l-.68-.74a.47.47 0 0 1 0-.67.49.49 0 0 1 .65-.02zM70.72 71.06l.75.66a.67.67 0 0 1-.89 1v-.06l-.67-.74a.61.61 0 0 1 .86-.86zM73 73l.76.65A.89.89 0 0 1 72.59 75a.94.94 0 0 1-.1-.1l-.65-.76a.81.81 0 0 1 .09-1.14.79.79 0 0 1 1.07 0z"
+					      class="cls-2"/>
+					<path d="M75.27 75l.76.66a1.12 1.12 0 0 1-1.46 1.7l-.12-.12-.65-.76A1 1 0 0 1 75.27 75z"
+					      class="cls-2"/>
+					<path d="M77.53 77l.74.67a1.29 1.29 0 0 1-1.74 1.9.3.3 0 0 0-.08-.08l-.67-.74A1.24 1.24 0 0 1 77.53 77z"
+					      class="cls-2"/>
+					<path d="M79.74 79l.73.68a1.4 1.4 0 0 1-1.91 2l-.07-.06-.68-.73A1.37 1.37 0 0 1 79.74 79z"
+					      class="cls-2"/>
+					<path d="M81.93 81.06l.73.69a1.49 1.49 0 1 1-2 2.17l-.07-.06-.69-.73a1.46 1.46 0 0 1 2.07-2.07z"
+					      class="cls-2"/>
+					<path d="M84.11 83.12l.72.69a1.57 1.57 0 0 1-2.16 2.28v-.06l-.69-.72a1.55 1.55 0 0 1 2.18-2.19z"
+					      class="cls-2"/>
+					<path d="M86.27 85.21l.71.7a1.6 1.6 0 1 1-2.26 2.27l-.7-.71a1.6 1.6 0 0 1 2.26-2.26z"
+					      class="cls-2"/>
+					<path d="M88.4 87.32l.69.72a1.59 1.59 0 0 1-2.25 2.25l-.72-.7a1.61 1.61 0 0 1 2.24-2.31z"
+					      class="cls-2"/>
+					<path d="M90.47 89.49l.69.73A1.51 1.51 0 0 1 89 92.36l-.73-.69a1.55 1.55 0 0 1 2.12-2.25z"
+					      class="cls-2"/>
+					<path d="M92.51 91.69l.68.74a1.39 1.39 0 0 1-2 2l-.74-.68a1.43 1.43 0 1 1 1.94-2.11z"
+					      class="cls-2"/>
+					<path d="M94.53 93.91l.67.75a1.23 1.23 0 0 1-1.74 1.74l-.75-.67a1.29 1.29 0 1 1 1.71-1.93z"
+					      class="cls-2"/>
+					<path d="M96.52 96.16l.66.77a1 1 0 0 1-1.45 1.44l-.73-.65A1.1 1.1 0 0 1 96.4 96a.68.68 0 0 1 .12.16z"
+					      class="cls-2"/>
+					<path d="M98.48 98.45l.64.78a.77.77 0 0 1-1.12 1.09l-.77-.65a.86.86 0 1 1 1.1-1.33zM100.39 100.78l.63.79a.47.47 0 0 1-.07.65.48.48 0 0 1-.58 0l-.78-.63a.57.57 0 1 1 .71-.89zM102.25 103.17l.18.24a.17.17 0 0 1 0 .22.17.17 0 0 1-.18 0l-.25-.19a.2.2 0 0 1 0-.27.2.2 0 0 1 .28 0z"
+					      class="cls-2"/>
+				</g>
+			</svg>
+		</div>
+		<h4 class="about__title">aether</h4>
 		<div class="about__container">
 			<div class="about__head">
 				<div class="about__head-name">
@@ -243,11 +363,14 @@
 					<p>
 						We are a team of 4, studying in a bachelor of interactive Design at The Gobelins School in
 						Paris.
-						Amongst us, two are specialised in development (&nbsp;<a href="" target="_blank" class="link">Rémy</a> and <a
-							href="https://mael-atzorimaltete.fr" target="_blank" class="link">Maël</a>&nbsp;) and the two other in
+						Amongst us, two are specialised in development (&nbsp;<a href="http://remydumas.fr" target="_blank" class="link">Rémy</a>
+						and <a
+							href="https://mael-atzorimaltete.fr" target="_blank" class="link">Maël</a>&nbsp;) and the
+						two other in
 						design (&nbsp;<a
-							href="https://mradz.io" target="_blank" class="link">Zohra</a> and <a href="https://amelievorms.fr"
-						                                                             target="_blank" class="link">Amélie</a>&nbsp;).
+							href="https://mradz.io" target="_blank" class="link">Zohra</a> and <a
+							href="https://amelievorms.fr"
+							target="_blank" class="link">Amélie</a>&nbsp;).
 					</p>
 				</div>
 				<div class="about__section about__references js-about-section" data-index="4" data-title="references">
@@ -256,21 +379,28 @@
 						Design émotionnel, Aarron Walter, éditions Eyrolles - décembre 2011 <br>
 						L’intelligence émotionnelle, Daniel Goleman, éditions J’ai lu - octobre 2014 <br>
 						L'Intelligence Émotionnelle de Daniel GOLEMAN <br>
-						<a href="https://feg.univ-amu.fr/sites/feg.univ-amu.fr/files/intelligence_emotionnelle_-_rossano_et_di_nunzio_2011.pdf" target="_blank" class="link">Fiche de Lecture</a> Présentée par Viviane Rossano-Beaudoin et Marie-Gabrielle Di Nunzio&nbsp;:
+						<a href="https://feg.univ-amu.fr/sites/feg.univ-amu.fr/files/intelligence_emotionnelle_-_rossano_et_di_nunzio_2011.pdf"
+						   target="_blank" class="link">Fiche de Lecture</a> Présentée par Viviane Rossano-Beaudoin et
+						Marie-Gabrielle Di Nunzio&nbsp;:
 					</p>
 					<h4 class="about__references-bold">Podcast</h4>
 					<p>
-						<a href="https://louiemedia.com/emotions" target="_blank" class="link">Émotions</a>, Louie Média, 2019 (french)
+						<a href="https://louiemedia.com/emotions" target="_blank" class="link">Émotions</a>, Louie
+						Média, 2019 (french)
 					</p>
 					<h4 class="about__references-bold">Articles</h4>
 					<p>
-						<a href="https://inside.dogstudio.be/how-to-design-for-emotions-a-starters-guide-5652073b7a65" class="link">How
+						<a href="https://inside.dogstudio.be/how-to-design-for-emotions-a-starters-guide-5652073b7a65"
+						   class="link" target="_blank">How
 							to design for emotions: a starter’s guide</a>, Henry Daubrez, mai 2017 <br>
-						<a href="https://la-philosophie.com/emotion-philosophie" class="link">L’émotion en philosophie</a><br>
-						<a href="https://medium.com/google-design/design-for-emotion-7ba0cf40e05b" class="link">Design for Emotion</a>,
+						<a href="https://la-philosophie.com/emotion-philosophie" class="link" target="_blank">L’émotion en
+							philosophie</a><br>
+						<a href="https://medium.com/google-design/design-for-emotion-7ba0cf40e05b" class="link" target="_blank">Design
+							for Emotion</a>,
 						Daniel Ruston, mai 2017 <br>
-						Le dossier : <a href="https://cabinet-terrehappy.fr/?s=Guide+pratique+sur+les+%C3%A9motions" class="link">Guide
-							pratique sur les émotions</a>, du cabinet de psychologie Terre Happy
+						Le dossier : <a href="https://cabinet-terrehappy.fr/?s=Guide+pratique+sur+les+%C3%A9motions"
+						                class="link" target="_blank">Guide
+						pratique sur les émotions</a>, du cabinet de psychologie Terre Happy
 					</p>
 				</div>
 				<div class="about__section about__media js-about-section" data-index="5" data-title="media">
@@ -396,16 +526,142 @@
 			</div>
 		</div>
 	</div>
+
+	<div id="game-help" class="panel panel-help js-panel" data-panel="game-help">
+		<div class="panel-help__bg"></div>
+		<div class="panel__container">
+			<div>
+				<h4 class="icon__title">help !</h4>
+				<p class="icon__subtitle">What can I do ?</p>
+				<p class="icon__subtitle">I'm totally lost !</p>
+			</div>
+			<div class="icon__container">
+				<div class="icon__item js-item-navigate">
+					<div class="icon__anim js-anim-navigate"></div>
+					<p class="icon__item__title">Navigate</p>
+					<p class="icon__item__text">using your keyboard arrows.</p>
+				</div>
+				<div class="icon__item js-item-discover">
+					<div class="icon__anim js-anim-discover"></div>
+					<p class="icon__item__title">Discover</p>
+					<p class="icon__item__text">Interact with the universe using you mouse.</p>
+				</div>
+				<div class="icon__item js-item-interact">
+					<div class="icon__anim">
+						<div class="icon__anim__single drag js-anim-drag-drop"></div>
+						<div class="icon__anim__single son js-anim-son"></div>
+						<div class="icon__anim__single clic js-anim-double-clic"></div>
+					</div>
+					<p class="icon__item__title">Interact</p>
+					<p class="icon__item__text">Clic, double-clic, drag and drop things<br> and listen to the sounds
+						around you.</p>
+				</div>
+			</div>
+		</div>
+		<div class="panel-btn-close js-panel-btn" data-panel="0">
+			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 145.03 147.43">
+				<defs>
+					<style>
+						.cls-2 {
+							fill: #fff
+						}
+					</style>
+				</defs>
+				<g id="fleche">
+					<circle class="circle-1" cx="72.52" cy="73.71" r="61.5" fill="#fff" opacity=".3"/>
+					<path d="M102.43 44l-.6.82a.31.31 0 0 1-.43.07.31.31 0 0 1-.07-.44.23.23 0 0 1 .07-.07l.82-.6a.15.15 0 0 1 .21 0 .17.17 0 0 1 0 .22zM100.6 46.43l-.63.79a.68.68 0 0 1-1 .1.67.67 0 0 1-.1-1l.1-.11.79-.63a.56.56 0 0 1 .8.09.57.57 0 0 1 .04.76zM98.69 48.76l-.65.77a1 1 0 0 1-1.45-1.23.57.57 0 0 1 .11-.11l.77-.65a.87.87 0 0 1 1.22 1.22zM96.72 51l-.66.75a1.15 1.15 0 0 1-1.62.05 1.14 1.14 0 0 1 0-1.61l.75-.67A1.08 1.08 0 0 1 96.72 51z"
+					      class="cls-2"/>
+					<path d="M94.7 53.26L94 54a1.27 1.27 0 0 1-1.88-1.72l.08-.08.74-.67a1.22 1.22 0 0 1 1.73 1.73z"
+					      class="cls-2"/>
+					<path d="M92.64 55.44l-.69.73A1.33 1.33 0 0 1 90 54.32l.72-.69a1.31 1.31 0 0 1 1.85 1.85z"
+					      class="cls-2"/>
+					<path d="M90.55 57.59l-.72.7a1.34 1.34 0 0 1-1.89-1.89l.7-.72a1.35 1.35 0 0 1 1.94 1.88z"
+					      class="cls-2"/>
+					<path d="M88.36 59.64l-.75.67a1.2 1.2 0 0 1-1.69-1.69l.67-.75a1.25 1.25 0 1 1 1.82 1.72.12.12 0 0 1-.05.05z"
+					      class="cls-2"/>
+					<path d="M86.08 61.61l-.77.65A1 1 0 0 1 84 60.92l.65-.77a1 1 0 0 1 1.59 1.33.53.53 0 0 1-.16.13zM83.77 63.55l-.77.65a.7.7 0 0 1-1-1l.66-.76a.77.77 0 1 1 1.17 1zM81.5 65.52l-.74.67a.51.51 0 0 1-.72 0 .52.52 0 0 1 0-.68l.67-.74a.56.56 0 1 1 .83.75s-.02-.01-.04 0zM79.31 67.57l-.71.7a.45.45 0 0 1-.64-.64l.7-.71a.46.46 0 0 1 .65.65zM77.2 69.7l-.68.74a.51.51 0 0 1-.75-.7l.74-.68a.47.47 0 0 1 .67 0 .47.47 0 0 1 .02.64zM75.17 71.92l-.66.74a.67.67 0 1 1-1-.88l.06-.06.75-.66a.6.6 0 0 1 .85 0 .61.61 0 0 1 0 .86zM73.2 74.18l-.66.76a.88.88 0 0 1-1.25.1.9.9 0 0 1-.1-1.26l.1-.09.76-.65a.81.81 0 0 1 1.15.08.83.83 0 0 1 0 1.06z"
+					      class="cls-2"/>
+					<path d="M71.24 76.47l-.66.76a1.12 1.12 0 1 1-1.7-1.46 1.36 1.36 0 0 1 .12-.12l.77-.66a1 1 0 0 1 1.47 1.48z"
+					      class="cls-2"/>
+					<path d="M69.26 78.73l-.68.74a1.29 1.29 0 1 1-1.9-1.74l.08-.08.74-.65a1.25 1.25 0 0 1 1.76.07 1.27 1.27 0 0 1 0 1.66z"
+					      class="cls-2"/>
+					<path d="M67.22 80.94l-.68.73a1.4 1.4 0 0 1-2-1.91l.06-.07.73-.68a1.37 1.37 0 0 1 1.93 1.93z"
+					      class="cls-2"/>
+					<path d="M65.17 83.13l-.68.73a1.5 1.5 0 0 1-2.18-2l.07-.06.73-.69a1.46 1.46 0 0 1 2.06 2.07z"
+					      class="cls-2"/>
+					<path d="M63.11 85.31l-.69.72a1.57 1.57 0 0 1-2.28-2.16l.06-.06.72-.69a1.55 1.55 0 0 1 2.19 2.19z"
+					      class="cls-2"/>
+					<path d="M61 87.47l-.7.71a1.6 1.6 0 0 1-2.27-2.26l.71-.7A1.59 1.59 0 0 1 61 87.47z" class="cls-2"/>
+					<path d="M58.91 89.59l-.72.7A1.59 1.59 0 0 1 55.94 88l.7-.72A1.61 1.61 0 0 1 59 89.55z"
+					      class="cls-2"/>
+					<path d="M56.74 91.67l-.73.69a1.51 1.51 0 0 1-2.13-2.14l.68-.73a1.55 1.55 0 1 1 2.25 2.12z"
+					      class="cls-2"/>
+					<path d="M54.54 93.71l-.74.68a1.39 1.39 0 0 1-2-2l.68-.74a1.43 1.43 0 0 1 2.11 1.93.76.76 0 0 1-.05.13z"
+					      class="cls-2"/>
+					<path d="M52.32 95.73l-.75.67a1.23 1.23 0 0 1-1.74-1.74l.67-.75a1.29 1.29 0 1 1 1.93 1.71.57.57 0 0 1-.11.11z"
+					      class="cls-2"/>
+					<path d="M50.07 97.72l-.76.65a1 1 0 0 1-1.45-.11 1 1 0 0 1 0-1.33l.65-.77a1.11 1.11 0 1 1 1.68 1.44 1.36 1.36 0 0 1-.12.12z"
+					      class="cls-2"/>
+					<path d="M47.78 99.67l-.78.65a.77.77 0 0 1-1.08-.11.75.75 0 0 1 0-1l.64-.78a.87.87 0 1 1 1.33 1.11.57.57 0 0 1-.11.13zM45.45 101.59l-.79.63a.46.46 0 0 1-.64-.08.44.44 0 0 1 0-.57l.62-.79a.58.58 0 0 1 .9.72zM43.06 103.44l-.24.19a.15.15 0 0 1-.21 0 .14.14 0 0 1 0-.18l.18-.24a.19.19 0 0 1 .27 0 .19.19 0 0 1 0 .27s.01-.05 0-.04zM42.82 43.8l.82.6a.32.32 0 1 1-.37.51.46.46 0 0 1-.07-.07l-.59-.84a.16.16 0 0 1 0-.22.17.17 0 0 1 .21.02zM45.23 45.63l.79.63a.69.69 0 0 1 .11 1 .68.68 0 0 1-1 .1.52.52 0 0 1-.11-.1l-.63-.79a.58.58 0 0 1 .09-.8.57.57 0 0 1 .75-.04zM47.57 47.54l.76.65a1 1 0 0 1-1.23 1.45l-.1-.11-.65-.77a.87.87 0 0 1 1.23-1.22z"
+					      class="cls-2"/>
+					<path d="M49.84 49.51l.75.67A1.14 1.14 0 0 1 49 51.84l-.05-.05-.64-.79a1.08 1.08 0 0 1 1.53-1.53z"
+					      class="cls-2"/>
+					<path d="M52.07 51.53l.73.67a1.27 1.27 0 1 1-1.72 1.88L51 54l-.68-.74a1.23 1.23 0 0 1 1.74-1.73z"
+					      class="cls-2"/>
+					<path d="M54.25 53.59l.72.69a1.33 1.33 0 1 1-1.85 1.92l-.69-.73a1.31 1.31 0 0 1 1.86-1.85z"
+					      class="cls-2"/>
+					<path d="M56.39 55.68l.7.72a1.34 1.34 0 0 1-1.89 1.89l-.71-.7a1.35 1.35 0 1 1 1.87-1.94z"
+					      class="cls-2"/>
+					<path d="M58.45 57.87l.66.75a1.19 1.19 0 0 1-1.68 1.69c-.26-.22-.51-.44-.75-.67a1.25 1.25 0 1 1 1.71-1.82z"
+					      class="cls-2"/>
+					<path d="M60.42 60.15l.64.77a1 1 0 0 1-1.34 1.34l-.72-.65a1 1 0 0 1-.13-1.46 1 1 0 0 1 1.42-.15zM62.35 62.46l.65.76a.7.7 0 0 1-.08 1 .71.71 0 0 1-.9 0l-.76-.65a.79.79 0 0 1-.09-1.09.78.78 0 0 1 1.09-.09zM64.32 64.73l.67.74a.51.51 0 0 1-.72.72l-.74-.67a.56.56 0 0 1 .75-.83zM66.37 66.92l.7.71a.45.45 0 0 1-.64.64l-.71-.7a.47.47 0 0 1 0-.65.46.46 0 0 1 .65 0zM68.51 69l.73.68a.51.51 0 0 1-.7.75l-.68-.74a.47.47 0 0 1 0-.67.49.49 0 0 1 .65-.02zM70.72 71.06l.75.66a.67.67 0 0 1-.89 1v-.06l-.67-.74a.61.61 0 0 1 .86-.86zM73 73l.76.65A.89.89 0 0 1 72.59 75a.94.94 0 0 1-.1-.1l-.65-.76a.81.81 0 0 1 .09-1.14.79.79 0 0 1 1.07 0z"
+					      class="cls-2"/>
+					<path d="M75.27 75l.76.66a1.12 1.12 0 0 1-1.46 1.7l-.12-.12-.65-.76A1 1 0 0 1 75.27 75z"
+					      class="cls-2"/>
+					<path d="M77.53 77l.74.67a1.29 1.29 0 0 1-1.74 1.9.3.3 0 0 0-.08-.08l-.67-.74A1.24 1.24 0 0 1 77.53 77z"
+					      class="cls-2"/>
+					<path d="M79.74 79l.73.68a1.4 1.4 0 0 1-1.91 2l-.07-.06-.68-.73A1.37 1.37 0 0 1 79.74 79z"
+					      class="cls-2"/>
+					<path d="M81.93 81.06l.73.69a1.49 1.49 0 1 1-2 2.17l-.07-.06-.69-.73a1.46 1.46 0 0 1 2.07-2.07z"
+					      class="cls-2"/>
+					<path d="M84.11 83.12l.72.69a1.57 1.57 0 0 1-2.16 2.28v-.06l-.69-.72a1.55 1.55 0 0 1 2.18-2.19z"
+					      class="cls-2"/>
+					<path d="M86.27 85.21l.71.7a1.6 1.6 0 1 1-2.26 2.27l-.7-.71a1.6 1.6 0 0 1 2.26-2.26z"
+					      class="cls-2"/>
+					<path d="M88.4 87.32l.69.72a1.59 1.59 0 0 1-2.25 2.25l-.72-.7a1.61 1.61 0 0 1 2.24-2.31z"
+					      class="cls-2"/>
+					<path d="M90.47 89.49l.69.73A1.51 1.51 0 0 1 89 92.36l-.73-.69a1.55 1.55 0 0 1 2.12-2.25z"
+					      class="cls-2"/>
+					<path d="M92.51 91.69l.68.74a1.39 1.39 0 0 1-2 2l-.74-.68a1.43 1.43 0 1 1 1.94-2.11z"
+					      class="cls-2"/>
+					<path d="M94.53 93.91l.67.75a1.23 1.23 0 0 1-1.74 1.74l-.75-.67a1.29 1.29 0 1 1 1.71-1.93z"
+					      class="cls-2"/>
+					<path d="M96.52 96.16l.66.77a1 1 0 0 1-1.45 1.44l-.73-.65A1.1 1.1 0 0 1 96.4 96a.68.68 0 0 1 .12.16z"
+					      class="cls-2"/>
+					<path d="M98.48 98.45l.64.78a.77.77 0 0 1-1.12 1.09l-.77-.65a.86.86 0 1 1 1.1-1.33zM100.39 100.78l.63.79a.47.47 0 0 1-.07.65.48.48 0 0 1-.58 0l-.78-.63a.57.57 0 1 1 .71-.89zM102.25 103.17l.18.24a.17.17 0 0 1 0 .22.17.17 0 0 1-.18 0l-.25-.19a.2.2 0 0 1 0-.27.2.2 0 0 1 .28 0z"
+					      class="cls-2"/>
+				</g>
+			</svg>
+		</div>
+	</div>
+
+	<div id="game-commands" class="panel panel-commands js-panel" data-panel="game-commands" data-ptype="1">
+		<div class="panel__container">
+			<p>Game help</p>
+		</div>
+	</div>
+
 </div>
 
-<div class="background-generative js-generative"></div>
+<div id="background-generative" class="background-generative js-generative"></div>
 
-<div id="main" class="scene-container js-scene-container"></div>
+<div id="main" class="scene-container js-scene-container js-router" data-current="game-scene" data-page="3"></div>
 
 
 <audio id="audio">
 	<source src="" type="audio/mpeg">
 </audio>
 
+<script language="javascript" type="text/javascript" src="/projects/aether/assets/scripts/core/p5.min.js"></script>
 </body>
 </html>
