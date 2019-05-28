@@ -17,8 +17,10 @@ import Helpers from '../../../../core/helpers';
 import router from "../../../../layout/navigation/router";
 import panel from "../../../../layout/navigation/panel";
 
+
 // Game files
 import Character from '../../player/Character';
+import PlayerState from '../../player/PlayerState';
 import Ground from '../../world/Ground';
 import Normal from './template/Normal';
 import River from './template/River';
@@ -33,6 +35,9 @@ stats.showPanel(0);
 // Helpers init
 window.helpers = new Helpers();
 
+// Player State init
+window.playerState = new PlayerState();
+
 // Global vars
 window.RATIO = 0.1;
 
@@ -40,12 +45,9 @@ window.RATIO = 0.1;
 
 window.objectToInteractCollection = [];
 
-window.playerState = 2;
 window.playerHitBox = 12;
 
 window.statesScore = require('../../../../../datas/states');
-
-window.scoreObjectDestroyed = playerState;
 
 window.chunkSize = 100;
 
@@ -256,7 +258,7 @@ export default class Anger {
 		// Debug things
 
 		// Gui init
-		this.guiHandler();
+		//this.guiHandler();
 	}
 
 	render() {
@@ -538,19 +540,19 @@ export default class Anger {
 			case "normal":
 				console.log(`it's a normal template`);
 				this.loadNormalTemplate(elmt.id, elmt.elmt.body.position.x, elmt.elmt.body.position.z, false);
-				if(usedObjectNumber > window.rules.normal[window.playerState].corals.current) {
+				if(usedObjectNumber > window.rules.normal[window.playerState.playerStateNumber].corals.current) {
 					console.log(`Object used on last template : ${usedObjectNumber}`);
-					console.log(`Number of object that must be used : ${window.rules.normal[window.playerState].corals.current}`);
-					for(let i = 0; i <= diff; i++) {
+					console.log(`Number of object that must be used : ${window.rules.normal[window.playerState.playerStateNumber].corals.current}`);
+					for(let i = 0; i <= usedObjectNumber - window.rules.normal[window.playerState.playerStateNumber].corals.current; i++) {
 						console.log(`coral switch from unused to used`);
 						elmt.unusedCorals.push(elmt.corals[i]);
 						this.scene.remove(elmt.corals[i]);
 						elmt.corals.splice(i, 1);
 					}
-				} else if(usedObjectNumber < window.rules.normal[window.playerState].corals.current) {
+				} else if(usedObjectNumber < window.rules.normal[window.playerState.playerStateNumber].corals.current) {
 					console.log(`Object used on last template : ${usedObjectNumber}`);
-					console.log(`Number of object that must be used : ${window.rules.normal[window.playerState].corals.current}`);
-					for(let i = 0; i < window.rules.normal[window.playerState].corals.current - usedObjectNumber; i++) {
+					console.log(`Number of object that must be used : ${window.rules.normal[window.playerState.playerStateNumber].corals.current}`);
+					for(let i = 0; i < window.rules.normal[window.playerState.playerStateNumber].corals.current - usedObjectNumber; i++) {
 						console.log(elmt.unusedCorals);
 						console.log(elmt.corals);
 						console.log(`coral ${elmt.unusedCorals[i]} is now used`);
@@ -785,7 +787,7 @@ export default class Anger {
 		let id = 0, name = '';
 
 		if (this.intersects.length > 0) {
-			let obj, index;
+			let obj, index, scoreToAdd = 0;
 			for (var i = 0; i < this.intersects.length; i++) {
 
 				obj = this.intersects[i];
@@ -803,6 +805,7 @@ export default class Anger {
 					// obj.object.body.position.y = 0;
 
 					// this.character.putObjectInHand(obj.object);
+
 					var x = obj.object.body.position.x;
                     var y = obj.object.body.position.y;
                     var z = obj.object.body.position.z;
@@ -830,6 +833,20 @@ export default class Anger {
 						}, 500);
 					});
 
+
+					// Score handler
+
+					switch (name) {
+						case 'stone':
+							scoreToAdd = statesScore.stone;
+							break;
+						case 'stalagmite':
+							scoreToAdd = statesScore.stalagmite;
+							break;
+					}
+
+					playerState.addScore(scoreToAdd);
+
 					// var worldPoint = new CANNON.Vec3(0, 0, 1);
 					// var force = new CANNON.Vec3(vector.x * -100, vector.y * -100, vector.z * -100);
 					// obj.object.body.applyForce(force, worldPoint);
@@ -840,34 +857,13 @@ export default class Anger {
 
 					// this.character.throwObject(this.scene, obj.object);
 
+					console.log(playerState, playerState.score);
+
 				} else {
 					//alert(`The object is too far from you, make ${Math.floor(obj.distance - playerHitBox)} more footstep`);
 				}
 			}
 		}
-	}
-
-	displayGraphState() {
-		let canvas = document.querySelector('.js-graph-canvas'),
-			ctx = canvas.getContext('2d'),
-			canvasW = canvas.width, canvasH = canvas.height,
-			dotCollection = [],
-			posX = 0, posY = canvasH / 2,
-			lastPosY = 0,
-			diff = 0;
-
-		setInterval(() => {
-			posY = scoreObjectDestroyed;
-			if (posY != lastPosY) {
-
-				posY += diff;
-				let dot = new Dot(posX, posY * 10, ctx);
-				dot.init();
-				dotCollection.push(dot);
-				lastPosY = posY;
-				posX += 6;
-			}
-		}, 50);
 	}
 
 	addPhysicsObject(groundObj) {

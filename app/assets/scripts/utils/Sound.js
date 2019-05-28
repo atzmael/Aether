@@ -32,7 +32,7 @@ export default class SoundHandler {
 	bindEvent() {}
 
 	setupAudioElement() {
-		this.source.src = this.sounds[this.currentEmotion][playerState];
+		this.source.src = this.sounds[this.currentEmotion][playerState.playerStateNumber];
 	}
 
 	play() {

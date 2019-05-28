@@ -82,8 +82,8 @@ let rules = {
 
 class Normal {
 	constructor(groundID, coord, isInit) {
-		if(playerState > 0 && playerState < 4) {
-			this.rule = window.rules.normal[playerState];
+		if(playerState.playerStateNumber > 0 && playerState.playerStateNumber < 4) {
+			this.rule = window.rules.normal[playerState.playerStateNumber];
 		}
 
 		this.groundID = groundID;

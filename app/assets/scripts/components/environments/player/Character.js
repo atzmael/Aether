@@ -4,7 +4,7 @@ export default class Character {
 
 		this.limit = 16 / 2;
 
-		this.playerStrengh = playerState * 0.8;
+		this.playerStrengh = playerState.playerStateNumber * 0.8;
 
 		this.lastPos = {
 			x: 0,
@@ -15,10 +15,9 @@ export default class Character {
 			z: false,
 		};
 
-		this.hasObjectInHand = false;
-		this.objectInHand = undefined;
-
 		this.positionOnMap = 4;
+
+		this.hasBreath = false;
 
 		this.direction = {
 			up: {
@@ -54,8 +53,6 @@ export default class Character {
 
 	init() {
 		this.generateCharacter();
-
-		window.addEventListener('click', this.throwObject.bind(this), false);
 	}
 
 	generateCharacter() {
@@ -98,7 +95,6 @@ export default class Character {
 
 		this.controls();
 	}
-
 
 	update() {
 
@@ -143,11 +139,15 @@ export default class Character {
 				this.direction.up.keydown = true;
 
 				this.direction.down.forward = false;
+
+				clearInterval(this.breathInterval);
 			} else if (e.key === 's' || e.key === 'ArrowDown') {
 				this.direction.down.forward = true;
 				this.direction.down.keydown = true;
 
 				this.direction.up.forward = false;
+
+				clearInterval(this.breathInterval);
 			} else if (e.key === 'a') {
 				this.direction.goLeft.forward = true;
 				this.direction.goLeft.keydown = true;
@@ -193,42 +193,12 @@ export default class Character {
 				if (this.direction.goLeft.keydown) this.direction.goLeft.forward = true;
 			}
 		})
-	}
 
-	putObjectInHand(obj) {
-		this.hasObjectInHand = true;
-		this.objectInHand = obj;
-
-		let scoreToAdd = 0;
-
-		switch (obj.name) {
-			case 'stone':
-				scoreToAdd = statesScore.stone;
-				break;
-			case 'stalagmite':
-				scoreToAdd = statesScore.stalagmite;
-				this.mesh.remove(obj);
-				break;
-		}
-
-		scoreObjectDestroyed += scoreToAdd;
-
-		playerState = Math.floor(scoreObjectDestroyed);
-
-		if(playerState > 3) playerState = 3;
-
-
-	}
-
-	throwObject(scene, obj) {
-		if (this.hasObjectInHand && this.objectInHand != undefined) {
-
-			// scene.add(obj);
-
-			// var worldPoint = new CANNON.Vec3(0, 0, 1);
-			// var force = new CANNON.Vec3(0, 50, 0);
-			// obj.object.body.applyForce(force, worldPoint);
-		}
+		document.addEventListener('keypress', (e) => {
+			if(e.key === 'b') {
+				this.breath();
+			}
+		})
 	}
 
 	createBody() {
@@ -282,4 +252,31 @@ export default class Character {
 		this.mesh.add(handLeft);
 		this.mesh.add(handRight);
 	}
+
+	breath() {
+		if(!this.hasBreath) {
+			let breathTime = 0;
+
+			this.breathInterval = setInterval(() => {
+				if(!this.hasBreath) {
+					breathTime++;
+					if (breathTime >= 3) {
+						this.hasBreath = true;
+						window.playerState.removeScore(reduce.breath);
+						console.log('breathing...');
+						clearInterval(this.breathInterval);
+					}
+				}
+			}, 1000);
+		}
+	}
+
+	listen() {
+		this.hasBreath = false;
+	}
 }
+
+const reduce = {
+	breath: 0.2,
+	listen: 0.2
+};
