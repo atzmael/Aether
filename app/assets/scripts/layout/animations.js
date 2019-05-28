@@ -1,8 +1,10 @@
 import lottie from "lottie-web";
+import panel from "./navigation/panel";
 
 const animations = {
 	ui: {},
 	current: '',
+	timelineRunning: true,
 
 	bindUI() {
 		this.ui.body = document.querySelector('body');
@@ -13,6 +15,9 @@ const animations = {
 		this.ui.btnWbChoice = document.querySelector('.js-wb-choice');
 		this.ui.choice = document.querySelector('.js-choice');
 		this.ui.pulseBtn = document.querySelector('.js-pulse-wave');
+		this.ui.mainmenuBtn = document.querySelector('.js-main-menu');
+
+		this.ui.backToGameBtn = document.querySelector('.js-back-to-game');
 	},
 
 	bindEvent() {
@@ -23,6 +28,7 @@ const animations = {
 		this.ui.choice.addEventListener('click', this.pulsateIntroEmoBtn.bind(this));
 		this.ui.pulseBtn.addEventListener('mouseenter', this.stopPulsing.bind(this));
 		this.ui.pulseBtn.addEventListener('mouseleave', this.startPulsing.bind(this));
+		this.ui.backToGameBtn.addEventListener('click', this.backtoGame.bind(this));
 	},
 
 	init() {
@@ -99,6 +105,21 @@ const animations = {
 			this.soundAnim.stop();
 		});
 
+		this.menuBtnAnim = lottie.loadAnimation({
+			container: document.querySelector('.js-main-menu'), // the dom element that will contain the animation
+			renderer: 'svg',
+			loop: true,
+			autoplay: false,
+			path: `${DIR}/assets/datas/picto-menu.json` // the path to the animation json
+		});
+
+		document.querySelector('.js-main-menu').addEventListener('mouseenter', () => {
+			this.menuBtnAnim.play();
+		});
+
+		document.querySelector('.js-main-menu').addEventListener('mouseleave', () => {
+			this.menuBtnAnim.stop();
+		});
 	},
 
 	animateQuotationIntro() {
@@ -138,15 +159,23 @@ const animations = {
 	pulsateIntroEmoBtn() {
 		let wave = document.querySelector('.js-pulse-wave');
 
-		this.tlPulse = new TimelineMax({repeat: -1}).fromTo(wave, 1,{scale: 1, x: '-50%', y: '-50%', opacity: 1}, {scale: 2, x: '-50%', y: '-50%', opacity: 0, ease: 'ease-out'});
+		setInterval(() => {
+			if(this.timelineRunning) {
+				TweenMax.fromTo(wave, 1,{scale: 1, x: '-50%', y: '-50%', opacity: 1}, {scale: 2, x: '-50%', y: '-50%', opacity: 0, ease: 'ease-out'})
+			}
+		}, 1000);
 	},
 
 	startPulsing() {
-		this.tlPulse.play();
+		this.timelineRunning = true;
 	},
 
 	stopPulsing() {
-		this.tlPulse.pause();
+		this.timelineRunning = false;
+	},
+
+	backtoGame() {
+		panel.panelHandler('', 'game-back');
 	}
 };
 

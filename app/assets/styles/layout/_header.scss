@@ -6,7 +6,7 @@
 	z-index:100;
 
 	.menu {
-		padding: 60px 60px 0;
+		padding: 45px 45px 0;
 
 		&__container {
 			display: flex;
@@ -41,6 +41,10 @@
 
 		.item-help {
 			display: none;
+
+			img {
+				width: 60px;
+			}
 		}
 
 		.item-about {

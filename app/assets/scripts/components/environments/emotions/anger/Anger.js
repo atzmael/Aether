@@ -14,6 +14,23 @@ import CANNON from 'cannon';
 // Utilities files
 
 import Helpers from '../../../../core/helpers';
+import router from "../../../../layout/navigation/router";
+import panel from "../../../../layout/navigation/panel";
+
+// Game files
+import Character from '../../player/Character';
+import Ground from '../../world/Ground';
+import Normal from './template/Normal';
+import River from './template/River';
+
+// Stats
+import Stats from 'stats.js';
+
+// Stats init
+let stats = new Stats();
+stats.showPanel(0);
+
+// Helpers init
 window.helpers = new Helpers();
 
 // Global vars
@@ -197,18 +214,6 @@ window.rules = {
 		}
 	}
 };
-
-// Game files
-import Character from '../../player/Character';
-import Ground from '../../world/Ground';
-import Normal from './template/Normal';
-import River from './template/River';
-
-// Stats
-import Stats from 'stats.js';
-
-let stats = new Stats();
-stats.showPanel(0);
 
 // Vars
 
@@ -425,6 +430,10 @@ export default class Anger {
 		return new Promise(async resolve => {
 			await Ground.wait();
 			resolve();
+
+			router.defineNextSection('', 'game-scene');
+
+			panel.panelHandler('', 'game-commands');
 		});
 	}
 

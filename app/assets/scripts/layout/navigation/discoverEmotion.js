@@ -22,13 +22,13 @@ const discoverEmotion = {
 		this.ui.textVoices = document.querySelectorAll('.js-list-voice');
 		this.ui.btnSlider = document.querySelector('.js-off-btn');
 		this.ui.textReady = document.querySelector('.js-off-ready');
+		this.ui.loader = document.querySelector('.js-emotion-loader');
 	},
 
 	bindEvent() {
 		this.ui.btnEmotion.forEach(e => {e.addEventListener('click', this.buildEmotion.bind(this));});
 		this.ui.btnSlider.addEventListener('click', function(e) {
 			e.preventDefault();
-			console.log('click');
 			this.introductionNextSlide(this.increment);
 		}.bind(this));
 		
@@ -71,9 +71,10 @@ const discoverEmotion = {
 	introductionNextSlide(i) {
 		let tmln = ((i+1) * (100 / this.ui.textVoices.length)) + '%';
 		if (this.increment === this.ui.textVoices.length - 1) {
-			this.tl.to(this.ui.introductionSection, 0.6, {opacity: 0})
-				.to(this.ui.timeline, 0.6, {width: tmln }, '-=0.6')
-				.to(this.ui.introductionSection, 0, {display: 'none', onComplete: () => this.launchScene()});
+			this.tl.to(this.ui.introductionSection, 0.3, {opacity: 0})
+				.to(this.ui.timeline, 0.3, {width: tmln }, '-=0.6')
+				.to(this.ui.loader, 0, {display: 'flex'})
+				.to(this.ui.loader, 0.3, {opacity: 1, onComplete: () => this.launchScene()});
 		} else if (this.increment === this.ui.textVoices.length - 2) {
 			this.tl.to(this.ui.textVoices[i], 0.4, {opacity: 0})
 				.to(this.ui.textVoices[i], 0, {display: 'none'})

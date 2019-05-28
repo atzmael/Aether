@@ -1,0 +1,105 @@
+.confirm-change {
+
+	&__container {
+		width: 600px;
+		height: 600px;
+		max-width: 90%;
+		max-height: 90vw;
+
+		display: flex;
+		justify-content: center;
+		align-items: center;
+
+		background-image: url($dir + 'assets/medias/svgs/cercle.svg');
+		background-repeat: no-repeat;
+		background-position: center center;
+		background-size: cover;
+	}
+
+	&__inner {
+		width: 550px;
+		height: 550px;
+		max-width: 100%;
+		max-height: 90vw;
+		background-color: rgba(255,255,255, 0.3);
+		border-radius: 50%;
+
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		flex-flow: column nowrap;
+	}
+
+	&__text {
+		@extend .question-text;
+		width: 80%;
+		text-align:center;
+	}
+
+	&__btn {
+		text-align: right;
+		display: block;
+		position:relative;
+
+		&-container {
+			margin-top: 40px;
+		}
+
+		&-continue {
+			padding-left: 35px;
+			margin: 0 50px 0 0;
+			text-align:left;
+
+			.icon-container {
+				left: 0;
+			}
+
+			.icon-move {
+				top:0;
+				left:0;
+			}
+
+			&:hover {
+				.icon-move {
+					transform: translate(-2px, 1px);
+				}
+			}
+		}
+
+		&-refresh {
+			padding-right: 35px;
+			margin-top: 20px;
+			text-align: right;
+
+			.icon-container {
+				right: 0;
+			}
+			.icon-move {
+				top: 0;
+				right: 2px;
+			}
+
+			&:hover {
+				.icon-move {
+					transform: translate(2px, 1px);
+				}
+			}
+		}
+
+		.icon {
+			width: 25px;
+			height: 25px;
+		}
+
+		.icon-container {
+			position:absolute;
+			top:50%;
+			transform: translateY(-50%);
+		}
+
+		.icon-move {
+			position: absolute;
+			transition: 200ms transform ease-in-out;
+		}
+	}
+}

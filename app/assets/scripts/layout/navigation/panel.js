@@ -26,12 +26,11 @@ const panel = {
 
 		let panelID = dataPanel ? dataPanel : elmt.getAttribute('data-panel');
 
-		let panelType = elmt.getAttribute('data-type') ? elmt.getAttribute('data-type') : 0;
-
 		if(panelID == 0) {
 			this.closePanel();
 		} else {
 			this.current = document.querySelector(`.js-panel[data-panel=${panelID}]`);
+			let panelType = this.current.getAttribute('data-ptype') ? this.current.getAttribute('data-ptype') : 0;
 			this.openPanel(panelType);
 		}
 
@@ -42,14 +41,16 @@ const panel = {
 		new TimelineMax().to(this.current, 0, {display: 'flex'})
 			.to(this.current, 0.3, {opacity: 1});
 
+		
 		switch(panelType) {
 			case '1':
 				setTimeout(() => {
 					new TimelineMax().to(this.current, 0.3, {opacity: 0})
 						.to(this.current, 0, {display: 'none'});
-				}, 2000);
+				}, 3000);
 				break;
 		}
+
 	},
 
 	closePanel() {

@@ -1,7 +1,7 @@
 <html>
 <head>
 	<title>Aether</title>
-	<link rel="icon" href="/projects/aether/assets/medias/images/favicon.png">
+	<link rel="icon" href="/app/assets/medias/images/favicon.png">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta charset="UTF-8">
 </head>
@@ -23,16 +23,16 @@
 		<ul class="menu__container">
 			<li class="menu__item item-about js-menu-item js-about-hover">
 				<a href="#" class="btn menu__link js-menu-about js-panel-btn" data-panel="about">
-					<img src="/projects/aether/assets/medias/svgs/plus-bas.svg" alt="" class="item-about__icon">
-					<img src="/projects/aether/assets/medias/svgs/plus-haut.svg" alt="" class="item-about__icon icon-move">
+					<img src="/app/assets/medias/svgs/plus-bas.svg" alt="" class="item-about__icon">
+					<img src="/app/assets/medias/svgs/plus-haut.svg" alt="" class="item-about__icon icon-move">
 					<span class="item-about__tooltip js-menu-about-tooltip">ABOUT the project</span>
 				</a>
 			</li>
-			<li class="menu__item item-menu js-menu-item"><a href="#" class="btn menu__link js-main-menu">
-				<img src="/projects/aether/assets/medias/svgs/picto-menu.svg" alt="">
-			</a></li>
+			<li class="menu__item item-menu js-menu-item"><a href="#" class="btn menu__link js-main-menu"></a></li>
 			<li class="menu__item item-help js-menu-item"><a href="#" class="btn menu__link js-help js-panel-btn"
-			                                                 data-panel="game-help">Help</a></li>
+			                                                 data-panel="game-help">
+				<img src="/app/assets/medias/svgs/help.svg" alt="">
+			</a></li>
 		</ul>
 	</nav>
 </header>
@@ -90,16 +90,18 @@
 		</div>
 	</section>
 
-	<section id="intro-emotion" class="section js-router js-intro-emotion" data-current="intro-emotion" data-page="2">
-		<div class="intro-head js-intro-head">
+	<section id="intro-emotion" class="section intro-emotion js-router js-intro-emotion" data-current="intro-emotion" data-page="2">
+		<div class="intro-emotion__head js-intro-head">
 			<div class="intro-emotion__container">
 				<div class="intro-emotion__blob js-bubble">
 					<h2 class="intro-emotion__title">anger</h2>
-					<div class="intro-emotion__loader js-emotion-loader"></div>
+					<div class="intro-emotion__loader js-emotion-loader">
+						<img src="/app/assets/medias/svgs/cercle.svg" alt="">
+					</div>
 				</div>
 			</div>
 		</div>
-		<div class="intro-off">
+		<div class="intro-off js-intro-off">
 			<ul class="off-list js-intro-off-list">
 				<li class="list-voice js-list-voice">
 					Put your headphones on
@@ -119,6 +121,33 @@
 		</div>
 	</section>
 
+	<section id="confirm-change" class="section confirm-change js-router js-confirm-change" data-current="confirm-change" data-page="0">
+		<div class="confirm-change__container">
+			<div class="confirm-change__inner">
+				<p class="confirm-change__text">
+					Didn’t like exploring anger?
+					Everyone's path is different.
+				</p>
+				<div class="confirm-change__btn-container">
+					<a href="#" class="confirm-change__btn confirm-change__btn-continue js-router" data-next="game-scene">
+						<div class="icon-container">
+							<img class="icon" src="/app/assets/medias/svgs/fleche-gauche-bas.svg" alt="">
+							<img class="icon icon-move" src="/app/assets/medias/svgs/fleche-gauche-haut.svg" alt="">
+						</div>
+						Go back to enjoying anger
+					</a>
+					<a href="#" class="confirm-change__btn confirm-change__btn-refresh js-router-reset">
+						Live something else without regret
+						<div class="icon-container">
+							<img class="icon" src="/app/assets/medias/svgs/fleche-droite-bas.svg" alt="">
+							<img class="icon icon-move" src="/app/assets/medias/svgs/fleche-droite-haut.svg" alt="">
+						</div>
+					</a>
+				</div>
+			</div>
+		</div>
+	</section>
+
 	<!-- Others sections -->
 
 	<section id="welcome-back" class="section welcome-back js-router" data-current="welcome-back" data-page="0">
@@ -128,14 +157,14 @@
 				<a href="#" class="welcome-back__btn welcome-back__btn-refresh js-router-reset">
 					Refresh the whole experience
 					<div class="icon-container">
-						<img class="icon" src="/projects/aether/assets/medias/svgs/fleche-droite-bas.svg" alt="">
-						<img class="icon icon-move" src="/projects/aether/assets/medias/svgs/fleche-droite-haut.svg" alt="">
+						<img class="icon" src="/app/assets/medias/svgs/fleche-droite-bas.svg" alt="">
+						<img class="icon icon-move" src="/app/assets/medias/svgs/fleche-droite-haut.svg" alt="">
 					</div>
 				</a>
 				<a href="#" class="welcome-back__btn welcome-back__btn-continue js-wb-choice js-router" data-next="choice">
 					<div class="icon-container">
-						<img class="icon" src="/projects/aether/assets/medias/svgs/fleche-gauche-bas.svg" alt="">
-						<img class="icon icon-move" src="/projects/aether/assets/medias/svgs/fleche-gauche-haut.svg" alt="">
+						<img class="icon" src="/app/assets/medias/svgs/fleche-gauche-bas.svg" alt="">
+						<img class="icon icon-move" src="/app/assets/medias/svgs/fleche-gauche-haut.svg" alt="">
 					</div>
 
 					Continue with the previous session
@@ -558,7 +587,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="panel-btn-close js-panel-btn" data-panel="0">
+		<div class="panel-btn-close js-panel-btn js-back-to-game" data-panel="0">
 			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 145.03 147.43">
 				<defs>
 					<style>
@@ -647,9 +676,22 @@
 
 	<div id="game-commands" class="panel panel-commands js-panel" data-panel="game-commands" data-ptype="1">
 		<div class="panel__container">
-			<p>Game help</p>
+			<div class="panel__inner">
+				<div class="panel-commands__pictos"></div>
+				<p class="panel-commands__text">Use them to navigate & rotate the camera</p>
+			</div>
 		</div>
 	</div>
+
+	<div id="game-back" class="panel panel-game-back js-panel" data-panel="game-back" data-ptype="1">
+		<div class="panel__container">
+			<div class="panel__inner">
+				<p class="panel-game-back__text">Let yourself go.</p>
+				<p class="panel-game-back__text">You can master your emotion.</p>
+			</div>
+		</div>
+	</div>
+
 
 </div>
 
@@ -662,6 +704,6 @@
 	<source src="" type="audio/mpeg">
 </audio>
 
-<script language="javascript" type="text/javascript" src="/projects/aether/assets/scripts/core/p5.min.js"></script>
+<script language="javascript" type="text/javascript" src="/app/assets/scripts/core/p5.min.js"></script>
 </body>
 </html>

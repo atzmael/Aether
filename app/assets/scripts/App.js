@@ -48,10 +48,6 @@ window.onload = () => {
 		panel.init();
 	}
 
-	if (document.querySelector('.js-emotion-choice')) {
-		discoverEmotion.init();
-	}
-
 	// Build navigation controller
 	if(document.querySelector('.js-header')) {
 		header.init();
@@ -59,14 +55,9 @@ window.onload = () => {
 
 	animations.init();
 
-	/** Dev only **/
-	//router.defineNextSection('', 'intro-emotion');
-	//new Anger();
-	/** **/
-
 	// Skip intro if you already saw it
 
-
+	/*
 	if(storage.read('skipintro') == 'true') {
 		router.defineNextSection('','welcome-back');
 	} else {
@@ -75,5 +66,11 @@ window.onload = () => {
 			new p5(generativeCircle);
 		}, 2000);
 	}
+	*/
+
+	/** Dev only **/
+	router.defineNextSection('', 'game-scene');
+	new Anger();
+	/** **/
 
 };

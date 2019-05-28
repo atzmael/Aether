@@ -15,10 +15,13 @@ const introEmotion = {
 		this.dragged = false;
 		this.canBeDragged = false;
 
+		this.ui.section = document.querySelector('.js-intro-emotion');
+
 		this.ui.timeline = document.querySelector('.js-intro-timeline');
 		this.ui.textVoices = document.querySelectorAll('.js-list-voice');
 		this.ui.btnSlider = document.querySelector('.js-off-btn');
 		this.ui.textReady = document.querySelector('.js-off-ready');
+		this.ui.textContainer = document.querySelector('.js-intro-off');
 
 		this.ui.bubble = document.querySelector('.js-bubble');
 		this.ui.emotionLoader = document.querySelector('.js-emotion-loader');
@@ -37,10 +40,10 @@ const introEmotion = {
 			if(this.dragged) {
 				this.tl.to(this.ui.textVoices[this.increment], 0.4, {opacity: 0})
 					.to(this.ui.textVoices[this.increment], 0, {display: 'none'})
-					.to(this.ui.emotionLoader, 0.2, {display: 'block'})
-					.to(this.ui.emotionLoader, 0.2, {opacity: 1});
-
-				router.defineNextSection('', 'game-scene');
+					.to(this.ui.textContainer, 0, {display: 'none'})
+					.to(this.ui.emotionLoader, 0, {display: 'block'})
+					.to(this.ui.section, 0, {onComplete: () => {this.ui.section.classList.add('v-center')}})
+					.to(this.ui.emotionLoader, 0.3, {opacity: 1});
 
 				new Anger();
 
