@@ -41,6 +41,7 @@
     "simplex-noise": "^2.4.0",
     "stats.js": "^0.17.0",
     "three": "^0.101.1",
+    "three-shaders": "^1.0.16",
     "webvr-polyfill": "^0.9.38"
   }
 }
