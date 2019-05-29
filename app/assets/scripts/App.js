@@ -57,7 +57,6 @@ window.onload = () => {
 
 	// Skip intro if you already saw it
 
-	/*
 	if(storage.read('skipintro') == 'true') {
 		router.defineNextSection('','welcome-back');
 	} else {
@@ -66,11 +65,10 @@ window.onload = () => {
 			new p5(generativeCircle);
 		}, 2000);
 	}
-	*/
 
 	/** Dev only **/
-	router.defineNextSection('', 'game-scene');
-	new Anger();
+	//router.defineNextSection('', 'game-scene');
+	//new Anger();
 	/** **/
 
 };

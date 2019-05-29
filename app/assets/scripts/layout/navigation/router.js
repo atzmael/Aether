@@ -1,3 +1,5 @@
+import panel from "./panel";
+
 const router = {
 	ui: {},
 	current: '',
@@ -10,6 +12,7 @@ const router = {
 		this.ui.header = document.querySelector('.js-header');
 
 		this.ui.btnMenu = document.querySelector('.js-main-menu');
+		this.ui.backToGameBtn = document.querySelector('.js-back-to-game');
 	},
 
 	bindEvent() {
@@ -17,6 +20,7 @@ const router = {
 			elmt.addEventListener('click', (e) => this.defineNextSection(e))
 		});
 		this.ui.btnMenu.addEventListener('click', this.openMenuFromGame.bind(this));
+		this.ui.backToGameBtn.addEventListener('click', this.backtoGame.bind(this));
 	},
 
 	init() {
@@ -129,7 +133,11 @@ const router = {
 	openMenuFromGame(e) {
 		e.preventDefault();
 		router.defineNextSection('', 'change-emotion');
-	}
+	},
+
+	backtoGame() {
+		panel.panelHandler('', 'game-back');
+	},
 };
 
 export default router;

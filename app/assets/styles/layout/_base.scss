@@ -35,7 +35,7 @@ h1, h2, h3, h4, p {
 	//background-repeat: no-repeat;
 	//background-position: center center;
 	background-size: 65%;
-	opacity: 0.4;
+	opacity: 1;
 	width: 100vw;
 	height: 100vh;
 	position:absolute;
@@ -56,6 +56,12 @@ h1, h2, h3, h4, p {
 .is-intro {
 	.header {
 		display: none;
+	}
+}
+
+.is-landing {
+	.background-generative {
+		opacity: 0.4;
 	}
 }
 

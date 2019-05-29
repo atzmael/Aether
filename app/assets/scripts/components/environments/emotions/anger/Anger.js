@@ -381,6 +381,8 @@ export default class Anger {
 				this.scene.add(this.stone);
 			}
 
+			/*
+
 			setTimeout(function () {
 				var div = document.createElement("div");
 
@@ -419,6 +421,7 @@ export default class Anger {
 
 				}, 2000);
 			}, 2500);
+			*/
 
 			// --- FIN DU TEST --- //
 

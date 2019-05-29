@@ -16,8 +16,7 @@ const animations = {
 		this.ui.choice = document.querySelector('.js-choice');
 		this.ui.pulseBtn = document.querySelector('.js-pulse-wave');
 		this.ui.mainmenuBtn = document.querySelector('.js-main-menu');
-
-		this.ui.backToGameBtn = document.querySelector('.js-back-to-game');
+		this.ui.bgGenerative = document.querySelector('.js-generative');
 	},
 
 	bindEvent() {
@@ -28,7 +27,7 @@ const animations = {
 		this.ui.choice.addEventListener('click', this.pulsateIntroEmoBtn.bind(this));
 		this.ui.pulseBtn.addEventListener('mouseenter', this.stopPulsing.bind(this));
 		this.ui.pulseBtn.addEventListener('mouseleave', this.startPulsing.bind(this));
-		this.ui.backToGameBtn.addEventListener('click', this.backtoGame.bind(this));
+		this.ui.landing.addEventListener('click', this.landingIsEnded.bind(this));
 	},
 
 	init() {
@@ -174,9 +173,12 @@ const animations = {
 		this.timelineRunning = false;
 	},
 
-	backtoGame() {
-		panel.panelHandler('', 'game-back');
-	}
+	landingIsEnded() {
+
+		TweenMax.to(this.ui.bgGenerative, 0.3, {opacity: .4, onComplete: () => {
+				this.ui.body.classList.remove('is-landing');
+			}});
+	},
 };
 
 export default animations;
