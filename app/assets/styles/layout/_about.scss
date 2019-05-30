@@ -12,8 +12,8 @@
 		width: 1705px;
 		max-width: 90%;
 		height:100%;
-		max-height: 75%;
-		margin: 0 auto;
+		max-height: 70%;
+		margin: 0 auto 30px auto;
 
 		display: flex;
 		justify-content: space-around;
@@ -73,7 +73,6 @@
 
 	&__title {
 		@extend .heading-2;
-		margin-top: 10px;
 	}
 
 
@@ -90,7 +89,7 @@
 
 	&__section {
 		display: none;
-		width: 100%;
+		width: 92%;
 		transform: translateY(20px);
 
 		&.active {
@@ -124,14 +123,14 @@
 	&__references {
 
 		p {
-			margin-top: 25px;
+			margin-top: 15px;
 		}
 
 		h4 {
 			@extend %TextExtraBold;
 
 			&:not(:first-child) {
-				margin-top: 45px;
+				margin-top: 30px;
 			}
 		}
 
@@ -154,6 +153,11 @@
 			margin-right: 20px;
 			width: 560px;
 			height: 315px;
+			max-width: 100%;
+		}
+
+		img {
+			max-width: 100%;
 		}
 	}
 }

@@ -107,18 +107,22 @@ export default class Character {
 		if (this.direction.down.forward) {
 			this.mesh.position.z += Math.cos(this.mesh.rotation.y) * this.movementVelocity;
 			this.mesh.position.x += Math.sin(this.mesh.rotation.y) * this.movementVelocity;
+			window.lavaSoundObject.position.z = this.mesh.position.z;
 		}
 		if (this.direction.up.forward) {
 			this.mesh.position.z -= Math.cos(this.mesh.rotation.y) * this.movementVelocity;
 			this.mesh.position.x -= Math.sin(this.mesh.rotation.y) * this.movementVelocity;
+			window.lavaSoundObject.position.z = this.mesh.position.z;
 		}
 		if (this.direction.goLeft.forward) {
 			this.mesh.position.z -= Math.cos(this.mesh.rotation.y + 90 * Math.PI / 180) * this.movementVelocity;
 			this.mesh.position.x -= Math.sin(this.mesh.rotation.y + 90 * Math.PI / 180) * this.movementVelocity;
+			window.lavaSoundObject.position.z = this.mesh.position.z;
 		}
 		if (this.direction.goRight.forward) {
 			this.mesh.position.z -= Math.cos(this.mesh.rotation.y - 90 * Math.PI / 180) * this.movementVelocity;
 			this.mesh.position.x -= Math.sin(this.mesh.rotation.y - 90 * Math.PI / 180) * this.movementVelocity;
+			window.lavaSoundObject.position.z = this.mesh.position.z;
 		}
 	}
 

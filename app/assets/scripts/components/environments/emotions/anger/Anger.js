@@ -2,6 +2,23 @@
  * General import
  **/
 
+const DIR = '/app';
+
+window.listener = new THREE.AudioListener();
+import Sound from '../../world/Sound';
+// Sound init
+
+window.soundHandler = new Sound();
+window.soundBank = {
+	river_base: soundHandler.newSound({url: DIR + '/assets/medias/sounds/riviere_1_base.wav', trigger: 1}),
+	stone_pose: soundHandler.newSound({
+		url: DIR + '/assets/medias/sounds/cailloux_atterit.wav',
+		loop: false,
+		trigger: 1
+	}),
+	stone_break: soundHandler.newSound({url: DIR + '/assets/medias/sounds/cailloux_casse.wav', loop: false, trigger: 1})
+};
+
 // Libs
 import 'three/examples/js/controls/OrbitControls';
 
@@ -16,7 +33,6 @@ import CANNON from 'cannon';
 import Helpers from '../../../../core/helpers';
 import router from "../../../../layout/navigation/router";
 import panel from "../../../../layout/navigation/panel";
-
 
 // Game files
 import Character from '../../player/Character';
@@ -37,6 +53,8 @@ window.helpers = new Helpers();
 
 // Player State init
 window.playerState = new PlayerState();
+
+console.log(soundHandler, soundBank);
 
 // Global vars
 window.RATIO = 0.1;
@@ -64,11 +82,19 @@ window.rules = {
 	normal: {
 		1: {
 			stones: {
-				number: 3,
+				number: {
+					min: 2,
+					max: 5
+				},
 				radius: 1,
 				details: 0,
 			},
-			rocks: 0,
+			rocks: {
+				number: {
+					min: 1,
+					max: 3,
+				}
+			},
 			corals: {
 				max: 3,
 				current: 3,
@@ -86,14 +112,36 @@ window.rules = {
 				number: 0,
 			},
 			geysers: 0,
+			bubbles: {
+				number: {
+					min: 2,
+					max: 4
+				},
+				zPos: {
+					min: 1.5,
+					max: 3
+				},
+				radius: {
+					min: 0.5,
+					max: 0.8
+				}
+			}
 		},
 		2: {
 			stones: {
-				number: 6,
-				radius: 2,
+				number: {
+					min: 8,
+					max: 12,
+				},
+				radius: 1.5,
 				details: 0,
 			},
-			rocks: 1,
+			rocks: {
+				number: {
+					min: 5,
+					max: 8,
+				}
+			},
 			corals: {
 				max: 3,
 				current: 1,
@@ -108,14 +156,34 @@ window.rules = {
 					max: 9,
 				},
 				segments: 16,
-				number: 3,
+				number: {
+					min: 4,
+					max: 6,
+				},
 			},
 			geysers: 0,
+			bubbles: {
+				number: {
+					min: 1,
+					max: 3
+				},
+				zPos: {
+					min: 1,
+					max: 2
+				},
+				radius: {
+					min: 0.5,
+					max: 1.2
+				}
+			}
 		},
 		3: {
 			stones: {
-				number: 10,
-				radius: 4,
+				number: {
+					min: 8,
+					max: 12,
+				},
+				radius: 2.5,
 				details: 0,
 			},
 			rocks: 2,
@@ -136,12 +204,79 @@ window.rules = {
 				number: 5,
 			},
 			geysers: 0,
+			bubbles: {
+				number: {
+					min: 1,
+					max: 2
+				},
+				zPos: {
+					min: -0.5,
+					max: 0
+				},
+				radius: {
+					min: 2,
+					max: 2.2
+				}
+			}
 		}
 	},
 	river: {
 		1: {
 			stones: {
-				number: 4,
+				number: {
+					min: 2,
+					max: 3,
+				},
+				radius: 1,
+				details: 0,
+			},
+			rocks: {
+				number: {
+					min: 0,
+					max: 0
+				}
+			},
+			corals: {
+				max: 0,
+				current: 0,
+			},
+			stalagmites: {
+				radius: {
+					min: 1,
+					max: 1.4,
+				},
+				height: {
+					min: 7,
+					max: 9,
+				},
+				segments: 16,
+				number: {
+					min: 0,
+					max: 0
+				},
+			},
+			geysers: 0,
+			bubbles: {
+				number: {
+					min: 0,
+					max: 0
+				},
+				zPos: {
+					min: -0.5,
+					max: 0
+				},
+				radius: {
+					min: 2,
+					max: 2.2
+				}
+			}
+		},
+		2: {
+			stones: {
+				number: {
+					min: 4,
+					max: 6,
+				},
 				radius: 1,
 				details: 0,
 			},
@@ -160,39 +295,34 @@ window.rules = {
 					max: 9,
 				},
 				segments: 16,
-				number: 0,
+				number: {
+					min: 2,
+					max: 3,
+				},
 			},
 			geysers: 0,
-		},
-		2: {
-			stones: {
-				number: 6,
-				radius: 2,
-				details: 0,
-			},
-			rocks: 0,
-			corals: {
-				max: 3,
-				current: 0,
-			},
-			stalagmites: {
+			bubbles: {
+				number: {
+					min: 5,
+					max: 8
+				},
+				zPos: {
+					min: 0.3,
+					max: 0.4
+				},
 				radius: {
-					min: 1,
-					max: 1.4,
-				},
-				height: {
-					min: 7,
-					max: 9,
-				},
-				segments: 16,
-				number: 0,
-			},
-			geysers: 0,
+					min: 0.1,
+					max: 0.2
+				}
+			}
 		},
 		3: {
 			stones: {
-				number: 8,
-				radius: 4,
+				number: {
+					min: 5,
+					max: 7,
+				},
+				radius: 1,
 				details: 0,
 			},
 			rocks: 0,
@@ -210,9 +340,26 @@ window.rules = {
 					max: 13,
 				},
 				segments: 16,
-				number: 0,
+				number: {
+					min: 3,
+					max: 4,
+				},
 			},
 			geysers: 2,
+			bubbles: {
+				number: {
+					min: 7,
+					max: 9
+				},
+				zPos: {
+					min: 0.3,
+					max: 0.4
+				},
+				radius: {
+					min: 0.1,
+					max: 0.2
+				}
+			}
 		}
 	}
 };
@@ -233,6 +380,7 @@ export default class Anger {
 		this.camera.position.z = 0;
 		this.camera.position.y = 2;
 		this.camera.rotation.x = Math.PI / 180 * -15;
+		this.camera.add(window.listener);
 
 		// this.controls = new THREE.OrbitControls(this.camera);
 		// this.controls.update();
@@ -254,6 +402,12 @@ export default class Anger {
 		var light = new THREE.HemisphereLight(0xffffbb, 0x080820, 1);
 		light.position.set(0, 100, -10);
 		this.scene.add(light);
+
+		// Sound things
+		window.lavaSoundObject = new THREE.Object3D();
+		this.scene.add(window.lavaSoundObject);
+		window.lavaSoundObject.position.x = -chunkSize;
+		window.lavaSoundObject.add(window.soundBank.river_base);
 
 		// Debug things
 
@@ -370,7 +524,7 @@ export default class Anger {
 				// this.stone.position.set(0,0,0);
 				this.stone.position.set(Math.random() * (5 - -5) + -5, Math.random() * (30 - 5) + 5, Math.random() * (-3 - -5) + -5);
 				let sphere = new CANNON.Sphere(1);
-				let body = new CANNON.Body({ mass: 1 });
+				let body = new CANNON.Body({mass: 1});
 				body.position.set(this.stone.position.x, this.stone.position.y, this.stone.position.z);
 				body.addShape(sphere);
 				this.world.add(body);
@@ -539,23 +693,23 @@ export default class Anger {
 			this.scene.remove(obj);
 		});
 		elmt.objects = [];
-		switch(templateType) {
+		switch (templateType) {
 			case "normal":
 				console.log(`it's a normal template`);
 				this.loadNormalTemplate(elmt.id, elmt.elmt.body.position.x, elmt.elmt.body.position.z, false);
-				if(usedObjectNumber > window.rules.normal[window.playerState.playerStateNumber].corals.current) {
+				if (usedObjectNumber > window.rules.normal[window.playerState.playerStateNumber].corals.current) {
 					console.log(`Object used on last template : ${usedObjectNumber}`);
 					console.log(`Number of object that must be used : ${window.rules.normal[window.playerState.playerStateNumber].corals.current}`);
-					for(let i = 0; i <= usedObjectNumber - window.rules.normal[window.playerState.playerStateNumber].corals.current; i++) {
+					for (let i = 0; i <= usedObjectNumber - window.rules.normal[window.playerState.playerStateNumber].corals.current; i++) {
 						console.log(`coral switch from unused to used`);
 						elmt.unusedCorals.push(elmt.corals[i]);
 						this.scene.remove(elmt.corals[i]);
 						elmt.corals.splice(i, 1);
 					}
-				} else if(usedObjectNumber < window.rules.normal[window.playerState.playerStateNumber].corals.current) {
+				} else if (usedObjectNumber < window.rules.normal[window.playerState.playerStateNumber].corals.current) {
 					console.log(`Object used on last template : ${usedObjectNumber}`);
 					console.log(`Number of object that must be used : ${window.rules.normal[window.playerState.playerStateNumber].corals.current}`);
-					for(let i = 0; i < window.rules.normal[window.playerState.playerStateNumber].corals.current - usedObjectNumber; i++) {
+					for (let i = 0; i < window.rules.normal[window.playerState.playerStateNumber].corals.current - usedObjectNumber; i++) {
 						console.log(elmt.unusedCorals);
 						console.log(elmt.corals);
 						console.log(`coral ${elmt.unusedCorals[i]} is now used`);
@@ -576,7 +730,7 @@ export default class Anger {
 			this.scene.add(e);
 		});
 
-		if(color) {
+		if (color) {
 			elmt.elmt.material.color.set(color);
 		}
 	}
@@ -810,28 +964,29 @@ export default class Anger {
 					// this.character.putObjectInHand(obj.object);
 
 					var x = obj.object.body.position.x;
-                    var y = obj.object.body.position.y;
-                    var z = obj.object.body.position.z;
+					var y = obj.object.body.position.y;
+					var z = obj.object.body.position.z;
 
 					var shootDirection = new THREE.Vector3();
 					var shootVelo = 25;
 					// var projector = new THREE.Projector();
-					shootDirection.set(0,0,1);
+					shootDirection.set(0, 0, 1);
 					shootDirection.unproject(this.camera);
 					// projector.unprojectVector(shootDirection, this.camera);
-					var ray = new THREE.Ray(obj.object.body.position, shootDirection.sub(obj.object.body.position).normalize() );
+					var ray = new THREE.Ray(obj.object.body.position, shootDirection.sub(obj.object.body.position).normalize());
 					shootDirection.copy(ray.direction);
 
-					obj.object.body.velocity.set(  shootDirection.x * shootVelo,
-                                            shootDirection.y * shootVelo + 15,
-                                            shootDirection.z * shootVelo);
-                    x += shootDirection.x * (1*1.02 + 1);
-                    y += shootDirection.y * (1*1.02 + 1);
-                    z += shootDirection.z * (1*1.02 + 1);
-					obj.object.body.position.set(x,y,z);
-					
+					obj.object.body.velocity.set(shootDirection.x * shootVelo,
+						shootDirection.y * shootVelo + 15,
+						shootDirection.z * shootVelo);
+					x += shootDirection.x * (1 * 1.02 + 1);
+					y += shootDirection.y * (1 * 1.02 + 1);
+					z += shootDirection.z * (1 * 1.02 + 1);
+					obj.object.body.position.set(x, y, z);
+
 					obj.object.body.addEventListener("collide", function (e) {
-						setTimeout(function() {
+						obj.object.add(soundBank.stone_break.play());
+						setTimeout(function () {
 							window.scene.remove(obj.object);
 						}, 500);
 					});
@@ -890,28 +1045,5 @@ export default class Anger {
 			await River.wait(piecesNumber, {x: posChunkX, y: posChunkZ}, isInit);
 			resolve();
 		})
-	}
-}
-
-
-class Dot {
-	constructor(posX, posY, ctx) {
-		this.radius = 2;
-
-		this.posX = posX + this.radius;
-		this.posY = posY;
-		this.ctx = ctx;
-	}
-
-	init() {
-		this.drawDot();
-	}
-
-	drawDot() {
-		this.ctx.beginPath();
-		this.ctx.fillStyle = 'white';
-		this.ctx.arc(this.posX, this.posY, this.radius, 0, Math.PI * 2);
-		this.ctx.fill();
-		this.ctx.closePath();
 	}
 }

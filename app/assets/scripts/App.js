@@ -1,9 +1,7 @@
 import TweenMax from 'gsap';
 import lottie from 'lottie-web';
 
-import sceneSwitch from './layout/navigation/sceneSwitch';
 import router from "./layout/navigation/router";
-import discoverEmotion from "./layout/navigation/discoverEmotion";
 import storage from "./utils/storage";
 import header from "./layout/header";
 import aboutNav from "./layout/navigation/aboutNav";
@@ -16,7 +14,6 @@ import generativeCircle from "./utils/generative-circle";
 import cursor from "./utils/Cursor";
 
 import Anger from "./components/environments/emotions/anger/Anger";
-import SoundHandler from "./utils/Sound";
 
 window.onload = () => {
 
@@ -57,17 +54,25 @@ window.onload = () => {
 
 	// Skip intro if you already saw it
 
+	/*
 	if(storage.read('skipintro') == 'true') {
 		router.defineNextSection('','welcome-back');
+
 	} else {
 		setTimeout(() => {
 			TweenMax.to(document.querySelector('.js-loading-landing'), 0.2, {opacity: 0, ease: 'ease-out'});
 			new p5(generativeCircle);
+
+			setTimeout(() => {
+				router.defineNextSection('', 'quotation');
+				animations.animateQuotationIntro();
+			}, 2000)
 		}, 2000);
 	}
+	*/
 
 	/** Dev only **/
-	//router.defineNextSection('', 'game-scene');
+	router.defineNextSection('', 'choice');
 	//new Anger();
 	/** **/
 

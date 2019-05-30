@@ -18,10 +18,11 @@
 	}
 
 	&-btn-close {
-		top: 25px;
-		right: 25px;
+		top: 60px;
+		right: 65px;
 		position: absolute;
-		width: 50px;
+		width: 60px;
+		height:60px;
 		cursor: pointer;
 
 		.circle-1 {
@@ -125,7 +126,7 @@
 			align-items: center;
 
 			background-color: unset;
-			background-image: url($dir + 'assets/medias/svgs/cercle.svg');
+			background-image: url($dir + 'assets/medias/svgs/cercle-low-opa.svg');
 			background-repeat: no-repeat;
 			background-position: center center;
 			background-size: 99%;
@@ -169,7 +170,7 @@
 			align-items: center;
 
 			background-color: unset;
-			background-image: url($dir + 'assets/medias/svgs/cercle.svg');
+			background-image: url($dir + 'assets/medias/svgs/cercle-low-opa.svg');
 			background-repeat: no-repeat;
 			background-position: center center;
 			background-size: 99%;

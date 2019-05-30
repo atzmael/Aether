@@ -136,7 +136,10 @@ const router = {
 	},
 
 	backtoGame() {
-		panel.panelHandler('', 'game-back');
+		panel.panelHandler('', '0');
+		setTimeout(() => {
+			panel.panelHandler('', 'game-back');
+		}, 400)
 	},
 };
 

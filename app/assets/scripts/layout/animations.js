@@ -16,6 +16,7 @@ const animations = {
 		this.ui.choice = document.querySelector('.js-choice');
 		this.ui.pulseBtn = document.querySelector('.js-pulse-wave');
 		this.ui.mainmenuBtn = document.querySelector('.js-main-menu');
+		this.ui.helpmenuBtn = document.querySelector('.js-help-btn');
 		this.ui.bgGenerative = document.querySelector('.js-generative');
 	},
 
@@ -27,7 +28,6 @@ const animations = {
 		this.ui.choice.addEventListener('click', this.pulsateIntroEmoBtn.bind(this));
 		this.ui.pulseBtn.addEventListener('mouseenter', this.stopPulsing.bind(this));
 		this.ui.pulseBtn.addEventListener('mouseleave', this.startPulsing.bind(this));
-		this.ui.landing.addEventListener('click', this.landingIsEnded.bind(this));
 	},
 
 	init() {
@@ -119,6 +119,22 @@ const animations = {
 		document.querySelector('.js-main-menu').addEventListener('mouseleave', () => {
 			this.menuBtnAnim.stop();
 		});
+
+		this.helpmenuAnim = lottie.loadAnimation({
+			container: document.querySelector('.js-help-btn'), // the dom element that will contain the animation
+			renderer: 'svg',
+			loop: true,
+			autoplay: false,
+			path: `${DIR}/assets/datas/picto-help.json` // the path to the animation json
+		});
+
+		document.querySelector('.js-help-btn').addEventListener('mouseenter', () => {
+			this.helpmenuAnim.play();
+		});
+
+		document.querySelector('.js-help-btn').addEventListener('mouseleave', () => {
+			this.helpmenuAnim.stop();
+		});
 	},
 
 	animateQuotationIntro() {
@@ -130,6 +146,10 @@ const animations = {
 				.to(text[1], 0.4, {y: 0, ease: 'ease-in'})
 				.to(text[2], 0.4, {y: 0, ease: 'ease-in'})
 				.to(credit, 0.3, {opacity: 1, ease: 'ease-in'});
+
+			TweenMax.to(this.ui.bgGenerative, 0.3, {opacity: .4, onComplete: () => {
+					this.ui.body.classList.remove('is-landing');
+				}});
 		}, 600)
 	},
 
@@ -171,13 +191,6 @@ const animations = {
 
 	stopPulsing() {
 		this.timelineRunning = false;
-	},
-
-	landingIsEnded() {
-
-		TweenMax.to(this.ui.bgGenerative, 0.3, {opacity: .4, onComplete: () => {
-				this.ui.body.classList.remove('is-landing');
-			}});
 	},
 };
 

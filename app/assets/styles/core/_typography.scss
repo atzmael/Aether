@@ -10,8 +10,8 @@
 
 .heading-2 {
 	@extend %PosterBold;
-	font-size: 120px;
-	line-height: 152px;
+	font-size: 90px;
+	line-height: 120px;
 }
 
 .heading-3 {
@@ -52,6 +52,6 @@
 
 .question-text {
 	@extend %TextMedium;
-	font-size: 30px;
-	line-height: 38px;
+	font-size: 26px;
+	line-height: 32px;
 }
