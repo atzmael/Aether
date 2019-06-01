@@ -16,7 +16,8 @@ window.soundBank = {
 		loop: false,
 		trigger: 1
 	}),
-	stone_break: soundHandler.newSound({url: DIR + '/assets/medias/sounds/cailloux_casse.wav', loop: false, trigger: 1})
+	stone_break: soundHandler.newSound({url: DIR + '/assets/medias/sounds/cailloux_casse.wav', loop: false, trigger: 1}),
+	breath: soundHandler.newSound({url: DIR + '/assets/medias/sounds/cailloux_casse.wav', loop: false, trigger: 1}),
 };
 
 // Libs
@@ -109,7 +110,10 @@ window.rules = {
 					max: 9,
 				},
 				segments: 16,
-				number: 0,
+				number: {
+					min: 0,
+					max: 0,
+				},
 			},
 			geysers: 0,
 			bubbles: {

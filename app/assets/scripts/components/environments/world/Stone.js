@@ -2,7 +2,7 @@ export default class Stone {
 	constructor(groundID, coord, radius = 1, details = 0, stoneNumber = 0, amp = 0.5) {
 		this.radius = radius;
 		this.details = details;
-		this.stoneNumber = stoneNumber;
+		this.stoneNumber = window.helpers.randFloat(stoneNumber.min, stoneNumber.max);
 
 		this.groundID = groundID;
 		this.coord = coord;

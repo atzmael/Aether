@@ -55,7 +55,6 @@ window.onload = () => {
 	// Skip intro if you already saw it
 
 
-	/*
 	if(storage.read('skipintro') == 'true') {
 		router.defineNextSection('','welcome-back');
 
@@ -70,11 +69,12 @@ window.onload = () => {
 			}, 2000)
 		}, 2000);
 	}
-	*/
+
+
 
 	/** Dev only **/
-	//router.defineNextSection('', 'intro-emotion');
-	panel.panelHandler('', 'game-help');
+	//router.defineNextSection('', 'game-scene');
+	//panel.panelHandler('', 'game-help');
 	//new Anger();
 	/** **/
 

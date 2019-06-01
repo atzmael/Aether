@@ -5,7 +5,7 @@ export default class Stalagmite {
 		this.radius = radius;
 		this.height = height;
 		this.segments = segments;
-		this.stalagmiteNumber = stalagmiteNumber;
+		this.stalagmiteNumber = window.helpers.randFloat(stalagmiteNumber.min, stalagmiteNumber.max);
 
 		this.groundID = groundID;
 		this.coord = coord;

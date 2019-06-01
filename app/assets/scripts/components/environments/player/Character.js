@@ -84,11 +84,6 @@ export default class Character {
 		this.mesh.add(hitbox);
 
 		/*
-
-		 */
-
-
-		/*
 		this.createBody();
 		this.createHead();
 		*/
@@ -144,14 +139,14 @@ export default class Character {
 
 				this.direction.down.forward = false;
 
-				clearInterval(this.breathInterval);
+				clearTimeout(this.breathInterval);
 			} else if (e.key === 's' || e.key === 'ArrowDown') {
 				this.direction.down.forward = true;
 				this.direction.down.keydown = true;
 
 				this.direction.up.forward = false;
 
-				clearInterval(this.breathInterval);
+				clearTimeout(this.breathInterval);
 			} else if (e.key === 'a') {
 				this.direction.goLeft.forward = true;
 				this.direction.goLeft.keydown = true;
@@ -199,7 +194,7 @@ export default class Character {
 		})
 
 		document.addEventListener('keypress', (e) => {
-			if(e.key === 'b') {
+			if (e.key === 'b') {
 				this.breath();
 			}
 		})
@@ -258,18 +253,17 @@ export default class Character {
 	}
 
 	breath() {
-		if(!this.hasBreath) {
+		if (!this.hasBreath) {
 			let breathTime = 0;
 
-			this.breathInterval = setInterval(() => {
-				if(!this.hasBreath) {
-					breathTime++;
-					if (breathTime >= 3) {
-						this.hasBreath = true;
-						window.playerState.removeScore(reduce.breath);
-						console.log('breathing...');
-						clearInterval(this.breathInterval);
-					}
+			window.soundHandler.breath.play();
+
+			this.breathInterval = setTimeout(() => {
+				if (!this.hasBreath) {
+					this.hasBreath = true;
+					window.playerState.removeScore(reduce.breath);
+					console.log('breathing...');
+					clearTimeout(this.breathInterval);
 				}
 			}, 1000);
 		}
