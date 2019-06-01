@@ -54,6 +54,7 @@ window.onload = () => {
 
 	// Skip intro if you already saw it
 
+
 	/*
 	if(storage.read('skipintro') == 'true') {
 		router.defineNextSection('','welcome-back');
@@ -72,7 +73,8 @@ window.onload = () => {
 	*/
 
 	/** Dev only **/
-	router.defineNextSection('', 'choice');
+	//router.defineNextSection('', 'intro-emotion');
+	panel.panelHandler('', 'game-help');
 	//new Anger();
 	/** **/
 

@@ -39,12 +39,16 @@
 
 .panel-help {
 	text-align:center;
+	display: flex;
+	flex-flow: column nowrap;
+	justify-content: space-around;
 
 	.panel {
 		&__container {
 			display: flex;
 			flex-flow: column nowrap;
 			justify-content: space-around;
+			margin: 25px 0 50px 0;
 		}
 	}
 
@@ -60,6 +64,7 @@
 
 		&__title {
 			@extend .heading-2;
+			margin: 25px 0 0 0;
 		}
 
 		&__subtitle {

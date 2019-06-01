@@ -5,6 +5,11 @@
 		border-bottom: 2px dashed $white;
 	}
 	.intro-off {
+		position:absolute;
+		top:80%;
+		display:block;
+		width: 100%;
+
 		.off-list {
 			margin: 25px 0;
 			li:not(:first-child) {
@@ -74,7 +79,7 @@
 }
 
 .intro-emotion {
-	justify-content: flex-start;
+	justify-content: center;
 	align-items: center;
 	text-align: center;
 	flex-direction: column;
@@ -86,6 +91,7 @@
 	&__container {
 		display: flex;
 		flex-flow: column;
+		position:relative;
 	}
 
 	&__title {
@@ -93,7 +99,6 @@
 	}
 
 	&__blob {
-		position:relative;
 		display: flex;
 		justify-content: center;
 		align-items: center;
