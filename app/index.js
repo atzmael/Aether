@@ -1,6 +1,6 @@
 import './assets/styles/index.scss';
 
-window.DIR = '/projects/aether';
+window.DIR = '/app';
 
 
 import Anger from './assets/scripts/components/environments/emotions/anger/Anger';
