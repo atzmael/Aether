@@ -248,7 +248,6 @@ class Ground {
 					piecesNumber++;
 				}
 			}
-			console.log(grounds);
 			resolve();
 		});
 	}

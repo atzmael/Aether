@@ -40,8 +40,6 @@ const router = {
 		if (newAttr == 'previous') newAttr = this.last;
 		let oldAttr = this.current;
 
-		console.log("new", newAttr, "old", oldAttr);
-
 		let oldSection = document.querySelector(`.js-router[data-current=${oldAttr}]`);
 		let newSection = document.querySelector(`.js-router[data-current=${newAttr}]`);
 
@@ -54,8 +52,6 @@ const router = {
 	changeSection(oldSection, newSection, pType) {
 		let pageType = pType != '' ? pType : newSection.getAttribute('data-page');
 		let header = this.ui.header;
-
-		console.log('test', pageType);
 
 		switch (pageType) {
 			case '0':

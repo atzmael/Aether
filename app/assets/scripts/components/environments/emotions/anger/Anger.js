@@ -2,23 +2,14 @@
  * General import
  **/
 
-const DIR = '/app';
+const DIR = '/projects/aether';
 
 window.listener = new THREE.AudioListener();
 import Sound from '../../world/Sound';
 // Sound init
 
 window.soundHandler = new Sound();
-window.soundBank = {
-	river_base: soundHandler.newSound({url: DIR + '/assets/medias/sounds/riviere_1_base.wav', trigger: 1}),
-	stone_pose: soundHandler.newSound({
-		url: DIR + '/assets/medias/sounds/cailloux_atterit.wav',
-		loop: false,
-		trigger: 1
-	}),
-	stone_break: soundHandler.newSound({url: DIR + '/assets/medias/sounds/cailloux_casse.wav', loop: false, trigger: 1}),
-	breath: soundHandler.newSound({url: DIR + '/assets/medias/sounds/cailloux_casse.wav', loop: false, trigger: 1}),
-};
+window.soundBank = {};
 
 // Libs
 import 'three/examples/js/controls/OrbitControls';
@@ -54,8 +45,6 @@ window.helpers = new Helpers();
 
 // Player State init
 window.playerState = new PlayerState();
-
-console.log(soundHandler, soundBank);
 
 // Global vars
 window.RATIO = 0.1;
@@ -408,10 +397,6 @@ export default class Anger {
 		this.scene.add(light);
 
 		// Sound things
-		window.lavaSoundObject = new THREE.Object3D();
-		this.scene.add(window.lavaSoundObject);
-		window.lavaSoundObject.position.x = -chunkSize;
-		window.lavaSoundObject.add(window.soundBank.river_base);
 
 		// Debug things
 
@@ -476,15 +461,43 @@ export default class Anger {
 	}
 
 	async init() {
-		this.initScene();
-		this.initPhysics();
-		this.helpers();
+		return new Promise(async resolve => {
+			this.initScene();
+			this.initPhysics();
+			this.helpers();
 
-		//this.displayGraphState();
+			//this.displayGraphState();
 
-		await this.initObjects();
+			await this.initObjects();
 
-		this.update();
+			this.initSounds();
+
+			this.update();
+
+			resolve();
+		});
+	}
+
+	initSounds() {
+		window.soundBank = {
+			permanent: soundHandler.newSound({url: DIR + '/assets/medias/sounds/bg_permanent.wav', loop: true, trigger: 0, obj: this.character.mesh}),
+			etat1: soundHandler.newSound({url: DIR + '/assets/medias/sounds/bg_etat_1.wav', loop: true, trigger: 1, volume: 0.4, obj: this.character.mesh}),
+			etat2: soundHandler.newSound({url: DIR + '/assets/medias/sounds/bg_etat_2.wav', loop: true, trigger: 0, volume: 0.4, obj: this.character.mesh}),
+			etat3: soundHandler.newSound({url: DIR + '/assets/medias/sounds/bg_etat_3.wav', loop: true, trigger: 1, volume: 0.4, obj: this.character.mesh}),
+			river_base: soundHandler.newSound({url: DIR + '/assets/medias/sounds/riviere_1_base.wav', loop: true, trigger: 0}),
+			stone_pose: soundHandler.newSound({
+				url: DIR + '/assets/medias/sounds/cailloux_atterit.wav',
+				loop: false,
+				trigger: 1
+			}),
+			stone_break: soundHandler.newSound({url: DIR + '/assets/medias/sounds/cailloux_casse.wav', loop: false, trigger: 1}),
+			breath: soundHandler.newSound({url: DIR + '/assets/medias/sounds/cailloux_casse.wav', loop: false, trigger: 1}),
+		};
+
+		window.lavaSoundObject = new THREE.Object3D();
+		this.scene.add(window.lavaSoundObject);
+		window.lavaSoundObject.position.x = -chunkSize;
+		window.lavaSoundObject.add(window.soundBank.river_base);
 	}
 
 	initObjects() {
@@ -692,31 +705,22 @@ export default class Anger {
 
 	updateTemplate(elmt, color = false, templateType) {
 		let usedObjectNumber = elmt.corals.length;
-		console.log(`Object used : ${usedObjectNumber}`);
 		elmt.objects.forEach(obj => {
 			this.scene.remove(obj);
 		});
 		elmt.objects = [];
 		switch (templateType) {
 			case "normal":
-				console.log(`it's a normal template`);
 				this.loadNormalTemplate(elmt.id, elmt.elmt.body.position.x, elmt.elmt.body.position.z, false);
 				if (usedObjectNumber > window.rules.normal[window.playerState.playerStateNumber].corals.current) {
-					console.log(`Object used on last template : ${usedObjectNumber}`);
-					console.log(`Number of object that must be used : ${window.rules.normal[window.playerState.playerStateNumber].corals.current}`);
+
 					for (let i = 0; i <= usedObjectNumber - window.rules.normal[window.playerState.playerStateNumber].corals.current; i++) {
-						console.log(`coral switch from unused to used`);
 						elmt.unusedCorals.push(elmt.corals[i]);
 						this.scene.remove(elmt.corals[i]);
 						elmt.corals.splice(i, 1);
 					}
 				} else if (usedObjectNumber < window.rules.normal[window.playerState.playerStateNumber].corals.current) {
-					console.log(`Object used on last template : ${usedObjectNumber}`);
-					console.log(`Number of object that must be used : ${window.rules.normal[window.playerState.playerStateNumber].corals.current}`);
 					for (let i = 0; i < window.rules.normal[window.playerState.playerStateNumber].corals.current - usedObjectNumber; i++) {
-						console.log(elmt.unusedCorals);
-						console.log(elmt.corals);
-						console.log(`coral ${elmt.unusedCorals[i]} is now used`);
 						elmt.corals.push(elmt.unusedCorals[i]);
 						this.scene.add(elmt.unusedCorals[i]);
 						elmt.unusedCorals.splice(i, 1);
@@ -724,7 +728,6 @@ export default class Anger {
 				}
 				break;
 		}
-		console.log(elmt);
 		elmt.corals.forEach(coral => {
 			coral.body.position.x = elmt.elmt.body.position.x + helpers.rand(-chunkSize / 2, chunkSize / 2);
 			coral.body.position.z = elmt.elmt.body.position.z + helpers.rand(-chunkSize / 2, chunkSize / 2);
@@ -1019,7 +1022,6 @@ export default class Anger {
 
 					// this.character.throwObject(this.scene, obj.object);
 
-					console.log(playerState, playerState.score);
 
 				} else {
 					//alert(`The object is too far from you, make ${Math.floor(obj.distance - playerHitBox)} more footstep`);

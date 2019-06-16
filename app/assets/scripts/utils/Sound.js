@@ -1,13 +1,16 @@
 export default class SoundHandler {
 	constructor(currEmotion = 'anger') {
 		this.ui = {};
+		this.isASoundPlaying = false;
 		this.sounds = {
-			anger: [
-				window.DIR + '/assets/medias/sounds/colere_etat1.mp3',
-				window.DIR + '/assets/medias/sounds/colere_etat2.mp3',
-				window.DIR + '/assets/medias/sounds/colere_etat3.mp3',
-			],
-		};
+			anger: {
+				etat1: window.DIR + '/assets/medias/sounds/bg_etat_1.wav',
+				etat2: window.DIR + '/assets/medias/sounds/bg_etat_2.wav',
+				etat3: window.DIR + '/assets/medias/sounds/bg_etat_3.wav',
+				permanent: window.DIR + '/assets/medias/sounds/bg_permanent.wav',
+			}
+		}
+		;
 
 		this.currentEmotion = currEmotion;
 		this.audio = document.querySelector("#audio");
@@ -29,14 +32,19 @@ export default class SoundHandler {
 		this.ui.body = document.querySelector('body');
 	}
 
-	bindEvent() {}
+	bindEvent() {
+	}
 
 	setupAudioElement() {
-		this.source.src = this.sounds[this.currentEmotion][playerState.playerStateNumber];
+		this.source.src = this.sounds[this.currentEmotion][`etat${playerState.playerStateNumber}`];
 	}
 
 	play() {
-		this.audio.play();
+		if (this.isASoundPlaying) {
+
+		} else {
+			this.audio.play();
+		}
 	}
 
 	resume() {
@@ -47,5 +55,5 @@ export default class SoundHandler {
 		this.audio.pause();
 	}
 
-
+	change
 }
