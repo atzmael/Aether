@@ -401,7 +401,7 @@ export default class Anger {
 		// Debug things
 
 		// Gui init
-		//this.guiHandler();
+		this.guiHandler();
 	}
 
 	render() {
@@ -448,6 +448,8 @@ export default class Anger {
 
 		// calculate objects intersecting the picking ray
 		this.intersects = this.raycaster.intersectObjects(objectToInteractCollection);
+
+		console.log(this.renderer.info.render.calls);
 
 		this.render();
 
