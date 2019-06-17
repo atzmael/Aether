@@ -32,6 +32,7 @@ import PlayerState from '../../player/PlayerState';
 import Ground from '../../world/Ground';
 import Normal from './template/Normal';
 import River from './template/River';
+import Physics from '../../world/Physics';
 
 // Stats
 import Stats from 'stats.js';
@@ -414,28 +415,7 @@ export default class Anger {
 		requestAnimationFrame(this.update.bind(this));
 
 		// this.controls.update();
-
-		// --- TEST ANIMATION D'INTRODUCTION ---//
-		// this.test.forEach(stone => {
-		// 	stone.position.copy(stone.body.position)
-		// });
-		// --- FIN DU TEST --- //
-
-		this.physicsUpdate();
-
-		// Link physics
-		window.grounds.forEach(ground => {
-			ground.elmt.position.copy(ground.elmt.body.position);
-			ground.elmt.quaternion.copy(ground.elmt.body.quaternion);
-			ground.objects.forEach(groundObj => {
-				groundObj.position.copy(groundObj.body.position);
-				groundObj.quaternion.copy(groundObj.body.quaternion);
-			});
-			ground.corals.forEach(coralObj => {
-				coralObj.position.copy(coralObj.body.position);
-				coralObj.quaternion.copy(coralObj.body.quaternion);
-			})
-		});
+		this.physicsUpdate(dt);
 
 		// Update du personnage
 		this.character.update();
@@ -512,6 +492,7 @@ export default class Anger {
 			await this.loadGround();
 
 			window.grounds.forEach(ground => {
+				// console.log(ground)
 				this.scene.add(ground.elmt);
 				ground.objects.forEach(groundElmt => {
 					this.scene.add(groundElmt);
@@ -521,84 +502,20 @@ export default class Anger {
 				})
 			});
 
-			// --- TEST ANIMATION D'INTRODUCTION ---//
-
 			this.test = [];
 			for (let i = 0; i < 25; i++) {
-				let shapes = Math.round(Math.random()),
-					geom;
-
-				geom = new THREE.IcosahedronGeometry(this.radius, this.details);
-
-				if (shapes == 1) {
-					geom = new THREE.DodecahedronGeometry(this.radius, this.details);
-				}
-
-				let mat = new THREE.MeshLambertMaterial({
-					color: '#720300'
+				window.physics.add('stone', {
+					position: {
+						x: Math.random() * (5 - -5) + -5,
+						y: Math.random() * (30 - 5) + 5,
+						z: Math.random() * (-3 - -5) + -5
+					},
+					materials: {
+						state: 2,
+						texture: 'stone'
+					}
 				});
-				this.stone = new THREE.Mesh(geom, mat);
-
-				this.stone.name = 'stone';
-				// this.stone.position.set(0,0,0);
-				this.stone.position.set(Math.random() * (5 - -5) + -5, Math.random() * (30 - 5) + 5, Math.random() * (-3 - -5) + -5);
-				let sphere = new CANNON.Sphere(1);
-				let body = new CANNON.Body({mass: 1});
-				body.position.set(this.stone.position.x, this.stone.position.y, this.stone.position.z);
-				body.addShape(sphere);
-				this.world.add(body);
-				this.stone.body = body;
-
-				window.grounds[4].objects.push(this.stone);
-
-				this.scene.add(this.stone);
 			}
-
-			/*
-
-			setTimeout(function () {
-				var div = document.createElement("div");
-
-				div.innerHTML =
-					'<p>What the ... ?</p>';
-
-				div.classList.add("afterIntroEmo");
-
-				document.getElementById('page-content').appendChild(div);
-
-				setTimeout(function () {
-					div = document.createElement("div");
-					document.querySelector('.afterIntroEmo').style.display = 'none';
-					div.innerHTML =
-						'<p>ARE THOSE STONES ?</p>';
-
-					div.classList.add("afterIntroEmoBis");
-
-					document.getElementById('page-content').appendChild(div);
-
-						setTimeout(function () {
-							div = document.createElement("div");
-							document.querySelector('.afterIntroEmoBis').style.display = 'none';
-							div.innerHTML =
-								'<p>How can I get them out of my way ?</p>';
-
-							div.classList.add("afterIntroEmoBisBis");
-
-							document.getElementById('page-content').appendChild(div);
-
-							setTimeout(function () {
-								document.querySelector('.afterIntroEmoBisBis').style.display = 'none';
-							}, 4000);
-
-						}, 2000);
-
-				}, 2000);
-			}, 2500);
-			*/
-
-			// --- FIN DU TEST --- //
-
-			this.addPhysics();
 
 			resolve();
 		});
@@ -647,54 +564,7 @@ export default class Anger {
 	}
 
 	initPhysics() {
-		this.world = new CANNON.World();
-		window.world = this.world;
-		this.world.gravity.set(0, -9, 0);
-		this.world.broadphase = new CANNON.NaiveBroadphase();
-		this.world.solver.iterations = 5;
-		this.world.defaultContactMaterial.contactEquationStiffness = 1e6;
-		this.world.defaultContactMaterial.contactEquationRelaxation = 10;
-		this.ground = new CANNON.ContactMaterial(new CANNON.Material("groundMaterial"), new CANNON.Material("slipperyMaterial"), {
-			friction: .1,
-			restitution: .55
-		});
-		this.world.addContactMaterial(this.ground);
-	}
-
-	addPhysics() {
-		window.grounds.forEach(ground => {
-			let plane = new CANNON.Plane();
-			let body = new CANNON.Body({mass: 0});
-			body.addShape(plane);
-			body.quaternion.setFromAxisAngle(new CANNON.Vec3(1, 0, 0), -Math.PI / 2);
-			body.position.set(ground.elmt.position.x, ground.elmt.position.y, ground.elmt.position.z);
-			this.world.add(body);
-			ground.elmt.body = body;
-			ground.objects.forEach(groundObj => {
-				let sphere = new CANNON.Sphere(1);
-				let body = new CANNON.Body({mass: 1});
-				body.position.set(groundObj.position.x, groundObj.position.y, groundObj.position.z);
-				body.addShape(sphere);
-				this.world.add(body);
-				groundObj.body = body;
-			});
-			ground.corals.forEach(coral => {
-				let sphere = new CANNON.Sphere(1);
-				let body = new CANNON.Body({mass: 1});
-				body.position.set(coral.position.x, coral.position.y, coral.position.z);
-				body.addShape(sphere);
-				this.world.add(body);
-				coral.body = body;
-			});
-			ground.unusedCorals.forEach(coral => {
-				let sphere = new CANNON.Sphere(1);
-				let body = new CANNON.Body({mass: 1});
-				body.position.set(coral.position.x, coral.position.y, coral.position.z);
-				body.addShape(sphere);
-				this.world.add(body);
-				coral.body = body;
-			});
-		});
+		window.physics = new Physics(this.scene, {});
 	}
 
 	helpers() {
@@ -730,18 +600,18 @@ export default class Anger {
 				}
 				break;
 		}
-		elmt.corals.forEach(coral => {
-			coral.body.position.x = elmt.elmt.body.position.x + helpers.rand(-chunkSize / 2, chunkSize / 2);
-			coral.body.position.z = elmt.elmt.body.position.z + helpers.rand(-chunkSize / 2, chunkSize / 2);
-		});
+		// elmt.corals.forEach(coral => {
+		// 	coral.body.position.x = elmt.elmt.body.position.x + helpers.rand(-chunkSize / 2, chunkSize / 2);
+		// 	coral.body.position.z = elmt.elmt.body.position.z + helpers.rand(-chunkSize / 2, chunkSize / 2);
+		// });
+
 		elmt.objects.forEach(e => {
-			this.addPhysicsObject(e);
 			this.scene.add(e);
 		});
 
-		if (color) {
-			elmt.elmt.material.color.set(color);
-		}
+		// if(color) {
+		// 	elmt.elmt.material.color.set(color);
+		// }
 	}
 
 	groundUpdate() {
@@ -920,8 +790,8 @@ export default class Anger {
 		}
 	}
 
-	physicsUpdate() {
-		this.world.step(1 / 60);
+	physicsUpdate(dt) {
+		window.physics.update(dt);
 	}
 
 	guiHandler() {
@@ -1030,15 +900,6 @@ export default class Anger {
 				}
 			}
 		}
-	}
-
-	addPhysicsObject(groundObj) {
-		let sphere = new CANNON.Sphere(1);
-		let body = new CANNON.Body({mass: 1});
-		body.position.set(groundObj.position.x, groundObj.position.y, groundObj.position.z);
-		body.addShape(sphere);
-		this.world.add(body);
-		groundObj.body = body;
 	}
 
 	loadNormalTemplate(piecesNumber, posChunkX, posChunkZ, isInit) {

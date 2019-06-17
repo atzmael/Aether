@@ -55,10 +55,8 @@ window.onload = () => {
 
 	// Skip intro if you already saw it
 
-
 	if(storage.read('skipintro') == 'true') {
 		router.defineNextSection('','welcome-back');
-
 	} else {
 		setTimeout(() => {
 			TweenMax.to(document.querySelector('.js-loading-landing'), 0.2, {opacity: 0, ease: 'ease-out'});
@@ -72,9 +70,8 @@ window.onload = () => {
 	}
 
 	/** Dev only **/
-	//router.defineNextSection('', 'game-scene');
-	//panel.panelHandler('', 'game-help');
-	//new Anger();
+	router.defineNextSection('', 'game-scene');
+	new Anger();
 	/** **/
 
 };
