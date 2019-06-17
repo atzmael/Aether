@@ -27,6 +27,7 @@
 	Exemple:
 	 physics.add('floor', {
 		// Global variables
+		groundID: 4,
 		size: {
 			x: 1,
 			y: 1,
@@ -281,59 +282,64 @@ export default class Physics {
 		window.grounds[groundID].objects.push(mesh);
 	}
 	drawIcosahedron(options) {
-		// Initialize
-		let radius = options.radius;
-		let detail = options.detail;
-		let position = options.position;
-		let rotation = options.rotation;
-		let shape = options.shape;
-		let body = options.body;
-		let mass = options.mass;
-		let geometry = options.geometry;
-		let materials = options.materials;
-		let material = options.material;
-		let mesh = options.mesh;
-		let character = options.character;
-		let name = options.name;
-		let is = options.is;
-		let groundID = options.groundID;
-		// Physics
-		shape = new CANNON.Sphere(radius);
-		body = new CANNON.Body({
-			mass: mass
+		return new Promise(resolve => {
+			// Initialize
+			let radius = options.radius;
+			let detail = options.detail;
+			let position = options.position;
+			let rotation = options.rotation;
+			let shape = options.shape;
+			let body = options.body;
+			let mass = options.mass;
+			let geometry = options.geometry;
+			let materials = options.materials;
+			let material = options.material;
+			let mesh = options.mesh;
+			let character = options.character;
+			let name = options.name;
+			let is = options.is;
+			let groundID = options.groundID;
+			// Physics
+			shape = new CANNON.Sphere(radius);
+			body = new CANNON.Body({
+				mass: mass
+			});
+			body.addShape(shape);
+			body.position.set(position.x, position.y, position.z);
+			body.quaternion.setFromAxisAngle(
+				new CANNON.Vec3(0, 1, 0),
+				rotation
+			);
+			// Graphics
+			geometry = new THREE.IcosahedronBufferGeometry(radius, detail);
+			materials = new Materials(materials);
+			material = materials.material;
+			material.texture = materials;
+			mesh = new THREE.Mesh(geometry, material);
+			mesh.position.set(position.x, position.y, position.z);
+			mesh.quaternion.setFromAxisAngle(
+				new THREE.Vector3(0, 1, 0),
+				rotation
+			);
+			mesh.name = name;
+			mesh.is = is;
+			// Global
+			this.world.addBody(body);
+			console.log(character)
+			if (character) {
+				this.character.body = body;
+				this.character.body.character = new Character()
+				console.log(this.character.body.character)
+			} else {
+				this.objects.bodies.push(body);
+			}
+			// (character) || this.scene.add(mesh);
+			(character) || this.objects.meshes.push(mesh);
+			console.log(groundID);
+			window.grounds[groundID].objects.push(mesh);
+
+			resolve();
 		});
-		body.addShape(shape);
-		body.position.set(position.x, position.y, position.z);
-		body.quaternion.setFromAxisAngle(
-			new CANNON.Vec3(0, 1, 0),
-			rotation
-		);
-		// Graphics
-		geometry = new THREE.IcosahedronBufferGeometry(radius, detail);
-		materials = new Materials(materials);
-		material = materials.material;
-		material.texture = materials;
-		mesh = new THREE.Mesh(geometry, material);
-		mesh.position.set(position.x, position.y, position.z);
-		mesh.quaternion.setFromAxisAngle(
-			new THREE.Vector3(0, 1, 0),
-			rotation
-		);
-		mesh.name = name;
-		mesh.is = is;
-		// Global
-		this.world.addBody(body);
-		console.log(character)
-		if (character) {
-			this.character.body = body;
-			this.character.body.character = new Character()
-			console.log(this.character.body.character)
-		} else {
-			this.objects.bodies.push(body);
-		}
-		// (character) || this.scene.add(mesh);
-		(character) || this.objects.meshes.push(mesh);
-		window.grounds[groundID].objects.push(mesh);
 	}
 	drawPlane(options) {
 	// Initialize

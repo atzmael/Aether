@@ -55,6 +55,7 @@ window.onload = () => {
 
 	// Skip intro if you already saw it
 
+	/*
 	if(storage.read('skipintro') == 'true') {
 		router.defineNextSection('','welcome-back');
 	} else {
@@ -68,6 +69,7 @@ window.onload = () => {
 			}, 2000)
 		}, 2000);
 	}
+	*/
 
 	/** Dev only **/
 	router.defineNextSection('', 'game-scene');
