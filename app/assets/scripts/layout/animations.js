@@ -1,10 +1,12 @@
 import lottie from "lottie-web";
-import panel from "./navigation/panel";
+import Blob from './Blob';
+import SceneInterface from "./SceneInterface";
 
 const animations = {
 	ui: {},
 	current: '',
 	timelineRunning: true,
+	blobScene: null,
 
 	bindUI() {
 		this.ui.body = document.querySelector('body');
@@ -168,6 +170,15 @@ const animations = {
 	animateChoiceEmotion() {
 		let text = document.querySelector('.js-choice-text');
 		let help = document.querySelector('.js-choice-help');
+
+		window.sceneInterface = new SceneInterface();
+		window.blob = new Blob(window.sceneInterface.scene);
+		function animate(time) {
+			window.sceneInterface.raf = requestAnimationFrame(animate);
+			window.sceneInterface.renderer.render(window.sceneInterface.scene, window.sceneInterface.camera);
+			window.blob.update(time)
+		}
+		animate();
 
 		setTimeout(() => {
 			new TimelineMax().to(text, 0.4, {y: 0, ease: 'ease-in'})

@@ -43,6 +43,12 @@ const router = {
 		let oldSection = document.querySelector(`.js-router[data-current=${oldAttr}]`);
 		let newSection = document.querySelector(`.js-router[data-current=${newAttr}]`);
 
+		if(newAttr == 'change-emotion' || newAttr == 'choice') {
+			this.ui.body.classList.add('is-blob');
+		} else {
+			this.ui.body.classList.remove('is-blob');
+		}
+
 		this.changeSection(oldSection, newSection, pType);
 
 		this.last = this.current;
@@ -128,6 +134,7 @@ const router = {
 
 	openMenuFromGame(e) {
 		e.preventDefault();
+		this.ui.body.classList.add('is-blob');
 		router.defineNextSection('', 'change-emotion');
 	},
 

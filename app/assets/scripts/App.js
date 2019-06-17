@@ -14,6 +14,7 @@ import generativeCircle from "./utils/generative-circle";
 import cursor from "./utils/Cursor";
 
 import Anger from "./components/environments/emotions/anger/Anger";
+import SceneInterface from "./layout/SceneInterface";
 
 window.onload = () => {
 
@@ -69,8 +70,6 @@ window.onload = () => {
 			}, 2000)
 		}, 2000);
 	}
-
-
 
 	/** Dev only **/
 	//router.defineNextSection('', 'game-scene');
