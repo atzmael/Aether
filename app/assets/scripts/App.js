@@ -13,9 +13,6 @@ import generativeCircle from "./utils/generative-circle";
 
 import cursor from "./utils/Cursor";
 
-import Anger from "./components/environments/emotions/anger/Anger";
-import SceneInterface from "./layout/SceneInterface";
-
 window.onload = () => {
 
 	// Storage handler
@@ -55,7 +52,6 @@ window.onload = () => {
 
 	// Skip intro if you already saw it
 
-	/*
 	if(storage.read('skipintro') == 'true') {
 		router.defineNextSection('','welcome-back');
 	} else {
@@ -69,11 +65,10 @@ window.onload = () => {
 			}, 2000)
 		}, 2000);
 	}
-	*/
 
 	/** Dev only **/
-	router.defineNextSection('', 'game-scene');
-	new Anger();
+	//router.defineNextSection('', 'game-scene');
+	//new Anger();
 	/** **/
 
 };

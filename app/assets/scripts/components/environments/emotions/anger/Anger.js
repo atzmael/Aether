@@ -585,6 +585,7 @@ export default class Anger {
 			case "normal":
 				this.loadNormalTemplate(elmt.id, elmt.elmt.body.position.x, elmt.elmt.body.position.z, false);
 				if (usedObjectNumber > window.rules.normal[window.playerState.playerStateNumber].corals.current) {
+
 					for (let i = 0; i <= usedObjectNumber - window.rules.normal[window.playerState.playerStateNumber].corals.current; i++) {
 						elmt.unusedCorals.push(elmt.corals[i]);
 						this.scene.remove(elmt.corals[i]);

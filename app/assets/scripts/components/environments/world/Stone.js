@@ -16,6 +16,10 @@ export default class Stone {
 	}
 
 	init() {
+		this.mesh = new THREE.Object3D();
+		this.mesh.name = "stone-field";
+		this.mesh.position.y = 0;
+
 		this.createFieldOfStone();
 	}
 	/**
@@ -33,6 +37,7 @@ export default class Stone {
 				posY = (y - (this.stones.length / 2)) * 30 + (Math.sin(Math.random() * Math.PI) * 2) + this.coord.y;
 				stone.position.set(posX, 0, posY);
 				this.stones[x][y] = stone;
+				this.mesh.add(stone);
 				window.grounds[this.groundID].objects.push(stone);
 
 				// posX = (x - (this.stones.length / 2)) * 30 + (Math.cos(Math.random() * Math.PI) * 2) + this.coord.x;

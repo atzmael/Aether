@@ -232,7 +232,8 @@ class Ground {
 					);
 
 					if (!this.checkChunkTemplate(posChunkX)) {
-						await window.physics.add('chunk', {
+						await this.loadNormalTemplate(piecesNumber, posChunkX, posChunkZ, true);
+						window.physics.add('chunk', {
 							groundID: piecesNumber,
 							size: {
 								x: this.size,
@@ -250,9 +251,9 @@ class Ground {
 								texture: 'sand'
 							}
 						});
-						await this.loadNormalTemplate(piecesNumber, posChunkX, posChunkZ, true);
 					} else {
-						await window.physics.add('chunk', {
+						await this.loadRiverTemplate(piecesNumber, posChunkX, posChunkZ, true);
+						window.physics.add('chunk', {
 							groundID: piecesNumber,
 							size: {
 								x: this.size,
@@ -270,7 +271,6 @@ class Ground {
 								texture: 'lava'
 							}
 						});
-						await this.loadRiverTemplate(piecesNumber, posChunkX, posChunkZ, true);
 					}
 
 					piecesNumber++;
