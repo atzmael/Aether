@@ -57,18 +57,18 @@ window.onload = () => {
 
 	// Skip intro if you already saw it
 
-	if(storage.read('skipintro') == 'true') {
-		router.defineNextSection('','welcome-back');
-	} else {
-		setTimeout(() => {
-			TweenMax.to(document.querySelector('.js-loading-landing'), 0.2, {opacity: 0, ease: 'ease-out'});
-			new p5(generativeCircle);
-		}, 2000);
-	}
+	// if(storage.read('skipintro') == 'true') {
+	// 	router.defineNextSection('','welcome-back');
+	// } else {
+	// 	setTimeout(() => {
+	// 		TweenMax.to(document.querySelector('.js-loading-landing'), 0.2, {opacity: 0, ease: 'ease-out'});
+	// 		new p5(generativeCircle);
+	// 	}, 2000);
+	// }
 
 	/** Dev only **/
-	//router.defineNextSection('', 'game-scene');
-	//new Anger();
+	router.defineNextSection('', 'game-scene');
+	new Anger();
 	/** **/
 
 };

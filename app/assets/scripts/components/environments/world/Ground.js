@@ -233,17 +233,45 @@ class Ground {
 
 					if (!this.checkChunkTemplate(posChunkX)) {
 						await this.loadNormalTemplate(piecesNumber, posChunkX, posChunkZ, true);
-						piece = this.createPiece(true);
+						window.physics.add('chunk', {
+							groundID: piecesNumber,
+							size: {
+								x: this.size,
+								y: this.size,
+								z: this.size
+							},
+							mass: 0,
+							position: {
+								x: posChunkX,
+								y: -1,
+								z: posChunkZ
+							},
+							materials: {
+								state: 2,
+								texture: 'sand'
+							}
+						});
 					} else {
 						await this.loadRiverTemplate(piecesNumber, posChunkX, posChunkZ, true);
-						piece = this.createPiece(false, COLORS.blue);
+						window.physics.add('chunk', {
+							groundID: piecesNumber,
+							size: {
+								x: this.size,
+								y: this.size,
+								z: this.size
+							},
+							mass: 0,
+							position: {
+								x: posChunkX,
+								y: -1,
+								z: posChunkZ
+							},
+							materials: {
+								state: 2,
+								texture: 'lava'
+							}
+						});
 					}
-
-					piece.position.x = posChunkX;
-					piece.position.z = posChunkZ;
-					piece.position.y = -1;
-
-					window.grounds[piecesNumber].elmt = piece;
 
 					piecesNumber++;
 				}
