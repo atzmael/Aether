@@ -60,7 +60,7 @@ export default class Stalagmite {
 
 		let geom = new THREE.ConeBufferGeometry( radius, height, this.segments );
 
-		let mat = new THREE.MeshLambertMaterial({color: '#720300'});
+		let mat = new THREE.MeshBasicMaterial({color: '#720300'});
 
 		let stalagmite = new THREE.Mesh(geom, mat);
 

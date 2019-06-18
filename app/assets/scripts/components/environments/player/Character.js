@@ -15,6 +15,8 @@ export default class Character {
 			z: false,
 		};
 
+		this.vars = {};
+
 		this.positionOnMap = 4;
 
 		this.hasBreath = false;
@@ -60,10 +62,11 @@ export default class Character {
 		this.mesh.name = "character";
 		this.mesh.position.y = 0.5;
 
-		let geom = new THREE.BoxBufferGeometry(150, 150, 150);
-		let mat = new THREE.MeshLambertMaterial({color: '#2d1300', side: THREE.BackSide});
-
-		this.sky = new THREE.Mesh(geom, mat);
+		//let geom = new THREE.SphereBufferGeometry( 80, 20, 10 );
+		//let texture = new THREE.TextureLoader().load( window.DIR + '/assets/textures/ciel-2.jpg' );
+		//let mat = new THREE.MeshBasicMaterial({color: '#490200', side: THREE.BackSide, transparent: true, opacity: 0.97, map: texture});
+		//this.sky = new THREE.Mesh(geom, mat);
+		//this.mesh.add(this.sky);
 
 		/*
 		Hitbox helper
@@ -92,33 +95,51 @@ export default class Character {
 	}
 
 	update() {
+		this.vars = {
+			rotation: {
+				y: this.mesh.rotation.y,
+			},
+			position: {
+				x: this.mesh.position.x,
+				y: this.mesh.position.y,
+				z: this.mesh.position.z,
+			}
+		};
 
 		if (this.direction.left.forward) {
-			this.mesh.rotation.y += this.rotationVelocity;
+			this.vars.rotation.y += this.rotationVelocity;
 		}
 		if (this.direction.right.forward) {
-			this.mesh.rotation.y -= this.rotationVelocity;
+			this.vars.rotation.y -= this.rotationVelocity;
 		}
 		if (this.direction.down.forward) {
-			this.mesh.position.z += Math.cos(this.mesh.rotation.y) * this.movementVelocity;
-			this.mesh.position.x += Math.sin(this.mesh.rotation.y) * this.movementVelocity;
+			this.vars.position.z += Math.cos(this.mesh.rotation.y) * this.movementVelocity;
+			this.vars.position.x += Math.sin(this.mesh.rotation.y) * this.movementVelocity;
 			window.lavaSoundObject.position.z = this.mesh.position.z;
 		}
 		if (this.direction.up.forward) {
-			this.mesh.position.z -= Math.cos(this.mesh.rotation.y) * this.movementVelocity;
-			this.mesh.position.x -= Math.sin(this.mesh.rotation.y) * this.movementVelocity;
+			this.vars.position.z -= Math.cos(this.mesh.rotation.y) * this.movementVelocity;
+			this.vars.position.x -= Math.sin(this.mesh.rotation.y) * this.movementVelocity;
 			window.lavaSoundObject.position.z = this.mesh.position.z;
 		}
 		if (this.direction.goLeft.forward) {
-			this.mesh.position.z -= Math.cos(this.mesh.rotation.y + 90 * Math.PI / 180) * this.movementVelocity;
-			this.mesh.position.x -= Math.sin(this.mesh.rotation.y + 90 * Math.PI / 180) * this.movementVelocity;
+			this.vars.position.z -= Math.cos(this.mesh.rotation.y + 90 * Math.PI / 180) * this.movementVelocity;
+			this.vars.position.x -= Math.sin(this.mesh.rotation.y + 90 * Math.PI / 180) * this.movementVelocity;
 			window.lavaSoundObject.position.z = this.mesh.position.z;
 		}
 		if (this.direction.goRight.forward) {
-			this.mesh.position.z -= Math.cos(this.mesh.rotation.y - 90 * Math.PI / 180) * this.movementVelocity;
-			this.mesh.position.x -= Math.sin(this.mesh.rotation.y - 90 * Math.PI / 180) * this.movementVelocity;
+			this.vars.position.z -= Math.cos(this.mesh.rotation.y - 90 * Math.PI / 180) * this.movementVelocity;
+			this.vars.position.x -= Math.sin(this.mesh.rotation.y - 90 * Math.PI / 180) * this.movementVelocity;
 			window.lavaSoundObject.position.z = this.mesh.position.z;
 		}
+
+		if(this.vars.position.x < -45 && this.vars.position.x > -165) {
+			this.vars.position.x = this.mesh.position.x;
+		}
+		this.mesh.rotation.y = this.vars.rotation.y;
+		this.mesh.position.x = this.vars.position.x;
+		this.mesh.position.y = this.vars.position.y;
+		this.mesh.position.z = this.vars.position.z;
 	}
 
 	controls() {

@@ -1,4 +1,3 @@
-import "p5";
 import storage from './storage';
 
 const generativeCircle = function (sketch) {

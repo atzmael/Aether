@@ -46,8 +46,7 @@ window.helpers = new Helpers();
 // Player State init
 window.playerState = new PlayerState();
 
-// Global vars
-window.RATIO = 0.1;
+window.coralMeshIsLoaded = false;
 
 // collection of objects
 
@@ -58,8 +57,6 @@ window.playerHitBox = 12;
 window.statesScore = require('../../../../../datas/states');
 
 window.chunkSize = 100;
-
-window.isObjectLoaded = false;
 
 window.COLORS = {
 	blue: '#0c3191',
@@ -194,7 +191,10 @@ window.rules = {
 					max: 13,
 				},
 				segments: 16,
-				number: 5,
+				number: {
+					min: 5,
+					max: 7,
+				},
 			},
 			geysers: 0,
 			bubbles: {
@@ -363,13 +363,16 @@ window.rules = {
 var pixelRatio = window.devicePixelRatio >= 2 ? 2 : window.devicePixelRatio;
 var ANTIALIAS = false;
 
+// background
+var bgWidth, bgHeight, bgTexture;
+
 // App
 
 export default class Anger {
 
 	constructor() {
 
-		this.camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 1000);
+		this.camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 100);
 		this.camera.position.z = 0;
 		this.camera.position.y = 2;
 		this.camera.rotation.x = Math.PI / 180 * -15;
@@ -401,7 +404,7 @@ export default class Anger {
 		// Debug things
 
 		// Gui init
-		//this.guiHandler();
+		this.guiHandler();
 	}
 
 	render() {
@@ -449,6 +452,9 @@ export default class Anger {
 		// calculate objects intersecting the picking ray
 		this.intersects = this.raycaster.intersectObjects(objectToInteractCollection);
 
+		// DEBUG ONLY //
+		console.log(this.renderer.info.memory);
+
 		this.render();
 
 		stats.end();
@@ -466,8 +472,6 @@ export default class Anger {
 			this.initPhysics();
 			this.helpers();
 
-			//this.displayGraphState();
-
 			await this.initObjects();
 
 			this.initSounds();
@@ -480,7 +484,7 @@ export default class Anger {
 
 	initSounds() {
 		window.soundBank = {
-			permanent: soundHandler.newSound({url: DIR + '/assets/medias/sounds/bg_permanent.wav', loop: true, trigger: 0, obj: this.character.mesh}),
+			permanent: soundHandler.newSound({url: DIR + '/assets/medias/sounds/bg_permanent.wav', loop: true, trigger: 0, volume: 0.8, obj: this.character.mesh}),
 			etat1: soundHandler.newSound({url: DIR + '/assets/medias/sounds/bg_etat_1.wav', loop: true, trigger: 1, volume: 0.4, obj: this.character.mesh}),
 			etat2: soundHandler.newSound({url: DIR + '/assets/medias/sounds/bg_etat_2.wav', loop: true, trigger: 0, volume: 0.4, obj: this.character.mesh}),
 			etat3: soundHandler.newSound({url: DIR + '/assets/medias/sounds/bg_etat_3.wav', loop: true, trigger: 1, volume: 0.4, obj: this.character.mesh}),
@@ -491,7 +495,8 @@ export default class Anger {
 				trigger: 1
 			}),
 			stone_break: soundHandler.newSound({url: DIR + '/assets/medias/sounds/cailloux_casse.wav', loop: false, trigger: 1}),
-			breath: soundHandler.newSound({url: DIR + '/assets/medias/sounds/cailloux_casse.wav', loop: false, trigger: 1}),
+			inhale: soundHandler.newSound({url: DIR + '/assets/medias/sounds/respiration_inspiration.wav', loop: false, trigger: 1}),
+			exhale: soundHandler.newSound({url: DIR + '/assets/medias/sounds/respiration_expiration.wav', loop: false, trigger: 1}),
 		};
 
 		window.lavaSoundObject = new THREE.Object3D();
@@ -532,7 +537,7 @@ export default class Anger {
 					geom = new THREE.DodecahedronGeometry(this.radius, this.details);
 				}
 
-				let mat = new THREE.MeshLambertMaterial({
+				let mat = new THREE.MeshBasicMaterial({
 					color: '#720300'
 				});
 				this.stone = new THREE.Mesh(geom, mat);
@@ -551,48 +556,6 @@ export default class Anger {
 
 				this.scene.add(this.stone);
 			}
-
-			/*
-
-			setTimeout(function () {
-				var div = document.createElement("div");
-
-				div.innerHTML =
-					'<p>What the ... ?</p>';
-
-				div.classList.add("afterIntroEmo");
-
-				document.getElementById('page-content').appendChild(div);
-
-				setTimeout(function () {
-					div = document.createElement("div");
-					document.querySelector('.afterIntroEmo').style.display = 'none';
-					div.innerHTML =
-						'<p>ARE THOSE STONES ?</p>';
-
-					div.classList.add("afterIntroEmoBis");
-
-					document.getElementById('page-content').appendChild(div);
-
-						setTimeout(function () {
-							div = document.createElement("div");
-							document.querySelector('.afterIntroEmoBis').style.display = 'none';
-							div.innerHTML =
-								'<p>How can I get them out of my way ?</p>';
-
-							div.classList.add("afterIntroEmoBisBis");
-
-							document.getElementById('page-content').appendChild(div);
-
-							setTimeout(function () {
-								document.querySelector('.afterIntroEmoBisBis').style.display = 'none';
-							}, 4000);
-
-						}, 2000);
-
-				}, 2000);
-			}, 2500);
-			*/
 
 			// --- FIN DU TEST --- //
 
@@ -619,9 +582,29 @@ export default class Anger {
 
 		this.scene = new THREE.Scene();
 
-		//this.scene.fog = new THREE.Fog('#270100', 1, 75);
+		this.scene.fog = new THREE.Fog('#4b0500', 1, 130);
 
-		this.renderer = new THREE.WebGLRenderer({antialias: ANTIALIAS});
+		// Image as a background
+		bgTexture = new THREE.TextureLoader().load(DIR + '/assets/textures/ciel-2.jpg',
+			( texture ) => {
+				let img = texture.image;
+				bgWidth= img.width;
+				bgHeight = img.height;
+			} );
+		this.scene.background = bgTexture;
+		bgTexture.wrapS = THREE.MirroredRepeatWrapping;
+		bgTexture.wrapT = THREE.MirroredRepeatWrapping;
+
+		var aspect = window.innerWidth / window.innerHeight;
+		var texAspect = bgWidth / bgHeight;
+		var relAspect = aspect / texAspect;
+
+		bgTexture.repeat = new THREE.Vector2( Math.max(relAspect, 1), Math.max(1/relAspect,1) );
+		bgTexture.offset = new THREE.Vector2( -Math.max(relAspect-1, 0)/2, -Math.max(1/relAspect-1, 0)/2 );
+
+		//this.scene.background = new THREE.Color('#890b00');
+
+		this.renderer = new THREE.WebGLRenderer({antialias: ANTIALIAS, alpha: true});
 
 		// Raycasting
 		this.raycaster = new THREE.Raycaster();
@@ -635,6 +618,7 @@ export default class Anger {
 		this.renderer.setPixelRatio(pixelRatio);
 		this.renderer.setSize(window.innerWidth, window.innerHeight);
 		this.container.appendChild(this.renderer.domElement);
+		this.renderer.setClearColor(0x000000, 0);
 
 		// Event listener
 		window.addEventListener('resize', this.onWindowResize.bind(this), false);
@@ -646,7 +630,6 @@ export default class Anger {
 
 	initPhysics() {
 		this.world = new CANNON.World();
-		window.world = this.world;
 		this.world.gravity.set(0, -9, 0);
 		this.world.broadphase = new CANNON.NaiveBroadphase();
 		this.world.solver.iterations = 5;
@@ -707,6 +690,11 @@ export default class Anger {
 		let usedObjectNumber = elmt.corals.length;
 		elmt.objects.forEach(obj => {
 			this.scene.remove(obj);
+			obj.geometry.dispose();
+			obj.geometry = undefined;
+			obj.material.dispose();
+			obj.material = undefined;
+			obj = undefined;
 		});
 		elmt.objects = [];
 		switch (templateType) {
@@ -717,6 +705,11 @@ export default class Anger {
 					for (let i = 0; i <= usedObjectNumber - window.rules.normal[window.playerState.playerStateNumber].corals.current; i++) {
 						elmt.unusedCorals.push(elmt.corals[i]);
 						this.scene.remove(elmt.corals[i]);
+						elmt.corals[i].geometry.dispose();
+						elmt.corals[i].geometry = undefined;
+						elmt.corals[i].material.dispose();
+						elmt.corals[i].material = undefined;
+						elmt.corals[i] = undefined;
 						elmt.corals.splice(i, 1);
 					}
 				} else if (usedObjectNumber < window.rules.normal[window.playerState.playerStateNumber].corals.current) {
@@ -991,11 +984,21 @@ export default class Anger {
 					z += shootDirection.z * (1 * 1.02 + 1);
 					obj.object.body.position.set(x, y, z);
 
-					obj.object.body.addEventListener("collide", function (e) {
-						obj.object.add(soundBank.stone_break.play());
-						setTimeout(function () {
-							window.scene.remove(obj.object);
-						}, 500);
+					this.intersects.splice(i, 1);
+
+					obj.object.body.addEventListener("collide", () => {
+						if(!obj.hasCollide) {
+							obj.hasCollide = true;
+							obj.object.add(soundBank.stone_break.play());
+							setTimeout(() => {
+								window.scene.remove(obj.object);
+								obj.object.geometry.dispose();
+								obj.object.geometry = undefined;
+								obj.object.material.dispose();
+								obj.object.material = undefined;
+								obj.object = undefined;
+							}, 500);
+						}
 					});
 
 

@@ -1,5 +1,4 @@
 import TweenMax from 'gsap';
-import lottie from 'lottie-web';
 
 import router from "./layout/navigation/router";
 import storage from "./utils/storage";
@@ -12,9 +11,7 @@ import animations from './layout/animations';
 import generativeCircle from "./utils/generative-circle";
 
 import cursor from "./utils/Cursor";
-
 import Anger from "./components/environments/emotions/anger/Anger";
-import SceneInterface from "./layout/SceneInterface";
 
 window.onload = () => {
 
@@ -56,6 +53,7 @@ window.onload = () => {
 	// Skip intro if you already saw it
 
 
+	/*
 	if(storage.read('skipintro') == 'true') {
 		router.defineNextSection('','welcome-back');
 
@@ -70,11 +68,12 @@ window.onload = () => {
 			}, 2000)
 		}, 2000);
 	}
+	*/
 
 	/** Dev only **/
-	//router.defineNextSection('', 'game-scene');
+	router.defineNextSection('', 'game-scene');
 	//panel.panelHandler('', 'game-help');
-	//new Anger();
+	new Anger();
 	/** **/
 
 };

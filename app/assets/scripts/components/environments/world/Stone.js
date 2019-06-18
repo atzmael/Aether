@@ -56,7 +56,7 @@ export default class Stone {
 			geom = new THREE.DodecahedronGeometry(this.radius, this.details);
 		}
 
-		let mat = new THREE.MeshLambertMaterial({color: '#720300'});
+		let mat = new THREE.MeshBasicMaterial({color: '#720300'});
 
 		let stone = new THREE.Mesh(geom, mat);
 

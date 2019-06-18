@@ -8,7 +8,7 @@ class Sound {
 
 	}
 
-	newSound({url = null, volume = 1, loop = true, trigger = 0, obj = null, refDistance = 20}) {
+	newSound({url = null, volume = 1, loop = false, trigger = 0, obj = null, refDistance = 20}) {
 		if(url != null) {
 			let soundObject = new THREE.PositionalAudio(this.listener);
 

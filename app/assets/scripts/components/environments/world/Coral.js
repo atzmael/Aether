@@ -1,6 +1,4 @@
 import 'three/examples/js/loaders/OBJLoader';
-import CANNON from "cannon";
-import Normal from "../emotions/anger/template/Normal";
 
 class Coral {
 	constructor(groundID, coord, coralMaxNumber, coralCurrentNumber, unused) {
@@ -13,7 +11,6 @@ class Coral {
 		this.unused = unused;
 
 		this.loader = new THREE.OBJLoader();
-		this.manager = new THREE.LoadingManager();
 
 		this.corals = [];
 		for(let x = 0; x < 5;x++){
@@ -23,7 +20,11 @@ class Coral {
 
 	init() {
 		return new Promise(async resolve => {
-			await this.loadObj();
+			if(!window.coralMeshIsLoaded) {
+				await this.loadObj();
+			} else {
+				this.obj = window.coralMeshIsLoaded.clone();
+			}
 			await this.createFieldOfCoral();
 			resolve();
 		})
@@ -78,6 +79,7 @@ class Coral {
 				// Here the loaded data is assumed to be an object
 				obj => {
 					// Add the loaded object to the scene
+					window.coralMeshIsLoaded = obj;
 					this.obj = obj;
 					resolve();
 				},

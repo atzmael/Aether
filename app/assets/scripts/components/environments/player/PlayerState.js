@@ -25,6 +25,13 @@ class PlayerState {
 	calculatePlayerState() {
 		this.playerStateNumber = Math.floor(this.score);
 		if(this.playerStateNumber > 3) this.playerStateNumber = 3;
+		if(this.playerStateNumber < 0) this.playerStateNumber = 0;
+
+		switch(this.playerStateNumber) {
+			case 1:
+
+				break;
+		}
 	}
 }
 

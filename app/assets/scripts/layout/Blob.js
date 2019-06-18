@@ -1,6 +1,3 @@
-import { Material } from "cannon";
-import Shader from "three-shaders";
-
 export default class Blob {
 	constructor(scene) {
 		this.scene = scene;
