@@ -757,7 +757,7 @@ export default class Anger {
 			restitution: .55
 		});
 		this.world.addContactMaterial(this.ground);
-		this.helper = new THREE.CannonDebugRenderer(this.scene, this.world)
+		// this.helper = new THREE.CannonDebugRenderer(this.scene, this.world)
 	}
 
 	addPhysics() {
@@ -1128,7 +1128,7 @@ export default class Anger {
 
 	physicsUpdate() {
 		this.world.step(1 / 60);
-		this.helper.update();
+		// this.helper.update();
 	}
 
 	guiHandler() {

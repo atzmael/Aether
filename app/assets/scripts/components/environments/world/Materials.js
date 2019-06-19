@@ -93,7 +93,6 @@ export default class Materials {
         let vertexShader = `
             uniform float uTime;
             uniform vec2 uResolution;
-            varying vec3 vColor;
             varying float vNoise;
 
             float SimplexPerlin3D(vec3 P) {

@@ -29,7 +29,7 @@ export default class Bubble {
 		for (let i = 0; i < this.bubbleNumber; i++) {
 			x = Math.round(Math.random() * (4 - 1) + 1);
 			y = Math.round(Math.random() * (4 - 1) + 1);
-			if (this.bubbles[x][y] == undefined) {
+			if (window.grid[this.groundID][x][y] == undefined) {
 				bubble = this.createBubble();
 				posX = (x - (this.bubbles.length / 2)) * 30 + (Math.cos(Math.random() * Math.PI) * 2) + this.coord.x;
 				posY = (y - (this.bubbles.length / 2)) * 30 + (Math.sin(Math.random() * Math.PI) * 2) + this.coord.y;
@@ -37,6 +37,22 @@ export default class Bubble {
 				bubble.position.set(posX, posZ, posY);
 				this.bubbles[x][y] = bubble;
 				window.grounds[this.groundID].objects.push(bubble);
+			} else {
+				for (let i = 0; i < 5; i++) {
+					x = Math.round(Math.random() * (4 - 1) + 1);
+					y = Math.round(Math.random() * (4 - 1) + 1);
+					if (window.grid[this.groundID][x][y] == undefined) {
+						bubble = this.createBubble();
+						posX = (x - (this.bubbles.length / 2)) * 30 + (Math.cos(Math.random() * Math.PI) * 2) + this.coord.x;
+						posY = (y - (this.bubbles.length / 2)) * 30 + (Math.sin(Math.random() * Math.PI) * 2) + this.coord.y;
+						posZ = this.zPos;
+						bubble.position.set(posX, posZ, posY);
+						this.bubbles[x][y] = bubble;
+						window.grounds[this.groundID].objects.push(bubble);
+						break;
+					}
+				}
+
 			}
 		}
 	}
