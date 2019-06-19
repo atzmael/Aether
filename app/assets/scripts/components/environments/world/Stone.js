@@ -42,31 +42,21 @@ export default class Stone {
 				this.mesh.add(stone);
 				window.grounds[this.groundID].objects.push(stone);
 			} else {
-				let origin = x;
-				do {
-
-					x += 1;
-
-					if (x == origin) {
-						y += 1;
-						if (y > window.grid[0][0].length - 1) {
-							y = 0;
-						}
+				for (let i = 0; i < 5; i++) {
+					x = Math.round(Math.random() * (4 - 1) + 1);
+					y = Math.round(Math.random() * (4 - 1) + 1);
+					if (window.grid[this.groundID][x][y] == undefined) {
+						stone = this.createStone();
+						posX = (x - (window.grid.length / 2)) * 30 + (Math.cos(Math.random() * Math.PI) * 2) + this.coord.x;
+						posY = (y - (window.grid.length / 2)) * 30 + (Math.sin(Math.random() * Math.PI) * 2) + this.coord.y;
+						stone.position.set(posX, 0, posY);
+						window.grid[this.groundID][x][y] = stone;
+						this.mesh.add(stone);
+						window.grounds[this.groundID].objects.push(stone);
+						break;
 					}
+				}
 
-					if (x > window.grid[0].length - 1) {
-						x = 0;
-					}
-
-				} while (window.grid[this.groundID][x][y] != undefined);
-
-				stone = this.createStone();
-				posX = (x - (window.grid.length / 2)) * 30 + (Math.cos(Math.random() * Math.PI) * 2) + this.coord.x;
-				posY = (y - (window.grid.length / 2)) * 30 + (Math.sin(Math.random() * Math.PI) * 2) + this.coord.y;
-				stone.position.set(posX, 0, posY);
-				window.grid[this.groundID][x][y] = stone;
-				this.mesh.add(stone);
-				window.grounds[this.groundID].objects.push(stone);
 			}
 		}
 	}

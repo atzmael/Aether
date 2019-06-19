@@ -193,7 +193,7 @@ export default class Blob {
                 color.lightness = 0.4;
 				break;
         }
-        console.log(color.hue)
+        // console.log(color.hue)
 		let geometry = new THREE.IcosahedronBufferGeometry(0.75, 3);
 		let material = new THREE.ShaderMaterial({
 			transparent: true,

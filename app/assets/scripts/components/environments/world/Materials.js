@@ -52,12 +52,12 @@ export default class Materials {
                 this.get_material_noise(color);
                 break;
             case 'bush':
-                colorsState = [0x9e3a31, 0x8c342b, null];
+                colorsState = [0x9e3a31, 0x8c342b, 0x8c342b];
                 color = colorsState[this.state];
                 this.get_material_noise(color);
                 break;
             case 'tree':
-                colorsState = [0xcc7494, 0x590859, null];
+                colorsState = [0xcc7494, 0x590859, 0x590859];
                 color = colorsState[this.state];
                 this.get_material_noise(color);
                 break;

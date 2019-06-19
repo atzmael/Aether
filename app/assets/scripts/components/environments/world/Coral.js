@@ -14,14 +14,14 @@ class Coral {
 		this.loader = new THREE.OBJLoader();
 
 		this.corals = [];
-		for(let x = 0; x < 5;x++){
+		for (let x = 0; x < 5; x++) {
 			this.corals[x] = [];
 		}
 	}
 
 	init() {
 		return new Promise(async resolve => {
-			if(!window.coralMeshIsLoaded) {
+			if (!window.coralMeshIsLoaded) {
 				await this.loadObj();
 			} else {
 				this.obj = window.coralMeshIsLoaded.clone();
@@ -30,6 +30,7 @@ class Coral {
 			resolve();
 		})
 	}
+
 	/**
 	 *
 	 */
@@ -37,54 +38,47 @@ class Coral {
 		return new Promise(async resolve => {
 			let x, y, coral, posX, posY;
 
+
 			for (let i = 0; i < this.coralMaxNumber; i++) {
 				x = Math.round(Math.random() * (4 - 1) + 1);
 				y = Math.round(Math.random() * (4 - 1) + 1);
 				if (window.grid[this.groundID][x][y] == undefined) {
 					coral = this.createCoral();
-					posX = (x - (window.grid.length / 2)) * 30 + (Math.cos(Math.random() * Math.PI) * 2) + this.coord.x;
-					posY = (y - (window.grid.length / 2)) * 30 + (Math.sin(Math.random() * Math.PI) * 2) + this.coord.y;
-					coral.position.set(posX, 0, posY);
-					window.grid[this.groundID][x][y] = coral;
-					if (this.unused || i > this.coralCurrentNumber) {
-						window.grounds[this.groundID].unusedCorals.push(coral);
-					} else {
-						window.grounds[this.groundID].corals.push(coral);
+					if (coral != undefined) {
+						posX = (x - (window.grid.length / 2)) * 30 + (Math.cos(Math.random() * Math.PI) * 2) + this.coord.x;
+						posY = (y - (window.grid.length / 2)) * 30 + (Math.sin(Math.random() * Math.PI) * 2) + this.coord.y;
+						coral.position.set(posX, 0, posY);
+						window.grid[this.groundID][x][y] = coral;
+						if (this.unused || i > this.coralCurrentNumber) {
+							window.grounds[this.groundID].unusedCorals.push(coral);
+						} else {
+							window.grounds[this.groundID].corals.push(coral);
+						}
 					}
 				} else {
-					let origin = x;
 
-					/*
-					do {
-
-						x += 1;
-
-						if (x == origin) {
-							y += 1;
-							if (y > window.grid[0][0].length - 1) {
-								y = 0;
+					for (let i = 0; i < 5; i++) {
+						x = Math.round(Math.random() * (4 - 1) + 1);
+						y = Math.round(Math.random() * (4 - 1) + 1);
+						if (window.grid[this.groundID][x][y] == undefined) {
+							coral = this.createCoral();
+							if (coral != undefined) {
+								posX = (x - (window.grid.length / 2)) * 30 + (Math.cos(Math.random() * Math.PI) * 2) + this.coord.x;
+								posY = (y - (window.grid.length / 2)) * 30 + (Math.sin(Math.random() * Math.PI) * 2) + this.coord.y;
+								coral.position.set(posX, 0, posY);
+								window.grid[this.groundID][x][y] = coral;
+								if (this.unused || i > this.coralCurrentNumber) {
+									window.grounds[this.groundID].unusedCorals.push(coral);
+								} else {
+									window.grounds[this.groundID].corals.push(coral);
+								}
 							}
+							break;
 						}
-
-						if (x > window.grid[0].length - 1) {
-							x = 0;
-						}
-
-					} while (window.grid[this.groundID][x][y] != undefined);
-
-					coral = this.createCoral();
-					posX = (x - (window.grid.length / 2)) * 30 + (Math.cos(Math.random() * Math.PI) * 2) + this.coord.x;
-					posY = (y - (window.grid.length / 2)) * 30 + (Math.sin(Math.random() * Math.PI) * 2) + this.coord.y;
-					coral.position.set(posX, 0, posY);
-					window.grid[this.groundID][x][y] = coral;
-					if (this.unused || i > this.coralCurrentNumber) {
-						window.grounds[this.groundID].unusedCorals.push(coral);
-					} else {
-						window.grounds[this.groundID].corals.push(coral);
 					}
-					*/
 				}
 			}
+
 			resolve();
 		});
 
@@ -102,7 +96,7 @@ class Coral {
 			const geometry = object.geometry;
 			const material = new Materials({
 				state: playerState.playerStateNumber,
-				texture: 'tree'
+				texture: 'bush'
 			}).material;
 			const mesh = new THREE.Mesh(geometry, material);
 			coral.add(mesh);
