@@ -19,9 +19,11 @@ class River {
 
 			new Stalagmite(this.groundID, this.coord, this.rule.stalagmites.radius, this.rule.stalagmites.height, this.rule.stalagmites.segments, this.rule.stalagmites.number);
 
+			/*
 			if(this.isInit) {
 				await Coral.wait(this.groundID, this.coord, this.rule.corals.max, this.rule.corals.current, true);
 			}
+			*/
 
 			resolve();
 		});
