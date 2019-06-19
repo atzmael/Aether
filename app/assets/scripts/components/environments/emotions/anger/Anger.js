@@ -37,6 +37,7 @@ import Materials from '../../world/Materials';
 
 // Stats
 import Stats from 'stats.js';
+import { TweenMax } from 'gsap';
 
 // Stats init
 let stats = new Stats();
@@ -417,6 +418,8 @@ export default class Anger {
 
 		// Gui init
 		this.guiHandler();
+
+		this.moveCamera = false;
 	}
 
 	render() {
@@ -475,6 +478,29 @@ export default class Anger {
 		this.render();
 
 		stats.end();
+
+		if (playerState.playerStateNumber == 3) {
+			if (this.moveCamera == false) {
+				this.moveCamera = true
+				setTimeout(()=>{
+					let move = setInterval(() => {
+						this.camera.rotation.z = (Math.random() / 50) * (Math.random() < 0.5 ? -1 : 1);
+					}, 10)
+					setTimeout(() => {
+						clearInterval(move)
+						this.moveCamera = false
+					}, 2000)
+				}, 5000)
+			}
+		}
+
+		// if (playerState.playerStateNumber == 3) {
+		// 	if (5 % test == 5) {
+		// 		this.camera.rotation.z += 1;
+		// 		test = 0;
+		// 	}
+		// }
+
 	}
 
 	onWindowResize() {
@@ -543,7 +569,7 @@ export default class Anger {
 			// --- TEST ANIMATION D'INTRODUCTION ---//
 
 			this.test = [];
-			for (let i = 0; i < 30; i++) {
+			for (let i = 0; i < 20; i++) {
 				let shapes = Math.round(Math.random()),
 					geom;
 
