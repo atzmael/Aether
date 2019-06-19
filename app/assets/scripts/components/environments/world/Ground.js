@@ -2,6 +2,7 @@
 import Normal from '../emotions/anger/template/Normal';
 import River from '../emotions/anger/template/River';
 import Materials from '../world/Materials';
+import Simplex from 'simplex-noise'
 
 class Ground {
 	constructor(size = chunkSize, segments = 32, amp = 0.5) {
@@ -45,22 +46,55 @@ class Ground {
 	 * @returns {THREE.Mesh}
 	 */
 	createPiece(isNormal = true, color = '#b32b00') {
+		
+		let simplex = new Simplex()
 
 		let uniforms = this.uniforms;
 		
 		let geom = new THREE.PlaneGeometry(this.size, this.size, this.segments, this.segments);
-		for (var i = 0; i < geom.vertices.length; i++) {
-			geom.vertices[i].z += Math.random() * 0.0 - 0.0;
-			geom.vertices[i]._myZ = geom.vertices[i].z
-		}
 
 		let mat = null;
-		if (color == '#b32b00') {
+		if (isNormal) {
+			// console.log(geom.vertices)
+			for (var i = 0; i < geom.vertices.length; i++) {
+				if (geom.vertices[i].x != -50) {
+					if (geom.vertices[i].x != 0) {
+						if (geom.vertices[i].x != 50) {
+							if (geom.vertices[i].y != -50) {
+								if (geom.vertices[i].y != 0) {
+									if (geom.vertices[i].y != 50) {
+										let noise = simplex.noise2D(geom.vertices[i].x, geom.vertices[i].y)
+										geom.vertices[i].z += Math.sin(noise) * 1.25;
+										geom.vertices[i]._myZ = geom.vertices[i].z;
+									}
+								}
+							}
+						}
+					}
+				}
+			}
 			mat = new Materials({
 				state: playerState.playerStateNumber,
 				texture: 'sand'
 			}).material;
 		} else {
+			for (var i = 0; i < geom.vertices.length; i++) {
+				if (geom.vertices[i].x != -50) {
+					if (geom.vertices[i].x != 0) {
+						if (geom.vertices[i].x != 50) {
+							if (geom.vertices[i].y != -50) {
+								if (geom.vertices[i].y != 0) {
+									if (geom.vertices[i].y != 50) {
+										let noise = simplex.noise2D(geom.vertices[i].x, geom.vertices[i].y)
+										geom.vertices[i].z += Math.sin(noise) * 0.25;
+										geom.vertices[i]._myZ = geom.vertices[i].z;
+									}
+								}
+							}
+						}
+					}
+				}
+			}
 			mat = new Materials({
 				state: playerState.playerStateNumber,
 				texture: 'lava'
@@ -68,6 +102,7 @@ class Ground {
 		};
 		let ground = new THREE.Mesh(geom, mat);
 		ground.geometry.verticesNeedUpdate = true;
+		ground.geometry.normalsNeedUpdate = true;
 
 		ground.name = "chunk";
 

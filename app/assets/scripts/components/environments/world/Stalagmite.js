@@ -75,7 +75,7 @@ export default class Stalagmite {
 		radius = window.helpers.randFloat(this.radius.min, this.radius.max);
 		height = window.helpers.randFloat(this.height.min, this.height.max);
 
-		let geom = new THREE.ConeBufferGeometry( radius, height, this.segments );
+		let geom = new THREE.ConeGeometry( radius, height, this.segments );
 
 		let mat = new Materials({
 			state: playerState.playerStateNumber,
@@ -87,6 +87,18 @@ export default class Stalagmite {
 		stalagmite.rotation.y = Math.PI / 180 * 90;
 
 		stalagmite.name = "stalagmite";
+
+		let verts = stalagmite.geometry.vertices, ang, amp;
+
+		for (let i = 0; i < verts.length; i++) {
+			let v = verts[i];
+
+			ang = Math.random() * Math.PI;
+			amp = 0.8;
+
+			v.x += Math.cos(ang) * amp;
+			v.y += Math.sin(ang) * amp;
+		}
 
 		objectToInteractCollection.push(stalagmite);
 

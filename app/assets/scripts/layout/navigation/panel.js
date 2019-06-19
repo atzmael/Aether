@@ -34,7 +34,7 @@ const panel = {
 			this.openPanel(panelType);
 		}
 
-		console.log(panelID);
+		// console.log(panelID);
 	},
 
 	openPanel(panelType) {

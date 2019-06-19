@@ -89,7 +89,7 @@ export default class Stone {
 			let v = verts[i];
 
 			ang = Math.random() * Math.PI;
-			amp = 0.2;
+			amp = 0.8;
 
 			v.x += Math.cos(ang) * amp;
 			v.y += Math.sin(ang) * amp;
