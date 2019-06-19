@@ -33,9 +33,11 @@ import PlayerState from '../../player/PlayerState';
 import Ground from '../../world/Ground';
 import Normal from './template/Normal';
 import River from './template/River';
+import Materials from '../../world/Materials';
 
 // Stats
 import Stats from 'stats.js';
+import { TweenMax } from 'gsap';
 
 // Stats init
 let stats = new Stats();
@@ -416,6 +418,8 @@ export default class Anger {
 
 		// Gui init
 		this.guiHandler();
+
+		this.moveCamera = false;
 	}
 
 	render() {
@@ -474,6 +478,29 @@ export default class Anger {
 		this.render();
 
 		stats.end();
+
+		if (playerState.playerStateNumber == 3) {
+			if (this.moveCamera == false) {
+				this.moveCamera = true
+				setTimeout(()=>{
+					let move = setInterval(() => {
+						this.camera.rotation.z = (Math.random() / 50) * (Math.random() < 0.5 ? -1 : 1);
+					}, 10)
+					setTimeout(() => {
+						clearInterval(move)
+						this.moveCamera = false
+					}, 2000)
+				}, 5000)
+			}
+		}
+
+		// if (playerState.playerStateNumber == 3) {
+		// 	if (5 % test == 5) {
+		// 		this.camera.rotation.z += 1;
+		// 		test = 0;
+		// 	}
+		// }
+
 	}
 
 	onWindowResize() {
@@ -610,34 +637,41 @@ export default class Anger {
 			// --- TEST ANIMATION D'INTRODUCTION ---//
 
 			this.test = [];
-			for (let i = 0; i < 0; i++) {
+			for (let i = 0; i < 20; i++) {
 				let shapes = Math.round(Math.random()),
 					geom;
 
-				geom = new THREE.IcosahedronGeometry(this.radius, this.details);
+				geom = new THREE.IcosahedronGeometry(1.2, 1);
 
 				if (shapes == 1) {
-					geom = new THREE.DodecahedronGeometry(this.radius, this.details);
+					geom = new THREE.DodecahedronGeometry(1.2, 1);
 				}
 
-				let mat = new THREE.MeshBasicMaterial({
-					color: '#720300'
-				});
-				this.stone = new THREE.Mesh(geom, mat);
+				let mat = new Materials({
+					state: playerState.playerStateNumber,
+					texture: 'stone'
+				}).material;
 
-				this.stone.name = 'stone';
-				// this.stone.position.set(0,0,0);
-				this.stone.position.set(Math.random() * (5 - -5) + -5, Math.random() * (30 - 5) + 5, Math.random() * (-3 - -5) + -5);
-				let sphere = new CANNON.Sphere(1);
-				let body = new CANNON.Body({mass: 1});
-				body.position.set(this.stone.position.x, this.stone.position.y, this.stone.position.z);
-				body.addShape(sphere);
-				this.world.add(body);
-				this.stone.body = body;
+				let stone = new THREE.Mesh(geom, mat);
 
-				window.grounds[4].objects.push(this.stone);
+				stone.name = 'chute';
 
-				this.scene.add(this.stone);
+				let verts = stone.geometry.vertices,
+					ang, amp;
+
+				for (let i = 0; i < verts.length; i++) {
+					let v = verts[i];
+
+					ang = Math.random() * Math.PI;
+					amp = 0.2;
+
+					v.x += Math.cos(ang) * amp;
+					v.y += Math.sin(ang) * amp;
+				}
+				stone.position.set(Math.random() * (5 - -5) + -5, Math.random() * (30 - 5) + 5, Math.random() * (-3 - -5) + -5);
+				objectToInteractCollection.push(stone);
+				window.grounds[4].objects.push(stone);
+				this.scene.add(stone);
 			}
 
 			// --- FIN DU TEST --- //
@@ -755,6 +789,20 @@ export default class Anger {
 						groundObj.body = body;
 						break;
 					case 'stone':
+						shape = new CANNON.Sphere(this.radius);
+						body = new CANNON.Body({
+							mass: 5
+						});
+						body.addShape(shape);
+						body.position.set(groundObj.position.x, groundObj.position.y, groundObj.position.z);
+						body.quaternion.setFromAxisAngle(
+							new CANNON.Vec3(0, 1, 0),
+							-Math.PI / 2
+						);
+						this.world.add(body);
+						groundObj.body = body;
+						break;
+					case 'chute':
 						shape = new CANNON.Sphere(this.radius);
 						body = new CANNON.Body({
 							mass: 5
