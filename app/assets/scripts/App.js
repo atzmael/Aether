@@ -54,7 +54,7 @@ window.onload = () => {
 
 	// Skip intro if you already saw it
 
-	/*
+
 	if(storage.read('skipintro') == 'true') {
 		router.defineNextSection('','welcome-back');
 
@@ -69,12 +69,12 @@ window.onload = () => {
 			}, 2000)
 		}, 2000);
 	}
-	*/
+
 
 	/** Dev only **/
-	router.defineNextSection('', 'game-scene');
+	//router.defineNextSection('', 'game-scene');
 	//panel.panelHandler('', 'game-help');
-	new Anger();
+	//new Anger();
 	/** **/
 
 	// Console stuff
