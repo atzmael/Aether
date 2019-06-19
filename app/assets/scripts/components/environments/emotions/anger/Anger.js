@@ -2,7 +2,7 @@
  * General import
  **/
 
-const DIR = '/app';
+const DIR = '/projects/aether';
 
 window.listener = new THREE.AudioListener();
 import Sound from '../../world/Sound';
@@ -417,7 +417,7 @@ export default class Anger {
 		// Debug things
 
 		// Gui init
-		this.guiHandler();
+		//this.guiHandler();
 
 		this.moveCamera = false;
 	}
