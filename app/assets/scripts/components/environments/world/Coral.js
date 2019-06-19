@@ -53,6 +53,8 @@ class Coral {
 					}
 				} else {
 					let origin = x;
+
+					/*
 					do {
 
 						x += 1;
@@ -80,6 +82,7 @@ class Coral {
 					} else {
 						window.grounds[this.groundID].corals.push(coral);
 					}
+					*/
 				}
 			}
 			resolve();
@@ -96,7 +99,7 @@ class Coral {
 		const coral = new THREE.Object3D();
 		for (let i = 0; i < this.obj.children.length; i++) {
 			const object = this.obj.children[i];
-			const geometry = object.geometry
+			const geometry = object.geometry;
 			const material = new Materials({
 				state: playerState.playerStateNumber,
 				texture: 'tree'

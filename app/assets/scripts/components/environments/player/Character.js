@@ -61,16 +61,11 @@ export default class Character {
 		this.mesh = new THREE.Object3D();
 		this.mesh.name = "character";
 		this.mesh.position.y = 0.5;
-
-		//let geom = new THREE.SphereBufferGeometry( 80, 20, 10 );
-		//let texture = new THREE.TextureLoader().load( window.DIR + '/assets/textures/ciel-2.jpg' );
-		//let mat = new THREE.MeshBasicMaterial({color: '#490200', side: THREE.BackSide, transparent: true, opacity: 0.97, map: texture});
-		//this.sky = new THREE.Mesh(geom, mat);
-		//this.mesh.add(this.sky);
-
 		/*
 		Hitbox helper
 		 */
+
+		/*
 		let geometry = new THREE.CircleBufferGeometry(playerHitBox, 32);
 		let material = new THREE.MeshBasicMaterial({color: COLORS.orange});
 		let hitbox = new THREE.Mesh(geometry, material);
@@ -85,10 +80,6 @@ export default class Character {
 		hitbox.add(line);
 
 		this.mesh.add(hitbox);
-
-		/*
-		this.createBody();
-		this.createHead();
 		*/
 
 		this.controls();
@@ -133,7 +124,7 @@ export default class Character {
 			window.lavaSoundObject.position.z = this.mesh.position.z;
 		}
 
-		if(this.vars.position.x < -45 && this.vars.position.x > -165) {
+		if (this.vars.position.x <= -45 && this.vars.position.x >= -165) {
 			this.vars.position.x = this.mesh.position.x;
 		}
 		this.mesh.rotation.y = this.vars.rotation.y;
@@ -215,7 +206,7 @@ export default class Character {
 		})
 
 		document.addEventListener('keypress', (e) => {
-			if (e.key === 'b') {
+			if (e.key === 'Spacebar' || e.key == ' ') {
 				this.breath();
 			}
 		})
@@ -275,18 +266,15 @@ export default class Character {
 
 	breath() {
 		if (!this.hasBreath) {
-			let breathTime = 0;
-
-			window.soundHandler.breath.play();
+			this.hasBreath = true;
+			window.soundBank.respiration.play();
 
 			this.breathInterval = setTimeout(() => {
-				if (!this.hasBreath) {
-					this.hasBreath = true;
-					window.playerState.removeScore(reduce.breath);
-					console.log('breathing...');
-					clearTimeout(this.breathInterval);
-				}
-			}, 1000);
+				window.playerState.removeScore(reduce.breath);
+				window.soundBank.respiration.stop();
+				this.hasBreath = false;
+				clearTimeout(this.breathInterval);
+			}, 3000);
 		}
 	}
 
@@ -296,6 +284,6 @@ export default class Character {
 }
 
 const reduce = {
-	breath: 0.2,
+	breath: 3.0,
 	listen: 0.2
 };

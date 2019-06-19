@@ -47,7 +47,7 @@
 		&__container {
 			display: flex;
 			flex-flow: column nowrap;
-			justify-content: space-around;
+			justify-content: flex-start;
 			margin: 25px 0 50px 0;
 		}
 	}
@@ -59,7 +59,11 @@
 			justify-content: space-between;
 			align-items: center;
 			width: 80%;
-			margin:0 auto;
+			margin:50px auto;
+
+			&__subtitle {
+				margin: 40px 0 0 0;
+			}
 		}
 
 		&__title {
@@ -109,7 +113,7 @@
 		position:absolute;
 		top:0;
 		left:0;
-		background-color: rgba(#1c1e41, 0.95);
+		background-color: rgba(#1c1e41, 1);
 		z-index:-1;
 	}
 }

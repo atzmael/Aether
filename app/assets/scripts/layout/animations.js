@@ -126,7 +126,7 @@ const animations = {
 		this.helpmenuAnim = lottie.loadAnimation({
 			container: document.querySelector('.js-help-btn'), // the dom element that will contain the animation
 			renderer: 'svg',
-			loop: true,
+			loop: false,
 			autoplay: false,
 			path: `${DIR}/assets/datas/picto-help.json` // the path to the animation json
 		});

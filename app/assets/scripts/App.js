@@ -8,6 +8,8 @@ import introEmotion from "./layout/navigation/introEmotion";
 import panel from './layout/navigation/panel';
 import animations from './layout/animations';
 
+import p5 from 'p5';
+
 import generativeCircle from "./utils/generative-circle";
 
 import cursor from "./utils/Cursor";
@@ -51,7 +53,6 @@ window.onload = () => {
 	animations.init();
 
 	// Skip intro if you already saw it
-
 
 	/*
 	if(storage.read('skipintro') == 'true') {

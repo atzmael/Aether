@@ -45,7 +45,6 @@ export default class Stone {
 				let origin = x;
 				do {
 
-					console.log(x);
 					x += 1;
 
 					if (x == origin) {

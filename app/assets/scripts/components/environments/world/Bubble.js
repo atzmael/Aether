@@ -15,6 +15,8 @@ export default class Bubble {
 		}
 
 		this.init();
+
+		console.log(this.zPos);
 	}
 
 	init() {
@@ -47,9 +49,9 @@ export default class Bubble {
 	 */
 	createBubble() {
 
-		let geom = new THREE.SphereBufferGeometry(this.radius);
+		let geom = new THREE.SphereBufferGeometry(this.radius, 16, 16);
 
-		let mat = new THREE.MeshBasicMaterial({color: '#720300', opacity: 0.8});
+		let mat = new THREE.MeshBasicMaterial({color: '#e4a990', transparent: true, opacity: 0.85});
 
 		let bubble = new THREE.Mesh(geom, mat);
 

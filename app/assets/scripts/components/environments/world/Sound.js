@@ -1,6 +1,6 @@
 class Sound {
 	constructor() {
-		this.listener = window.listener
+		this.listener = window.listener;
 		this.audioLoader = new THREE.AudioLoader();
 	}
 

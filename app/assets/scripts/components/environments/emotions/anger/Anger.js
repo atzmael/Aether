@@ -134,7 +134,7 @@ window.rules = {
 					min: 8,
 					max: 12,
 				},
-				radius: 1.5,
+				radius: 1.8,
 				details: 0,
 			},
 			rocks: {
@@ -166,7 +166,7 @@ window.rules = {
 			bubbles: {
 				number: {
 					min: 1,
-					max: 3
+					max: 4
 				},
 				zPos: {
 					min: 1,
@@ -174,7 +174,7 @@ window.rules = {
 				},
 				radius: {
 					min: 0.5,
-					max: 1.2
+					max: 1.5
 				}
 			}
 		},
@@ -184,7 +184,7 @@ window.rules = {
 					min: 8,
 					max: 12,
 				},
-				radius: 2.5,
+				radius: 4,
 				details: 0,
 			},
 			rocks: 2,
@@ -218,8 +218,8 @@ window.rules = {
 					max: 0
 				},
 				radius: {
-					min: 2,
-					max: 2.2
+					min: 4,
+					max: 6
 				}
 			}
 		}
@@ -469,7 +469,7 @@ export default class Anger {
 		this.intersects = this.raycaster.intersectObjects(objectToInteractCollection);
 
 		// DEBUG ONLY //
-		console.log(this.renderer.info.memory);
+		//console.log(this.renderer.info.memory);
 
 		this.render();
 
@@ -511,8 +511,7 @@ export default class Anger {
 				trigger: 1
 			}),
 			stone_break: soundHandler.newSound({url: DIR + '/assets/medias/sounds/cailloux_casse.wav', loop: false, trigger: 1}),
-			inhale: soundHandler.newSound({url: DIR + '/assets/medias/sounds/respiration_inspiration.wav', loop: false, trigger: 1}),
-			exhale: soundHandler.newSound({url: DIR + '/assets/medias/sounds/respiration_expiration.wav', loop: false, trigger: 1}),
+			respiration: soundHandler.newSound({url: DIR + '/assets/medias/sounds/respiration.wav', loop: false, volume: 0.4, trigger: 1}),
 		};
 
 		window.lavaSoundObject = new THREE.Object3D();
@@ -691,6 +690,20 @@ export default class Anger {
 						shape = new CANNON.Sphere(this.radius);
 						body = new CANNON.Body({
 							mass: 5
+						});
+						body.addShape(shape);
+						body.position.set(groundObj.position.x, groundObj.position.y, groundObj.position.z);
+						body.quaternion.setFromAxisAngle(
+							new CANNON.Vec3(0, 1, 0),
+							-Math.PI / 2
+						);
+						this.world.add(body);
+						groundObj.body = body;
+						break;
+					case 'bubble':
+						shape = new CANNON.Sphere(this.radius);
+						body = new CANNON.Body({
+							mass: 0
 						});
 						body.addShape(shape);
 						body.position.set(groundObj.position.x, groundObj.position.y, groundObj.position.z);
@@ -1046,32 +1059,38 @@ export default class Anger {
 					var ray = new THREE.Ray(obj.object.body.position, shootDirection.sub(obj.object.body.position).normalize());
 					shootDirection.copy(ray.direction);
 
-					obj.object.body.velocity.set(shootDirection.x * shootVelo,
-						shootDirection.y * shootVelo + 15,
-						shootDirection.z * shootVelo);
-					x += shootDirection.x * (1 * 1.02 + 1);
-					y += shootDirection.y * (1 * 1.02 + 1);
-					z += shootDirection.z * (1 * 1.02 + 1);
-					obj.object.body.position.set(x, y, z);
+					switch(name) {
+						case 'bubble':
 
-					this.intersects.splice(i, 1);
+							break;
+						default:
+							obj.object.body.velocity.set(shootDirection.x * shootVelo,
+								shootDirection.y * shootVelo + 15,
+								shootDirection.z * shootVelo);
+							x += shootDirection.x * (1 * 1.02 + 1);
+							y += shootDirection.y * (1 * 1.02 + 1);
+							z += shootDirection.z * (1 * 1.02 + 1);
+							obj.object.body.position.set(x, y, z);
 
-					obj.object.body.addEventListener("collide", () => {
-						if (!obj.hasCollide) {
-							obj.hasCollide = true;
-							obj.object.add(soundBank.stone_break.play());
-							setTimeout(() => {
-								this.world.remove(obj.object.body);
-								window.scene.remove(obj.object);
-								obj.object.geometry.dispose();
-								obj.object.geometry = undefined;
-								obj.object.material.dispose();
-								obj.object.material = undefined;
-								obj.object = undefined;
-							}, 500);
-						}
-					});
+							this.intersects.splice(i, 1);
 
+							obj.object.body.addEventListener("collide", () => {
+								if (!obj.hasCollide) {
+									obj.hasCollide = true;
+									obj.object.add(soundBank.stone_break.play());
+									setTimeout(() => {
+										this.world.remove(obj.object.body);
+										window.scene.remove(obj.object);
+										obj.object.geometry.dispose();
+										obj.object.geometry = undefined;
+										obj.object.material.dispose();
+										obj.object.material = undefined;
+										obj.object = undefined;
+									}, 500);
+								}
+							});
+							break;
+					}
 					// Score handler
 					switch (name) {
 						case 'stone':
