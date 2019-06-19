@@ -1,4 +1,5 @@
 import Helpers from '../../../core/helpers';
+import Materials from '../world/Materials';
 
 export default class Stalagmite {
 	constructor(groundID, coord, radius = 1.6, height = 15, segments = 32, stalagmiteNumber = 0, amp = 0.5) {
@@ -36,12 +37,38 @@ export default class Stalagmite {
 		for (let i = 0; i < this.stalagmiteNumber; i++) {
 			x = Math.round(Math.random() * (4 - 1) + 1);
 			y = Math.round(Math.random() * (4 - 1) + 1);
-			if (this.stalagmites[x][y] == undefined) {
+			if (window.grid[this.groundID][x][y] == undefined) {
 				stalagmite = this.createstalagmite();
-				posX = (x - (this.stalagmites.length / 2)) * 30 + (Math.cos(Math.random() * Math.PI) * 2) + this.coord.x;
-				posY = (y - (this.stalagmites.length / 2)) * 30 + (Math.sin(Math.random() * Math.PI) * 2) + this.coord.y;
+				posX = (x - (window.grid.length / 2)) * 30 + (Math.cos(Math.random() * Math.PI) * 2) + this.coord.x;
+				posY = (y - (window.grid.length / 2)) * 30 + (Math.sin(Math.random() * Math.PI) * 2) + this.coord.y;
 				stalagmite.position.set(posX, 0, posY);
-				this.stalagmites[x][y] = stalagmite;
+				window.grid[this.groundID][x][y] = stalagmite;
+				this.mesh.add(stalagmite);
+				window.grounds[this.groundID].objects.push(stalagmite);
+			} else {
+				let origin = x;
+				do {
+
+					x += 1;
+
+					if (x == origin) {
+						y += 1;
+						if (y > window.grid[0][0].length - 1) {
+							y = 0;
+						}
+					}
+
+					if (x > window.grid[0].length - 1) {
+						x = 0;
+					}
+
+				} while (window.grid[this.groundID][x][y] != undefined);
+
+				stalagmite = this.createstalagmite();
+				posX = (x - (window.grid.length / 2)) * 30 + (Math.cos(Math.random() * Math.PI) * 2) + this.coord.x;
+				posY = (y - (window.grid.length / 2)) * 30 + (Math.sin(Math.random() * Math.PI) * 2) + this.coord.y;
+				stalagmite.position.set(posX, 0, posY);
+				window.grid[this.groundID][x][y] = stalagmite;
 				this.mesh.add(stalagmite);
 				window.grounds[this.groundID].objects.push(stalagmite);
 			}
@@ -60,7 +87,10 @@ export default class Stalagmite {
 
 		let geom = new THREE.ConeBufferGeometry( radius, height, this.segments );
 
-		let mat = new THREE.MeshLambertMaterial({color: '#720300'});
+		let mat = new Materials({
+			state: playerState.playerStateNumber,
+			texture: 'stalagmite'
+		}).material;
 
 		let stalagmite = new THREE.Mesh(geom, mat);
 

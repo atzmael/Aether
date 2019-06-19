@@ -45,10 +45,15 @@ const router = {
 
 		if(newAttr == 'change-emotion' || newAttr == 'choice') {
 			this.ui.body.classList.add('is-blob');
+			this.ui.body.classList.remove('is-bubble');
+		} else if (newAttr == 'intro-emotion') {
+			this.ui.body.classList.add('is-bubble');
+			this.ui.body.classList.remove('is-blob');
 		} else {
 			this.ui.body.classList.remove('is-blob');
+			this.ui.body.classList.remove('is-bubble');
 		}
-
+		
 		this.changeSection(oldSection, newSection, pType);
 
 		this.last = this.current;

@@ -1,8 +1,10 @@
+import Materials from '../world/Materials';
+
 export default class Stone {
-	constructor(groundID, coord, radius = 1, details = 0, stoneNumber = 0, amp = 0.5) {
+	constructor(groundID, coord, radius = 1, details = 1, stoneNumber = 0, amp = 0.5) {
 		this.radius = radius;
-		this.details = details;
-		this.stoneNumber = window.helpers.randFloat(stoneNumber.min, stoneNumber.max);
+		this.details = 1;
+		this.stoneNumber = Math.floor(window.helpers.randFloat(stoneNumber.min, stoneNumber.max));
 
 		this.groundID = groundID;
 		this.coord = coord;
@@ -31,12 +33,38 @@ export default class Stone {
 		for (let i = 0; i < this.stoneNumber; i++) {
 			x = Math.round(Math.random() * (4 - 1) + 1);
 			y = Math.round(Math.random() * (4 - 1) + 1);
-			if (this.stones[x][y] == undefined) {
+			if (window.grid[this.groundID][x][y] == undefined) {
 				stone = this.createStone();
-				posX = (x - (this.stones.length / 2)) * 30 + (Math.cos(Math.random() * Math.PI) * 2) + this.coord.x;
-				posY = (y - (this.stones.length / 2)) * 30 + (Math.sin(Math.random() * Math.PI) * 2) + this.coord.y;
+				posX = (x - (window.grid.length / 2)) * 30 + (Math.cos(Math.random() * Math.PI) * 2) + this.coord.x;
+				posY = (y - (window.grid.length / 2)) * 30 + (Math.sin(Math.random() * Math.PI) * 2) + this.coord.y;
 				stone.position.set(posX, 0, posY);
-				this.stones[x][y] = stone;
+				window.grid[this.groundID][x][y] = stone;
+				this.mesh.add(stone);
+				window.grounds[this.groundID].objects.push(stone);
+			} else {
+				let origin = x;
+				do {
+
+					x += 1;
+
+					if (x == origin) {
+						y += 1;
+						if (y > window.grid[0][0].length - 1) {
+							y = 0;
+						}
+					}
+
+					if (x > window.grid[0].length - 1) {
+						x = 0;
+					}
+
+				} while (window.grid[this.groundID][x][y] != undefined);
+
+				stone = this.createStone();
+				posX = (x - (window.grid.length / 2)) * 30 + (Math.cos(Math.random() * Math.PI) * 2) + this.coord.x;
+				posY = (y - (window.grid.length / 2)) * 30 + (Math.sin(Math.random() * Math.PI) * 2) + this.coord.y;
+				stone.position.set(posX, 0, posY);
+				window.grid[this.groundID][x][y] = stone;
 				this.mesh.add(stone);
 				window.grounds[this.groundID].objects.push(stone);
 			}
@@ -56,7 +84,10 @@ export default class Stone {
 			geom = new THREE.DodecahedronGeometry(this.radius, this.details);
 		}
 
-		let mat = new THREE.MeshLambertMaterial({color: '#720300'});
+		let mat = new Materials({
+			state: playerState.playerStateNumber,
+			texture: 'stone'
+		}).material;
 
 		let stone = new THREE.Mesh(geom, mat);
 
