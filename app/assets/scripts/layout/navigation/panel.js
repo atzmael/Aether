@@ -33,8 +33,6 @@ const panel = {
 			let panelType = this.current.getAttribute('data-ptype') ? this.current.getAttribute('data-ptype') : 0;
 			this.openPanel(panelType);
 		}
-
-		console.log(panelID);
 	},
 
 	openPanel(panelType) {

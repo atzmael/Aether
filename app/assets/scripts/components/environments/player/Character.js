@@ -47,8 +47,8 @@ export default class Character {
 				keydown: false,
 			}
 		};
-		this.movementVelocity = 0.7;
-		this.rotationVelocity = .06;
+		this.movementVelocity = 0.6;
+		this.rotationVelocity = .04;
 
 		this.init();
 	}
@@ -124,7 +124,7 @@ export default class Character {
 			window.lavaSoundObject.position.z = this.mesh.position.z;
 		}
 
-		if (this.vars.position.x <= -45 && this.vars.position.x >= -165) {
+		if ((this.vars.position.x <= -45 && this.vars.position.x >= -165) || (this.vars.position.x >= 145 && this.vars.position.x <= 205)) {
 			this.vars.position.x = this.mesh.position.x;
 		}
 		this.mesh.rotation.y = this.vars.rotation.y;

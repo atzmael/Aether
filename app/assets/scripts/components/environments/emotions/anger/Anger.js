@@ -440,7 +440,7 @@ export default class Anger {
 		// Link physics
 		window.grounds.forEach(ground => {
 			if (ground.elmt.material.uniforms) {
-				ground.elmt.material.uniforms.uTime.value = dt/1000;
+				ground.elmt.material.uniforms.uTime.value = dt / 1000;
 			}
 			ground.elmt.position.copy(ground.elmt.body.position);
 			ground.elmt.quaternion.copy(ground.elmt.body.quaternion);
@@ -500,18 +500,86 @@ export default class Anger {
 
 	initSounds() {
 		window.soundBank = {
-			permanent: soundHandler.newSound({url: DIR + '/assets/medias/sounds/bg_permanent.wav', loop: true, trigger: 0, volume: 0.8, obj: this.character.mesh}),
-			etat1: soundHandler.newSound({url: DIR + '/assets/medias/sounds/bg_etat_1.wav', loop: true, trigger: 1, volume: 0.4, obj: this.character.mesh}),
-			etat2: soundHandler.newSound({url: DIR + '/assets/medias/sounds/bg_etat_2.wav', loop: true, trigger: 0, volume: 0.4, obj: this.character.mesh}),
-			etat3: soundHandler.newSound({url: DIR + '/assets/medias/sounds/bg_etat_3.wav', loop: true, trigger: 1, volume: 0.4, obj: this.character.mesh}),
-			river_base: soundHandler.newSound({url: DIR + '/assets/medias/sounds/riviere_1_base.wav', loop: true, trigger: 0}),
+			permanent: soundHandler.newSound({
+				url: DIR + '/assets/medias/sounds/bg_permanent.wav',
+				loop: true,
+				trigger: 0,
+				volume: 0.8,
+				obj: this.character.mesh
+			}),
+			etat1: soundHandler.newSound({
+				url: DIR + '/assets/medias/sounds/bg_etat_1.wav',
+				loop: true,
+				trigger: 1,
+				volume: 0.4,
+				obj: this.character.mesh
+			}),
+			etat2: soundHandler.newSound({
+				url: DIR + '/assets/medias/sounds/bg_etat_2.wav',
+				loop: true,
+				trigger: 0,
+				volume: 0.4,
+				obj: this.character.mesh
+			}),
+			etat3: soundHandler.newSound({
+				url: DIR + '/assets/medias/sounds/bg_etat_3.wav',
+				loop: true,
+				trigger: 1,
+				volume: 0.4,
+				obj: this.character.mesh
+			}),
+			river_base: soundHandler.newSound({
+				url: DIR + '/assets/medias/sounds/riviere_1_base.wav',
+				loop: true,
+				trigger: 0
+			}),
 			stone_pose: soundHandler.newSound({
 				url: DIR + '/assets/medias/sounds/cailloux_atterit.wav',
 				loop: false,
 				trigger: 1
 			}),
-			stone_break: soundHandler.newSound({url: DIR + '/assets/medias/sounds/cailloux_casse.wav', loop: false, trigger: 1}),
-			respiration: soundHandler.newSound({url: DIR + '/assets/medias/sounds/respiration.wav', loop: false, volume: 0.4, trigger: 1}),
+			stone_break: soundHandler.newSound({
+				url: DIR + '/assets/medias/sounds/cailloux_casse.wav',
+				loop: false,
+				trigger: 1
+			}),
+			respiration: soundHandler.newSound({
+				url: DIR + '/assets/medias/sounds/respiration.wav',
+				loop: false,
+				volume: 0.4,
+				trigger: 1
+			}),
+			bubble_fly: soundHandler.newSound({
+				url: DIR + '/assets/medias/sounds/bulle_fly.wav',
+				loop: false,
+				trigger: 1
+			}),
+			bubble_pop: soundHandler.newSound({
+				url: DIR + '/assets/medias/sounds/bulle_pop.wav',
+				loop: false,
+				trigger: 1
+			}),
+			bubble_grow: soundHandler.newSound({
+				url: DIR + '/assets/medias/sounds/bulle_gonfle_pop.wav',
+				loop: false,
+				trigger: 1
+			}),
+			stalagmite_enfonce: soundHandler.newSound({
+				url: DIR + '/assets/medias/sounds/stalagmite_senfonce.wav',
+				loop: false,
+				trigger: 1
+			}),
+			stalagmite_fusee: soundHandler.newSound({
+				url: DIR + '/assets/medias/sounds/stalagmite_fusee.wav',
+				loop: false,
+				trigger: 1
+			}),
+			stalagmite_casse: soundHandler.newSound({
+				url: DIR + '/assets/medias/sounds/stalagmite_casse.wav',
+				loop: false,
+				volume: 0.5,
+				trigger: 1
+			}),
 		};
 
 		window.lavaSoundObject = new THREE.Object3D();
@@ -601,11 +669,11 @@ export default class Anger {
 
 		// Image as a background
 		bgTexture = new THREE.TextureLoader().load(DIR + '/assets/textures/ciel-2.jpg',
-			( texture ) => {
+			(texture) => {
 				let img = texture.image;
-				bgWidth= img.width;
+				bgWidth = img.width;
 				bgHeight = img.height;
-			} );
+			});
 		this.scene.background = bgTexture;
 		bgTexture.wrapS = THREE.MirroredRepeatWrapping;
 		bgTexture.wrapT = THREE.MirroredRepeatWrapping;
@@ -614,8 +682,8 @@ export default class Anger {
 		var texAspect = bgWidth / bgHeight;
 		var relAspect = aspect / texAspect;
 
-		bgTexture.repeat = new THREE.Vector2( Math.max(relAspect, 1), Math.max(1/relAspect,1) );
-		bgTexture.offset = new THREE.Vector2( -Math.max(relAspect-1, 0)/2, -Math.max(1/relAspect-1, 0)/2 );
+		bgTexture.repeat = new THREE.Vector2(Math.max(relAspect, 1), Math.max(1 / relAspect, 1));
+		bgTexture.offset = new THREE.Vector2(-Math.max(relAspect - 1, 0) / 2, -Math.max(1 / relAspect - 1, 0) / 2);
 
 		//this.scene.background = new THREE.Color('#890b00');
 
@@ -776,10 +844,14 @@ export default class Anger {
 		elmt.objects.forEach(obj => {
 			this.world.remove(obj.body);
 			this.scene.remove(obj);
-			obj.geometry.dispose();
-			obj.geometry = undefined;
-			obj.material.dispose();
-			obj.material = undefined;
+			if (obj.geometry != undefined) {
+				obj.geometry.dispose();
+				obj.geometry = undefined;
+			}
+			if (obj.material != undefined) {
+				obj.material.dispose();
+				obj.material = undefined;
+			}
 			obj = undefined;
 		});
 		elmt.objects = [];
@@ -814,7 +886,6 @@ export default class Anger {
 				}
 				break;
 		}
-		// console.log(elmt.corals)
 		elmt.corals.forEach(coral => {
 			if (coral != undefined) {
 				coral.body.position.x = elmt.elmt.body.position.x + helpers.rand(-chunkSize / 2, chunkSize / 2);
@@ -1073,9 +1144,155 @@ export default class Anger {
 					var ray = new THREE.Ray(obj.object.body.position, shootDirection.sub(obj.object.body.position).normalize());
 					shootDirection.copy(ray.direction);
 
-					switch(name) {
-						case 'bubble':
+					let luck = [0.8, 0.5, 0.33];
+					let random1 = Math.random(), random2;
+					let intervalDestroy;
 
+					switch (name) {
+						case 'bubble':
+							if (random1 <= luck[window.playerState.playerStateNumber - 1]) {
+								random2 = Math.floor(Math.random() * (2 - 1) + 1);
+
+								switch (random2) {
+									case 1:
+										TweenMax.to(obj.object.body.position, 0.8, {y: -10, ease: "ease-in"});
+										window.soundBank.bubble_fly.play();
+
+										this.intersects.splice(i, 1);
+
+										setTimeout(() => {
+											this.world.remove(obj.object.body);
+											window.scene.remove(obj.object);
+											if (obj.object.geometry != undefined) {
+												obj.object.geometry.dispose();
+												obj.object.geometry = undefined;
+											}
+											if (obj.object.material != undefined) {
+												obj.object.material.dispose();
+												obj.object.material = undefined;
+											}
+											obj.object = undefined;
+											window.soundBank.bubble_fly.stop();
+										}, 1000);
+										break;
+									case 2:
+										TweenMax.to(obj.object.body.position, 0.8, {y: 10, ease: "ease-in"});
+										window.soundBank.bubble_fly.play();
+
+										this.intersects.splice(i, 1);
+
+										setTimeout(() => {
+											this.world.remove(obj.object.body);
+											window.scene.remove(obj.object);
+											if (obj.object.geometry != undefined) {
+												obj.object.geometry.dispose();
+												obj.object.geometry = undefined;
+											}
+											if (obj.material != undefined) {
+												obj.object.material.dispose();
+												obj.object.material = undefined;
+											}
+											obj.object = undefined;
+											window.soundBank.bubble_fly.stop();
+										}, 1000);
+										break;
+								}
+
+							} else {
+								window.soundBank.bubble_grow.play();
+								TweenMax.to(obj.object.scale, 0.8, {x: 10, y: 10, z: 10, ease: "ease-in", onComplete: () => {
+										this.world.remove(obj.object.body);
+										window.scene.remove(obj.object);
+										obj.object.geometry.dispose();
+										obj.object.geometry = undefined;
+										obj.object.material.dispose();
+										obj.object.material = undefined;
+										obj.object = undefined;
+
+										window.soundBank.bubble_grow.stop();
+									}
+								});
+							}
+							break;
+						case 'stalagmite':
+							if (random1 <= luck[window.playerState.playerStateNumber - 1]) {
+								random2 = Math.floor(Math.random() * (2 - 1) + 1);
+
+								switch (random2) {
+									case 1:
+										TweenMax.to(obj.object.body.position, 0.8, {y: -10, ease: "ease-in"});
+										window.soundBank.stalagmite_enfonce.play();
+
+										this.intersects.splice(i, 1);
+
+										setTimeout(() => {
+											this.world.remove(obj.object.body);
+											window.scene.remove(obj.object);
+											if (obj.object.geometry != undefined) {
+												obj.object.geometry.dispose();
+												obj.object.geometry = undefined;
+											}
+											if (obj.object.material != undefined) {
+												obj.object.material.dispose();
+												obj.object.material = undefined;
+											}
+											obj.object = undefined;
+											window.soundBank.stalagmite_enfonce.stop();
+										}, 1000);
+										break;
+									case 2:
+										TweenMax.to(obj.object.body.position, 0.8, {y: 10, ease: "ease-in"});
+										window.soundBank.stalagmite_fusee.play();
+
+										this.intersects.splice(i, 1);
+
+										setTimeout(() => {
+											this.world.remove(obj.object.body);
+											window.scene.remove(obj.object);
+											if (obj.geometry != undefined) {
+												obj.object.geometry.dispose();
+												obj.object.geometry = undefined;
+											}
+											if (obj.material != undefined) {
+												obj.object.material.dispose();
+												obj.object.material = undefined;
+											}
+											window.soundBank.stalagmite_fusee.stop();
+											obj.object = undefined;
+										}, 1000);
+										break;
+								}
+							} else {
+								obj.object.body.velocity.set(shootDirection.x * shootVelo,
+									shootDirection.y * shootVelo + 15,
+									shootDirection.z * shootVelo);
+								x += shootDirection.x * (1 * 1.02 + 1);
+								y += shootDirection.y * (1 * 1.02 + 1);
+								z += shootDirection.z * (1 * 1.02 + 1);
+								obj.object.body.position.set(x, y, z);
+
+								this.intersects.splice(i, 1);
+
+								obj.object.body.addEventListener("collide", () => {
+									if (!obj.hasCollide) {
+										obj.hasCollide = true;
+										obj.object.add(soundBank.stalagmite_casse.play());
+										setTimeout(() => {
+											this.world.remove(obj.object.body);
+											window.scene.remove(obj.object);
+											if (obj.geometry != undefined) {
+												obj.object.geometry.dispose();
+												obj.object.geometry = undefined;
+											}
+											if (obj.material != undefined) {
+												obj.object.material.dispose();
+												obj.object.material = undefined;
+											}
+											obj.object = undefined;
+										}, 500);
+									}
+								});
+							}
 							break;
 						default:
 							obj.object.body.velocity.set(shootDirection.x * shootVelo,
@@ -1105,6 +1322,7 @@ export default class Anger {
 							});
 							break;
 					}
+
 					// Score handler
 					switch (name) {
 						case 'stone':
@@ -1137,52 +1355,52 @@ export default class Anger {
 
 	addPhysicsObject(groundObj) {
 		let shape, body;
-			switch (groundObj.name) {
-				case 'stalagmite':
-					shape = new CANNON.Box(
-						new CANNON.Vec3(1, 3, 1)
-					);
-					body = new CANNON.Body({
-						mass: 5
-					});
-					body.addShape(shape);
-					body.position.set(groundObj.position.x, 2, groundObj.position.z);
-					body.quaternion.setFromAxisAngle(
-						new CANNON.Vec3(0, 1, 0),
-						-Math.PI / 2
-					);
-					this.world.add(body);
-					groundObj.body = body;
-					break;
-				case 'stone':
-					shape = new CANNON.Sphere(this.radius);
-					body = new CANNON.Body({
-						mass: 5
-					});
-					body.addShape(shape);
-					body.position.set(groundObj.position.x, groundObj.position.y, groundObj.position.z);
-					body.quaternion.setFromAxisAngle(
-						new CANNON.Vec3(0, 1, 0),
-						-Math.PI / 2
-					);
-					this.world.add(body);
-					groundObj.body = body;
-					break;
-				default:
-					shape = new CANNON.Sphere(this.radius);
-					body = new CANNON.Body({
-						mass: 5
-					});
-					body.addShape(shape);
-					body.position.set(groundObj.position.x, groundObj.position.y, groundObj.position.z);
-					body.quaternion.setFromAxisAngle(
-						new CANNON.Vec3(0, 1, 0),
-						-Math.PI / 2
-					);
-					this.world.add(body);
-					groundObj.body = body;
-					break;
-			}
+		switch (groundObj.name) {
+			case 'stalagmite':
+				shape = new CANNON.Box(
+					new CANNON.Vec3(1, 3, 1)
+				);
+				body = new CANNON.Body({
+					mass: 5
+				});
+				body.addShape(shape);
+				body.position.set(groundObj.position.x, 2, groundObj.position.z);
+				body.quaternion.setFromAxisAngle(
+					new CANNON.Vec3(0, 1, 0),
+					-Math.PI / 2
+				);
+				this.world.add(body);
+				groundObj.body = body;
+				break;
+			case 'stone':
+				shape = new CANNON.Sphere(this.radius);
+				body = new CANNON.Body({
+					mass: 5
+				});
+				body.addShape(shape);
+				body.position.set(groundObj.position.x, groundObj.position.y, groundObj.position.z);
+				body.quaternion.setFromAxisAngle(
+					new CANNON.Vec3(0, 1, 0),
+					-Math.PI / 2
+				);
+				this.world.add(body);
+				groundObj.body = body;
+				break;
+			default:
+				shape = new CANNON.Sphere(this.radius);
+				body = new CANNON.Body({
+					mass: 5
+				});
+				body.addShape(shape);
+				body.position.set(groundObj.position.x, groundObj.position.y, groundObj.position.z);
+				body.quaternion.setFromAxisAngle(
+					new CANNON.Vec3(0, 1, 0),
+					-Math.PI / 2
+				);
+				this.world.add(body);
+				groundObj.body = body;
+				break;
+		}
 		// let sphere = new CANNON.Sphere(1);
 		// let body = new CANNON.Body({mass: 1});
 		// body.position.set(groundObj.position.x, groundObj.position.y, groundObj.position.z);

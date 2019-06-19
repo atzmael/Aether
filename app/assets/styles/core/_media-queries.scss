@@ -12,3 +12,9 @@
 		@content
 	}
 }
+
+@mixin huge-screen {
+	@media screen and (min-width: $huge-screen) {
+		@content;
+	}
+}

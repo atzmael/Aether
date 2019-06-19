@@ -15,8 +15,6 @@ export default class Bubble {
 		}
 
 		this.init();
-
-		console.log(this.zPos);
 	}
 
 	init() {
