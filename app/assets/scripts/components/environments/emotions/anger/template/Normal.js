@@ -1,6 +1,7 @@
 import Stone from '../../../world/Stone';
 import Stalagmite from '../../../world/Stalagmite';
 import Coral from '../../../world/Coral';
+import Bubble from "../../../world/Bubble";
 
 let rules = {
 	1: {
@@ -94,6 +95,8 @@ class Normal {
 	init() {
 		return new Promise(async resolve => {
 			new Stone(this.groundID, this.coord, this.rule.stones.radius, this.rule.stones.details, this.rule.stones.number);
+
+			new Bubble(this.groundID, this.coord, this.rule.bubbles.radius, this.rule.bubbles.number, this.rule.bubbles.zPos);
 
 			new Stalagmite(this.groundID, this.coord, this.rule.stalagmites.radius, this.rule.stalagmites.height, this.rule.stalagmites.segments, this.rule.stalagmites.number);
 
