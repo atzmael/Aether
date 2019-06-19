@@ -573,7 +573,7 @@ export default class Anger {
 			respiration: soundHandler.newSound({
 				url: DIR + '/assets/medias/sounds/respiration.wav',
 				loop: false,
-				volume: 0.4,
+				volume: 0.6,
 				trigger: 1
 			}),
 			bubble_fly: soundHandler.newSound({
@@ -699,7 +699,7 @@ export default class Anger {
 
 		this.scene = new THREE.Scene();
 
-		this.scene.fog = new THREE.Fog('#4b0500', 1, 130);
+		this.scene.fog = new THREE.Fog('#4b0500', 1, 101);
 
 		// Image as a background
 		bgTexture = new THREE.TextureLoader().load(DIR + '/assets/textures/ciel-2.jpg',
