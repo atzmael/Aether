@@ -77,4 +77,17 @@ window.onload = () => {
 	new Anger();
 	/** **/
 
+	// Console stuff
+	console.log('%cAETHER', 'font-size: 40px;font-weight: bold;color: purple;text-shadow: 3px 3px 0 rgb(217,31,38) , 6px 6px 0 rgb(226,91,14) , 9px 9px 0 rgb(245,221,8)');
+	console.log('%cSCHOOL PROJECT', 'color: blue; font-weight: bold;');
+	console.group('%cTHE TEAM', 'color: blue');
+	console.group('%cDesigners :', 'color: blue');
+	console.log('Zohra Mrad');
+	console.log('Amélie Mrad');
+	console.groupEnd();
+	console.group('%cDevelopper :', 'color: blue');
+	console.log('Rémy Dumas');
+	console.log('Maël Atzori Maltête');
+	console.groupEnd();
+	console.groupEnd();
 };

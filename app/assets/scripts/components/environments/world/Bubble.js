@@ -65,7 +65,7 @@ export default class Bubble {
 
 		let geom = new THREE.SphereBufferGeometry(this.radius, 16, 16);
 
-		let mat = new THREE.MeshBasicMaterial({color: '#e4a990', transparent: true, opacity: 0.85});
+		let mat = new THREE.MeshBasicMaterial({color: '#e48945', transparent: true, opacity: 0.85});
 
 		let bubble = new THREE.Mesh(geom, mat);
 

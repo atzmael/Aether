@@ -47,7 +47,7 @@ export default class Character {
 				keydown: false,
 			}
 		};
-		this.movementVelocity = 0.6;
+		this.movementVelocity = 0.4;
 		this.rotationVelocity = .04;
 
 		this.init();
@@ -265,17 +265,15 @@ export default class Character {
 	}
 
 	breath() {
-		if (!this.hasBreath) {
-			this.hasBreath = true;
-			window.soundBank.respiration.play();
+		window.soundBank.respiration.play();
 
-			this.breathInterval = setTimeout(() => {
-				window.playerState.removeScore(reduce.breath);
-				window.soundBank.respiration.stop();
-				this.hasBreath = false;
-				clearTimeout(this.breathInterval);
-			}, 3000);
-		}
+		this.breathInterval = setTimeout(() => {
+
+			window.playerState.removeScore(reduce.breath);
+			window.soundBank.respiration.stop();
+			console.log('end breath');
+			clearTimeout(this.breathInterval);
+		}, 3000);
 	}
 
 	listen() {

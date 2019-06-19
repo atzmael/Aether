@@ -95,7 +95,7 @@ class Coral {
 			const object = this.obj.children[i];
 			const geometry = object.geometry;
 			const material = new Materials({
-				state: playerState.playerStateNumber,
+				state: window.playerState.playerStateNumber,
 				texture: 'bush'
 			}).material;
 			const mesh = new THREE.Mesh(geometry, material);

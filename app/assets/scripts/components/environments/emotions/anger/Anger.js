@@ -86,7 +86,7 @@ window.rules = {
 					min: 2,
 					max: 5
 				},
-				radius: 1,
+				radius: 0.6,
 				details: 0,
 			},
 			rocks: {
@@ -96,8 +96,8 @@ window.rules = {
 				}
 			},
 			corals: {
-				max: 3,
-				current: 3,
+				max: 5,
+				current: 5,
 			},
 			stalagmites: {
 				radius: {
@@ -117,15 +117,15 @@ window.rules = {
 			geysers: 0,
 			bubbles: {
 				number: {
-					min: 2,
-					max: 4
+					min: 8,
+					max: 15
 				},
 				zPos: {
 					min: 1.5,
 					max: 3
 				},
 				radius: {
-					min: 0.5,
+					min: 0.2,
 					max: 0.8
 				}
 			}
@@ -493,14 +493,6 @@ export default class Anger {
 				}, 5000)
 			}
 		}
-
-		// if (playerState.playerStateNumber == 3) {
-		// 	if (5 % test == 5) {
-		// 		this.camera.rotation.z += 1;
-		// 		test = 0;
-		// 	}
-		// }
-
 	}
 
 	onWindowResize() {
@@ -1379,6 +1371,8 @@ export default class Anger {
 						case 'stalagmite':
 							scoreToAdd = statesScore.stalagmite;
 							break;
+						case 'bubble':
+							scoreToAdd = statesScore.bubble;
 					}
 
 					playerState.addScore(scoreToAdd);

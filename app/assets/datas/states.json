@@ -1,8 +1,9 @@
 {
-	"stone": 0.5,
+	"stone": 0.3,
 	"coral": {
-		"full": 0.5,
+		"full": 0.3,
 		"node": 0.01
 	},
-	"stalagmite": 0.3
+	"stalagmite": 0.3,
+	"bubble": 0.3
 }

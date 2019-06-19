@@ -75,7 +75,7 @@ export default class Stone {
 		}
 
 		let mat = new Materials({
-			state: playerState.playerStateNumber,
+			state: window.playerState.playerStateNumber,
 			texture: 'stone'
 		}).material;
 
@@ -89,16 +89,16 @@ export default class Stone {
 			let v = verts[i];
 
 			ang = Math.random() * Math.PI;
-			amp = 0.8;
+
+			if(window.playerState.playerStateNumber == 1) {
+				amp = 0.2;
+			} else {
+				amp = 0.8
+			}
 
 			v.x += Math.cos(ang) * amp;
 			v.y += Math.sin(ang) * amp;
 		}
-
-		// Utility, debug purpose only
-		let edges = new THREE.EdgesGeometry(geom);
-		let line = new THREE.LineSegments(edges, new THREE.LineBasicMaterial({color: 'red'}));
-		//stone.add(line);
 
 		objectToInteractCollection.push(stone);
 

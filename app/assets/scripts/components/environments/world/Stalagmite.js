@@ -78,7 +78,7 @@ export default class Stalagmite {
 		let geom = new THREE.ConeGeometry( radius, height, this.segments );
 
 		let mat = new Materials({
-			state: playerState.playerStateNumber,
+			state: window.playerState.playerStateNumber,
 			texture: 'stalagmite'
 		}).material;
 

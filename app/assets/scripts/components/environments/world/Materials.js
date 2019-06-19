@@ -52,7 +52,7 @@ export default class Materials {
                 this.get_material_noise(color);
                 break;
             case 'bush':
-                colorsState = [0x9e3a31, 0x8c342b, 0x8c342b];
+                colorsState = [0xa24864, 0x8c342b, 0x8c342b];
                 color = colorsState[this.state];
                 this.get_material_noise(color);
                 break;
@@ -62,7 +62,7 @@ export default class Materials {
                 this.get_material_noise(color);
                 break;
             case 'stone':
-                colorsState = [0x660a16, 0x5c1427, 0x520828];
+                colorsState = [0x862d22, 0x5c1427, 0x520828];
                 color = colorsState[this.state];
                 this.get_material_noise(color);
                 break;
