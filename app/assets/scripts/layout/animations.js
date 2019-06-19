@@ -1,5 +1,6 @@
 import lottie from "lottie-web";
 import Blob from './Blob';
+import Bubble from './Bubble';
 import SceneInterface from "./SceneInterface";
 
 const animations = {
@@ -171,7 +172,7 @@ const animations = {
 		let text = document.querySelector('.js-choice-text');
 		let help = document.querySelector('.js-choice-help');
 
-		window.sceneInterface = new SceneInterface();
+		window.sceneInterface = new SceneInterface('canvas__blob');
 		window.blob = new Blob(window.sceneInterface.scene);
 		function animate(time) {
 			window.sceneInterface.raf = requestAnimationFrame(animate);
@@ -188,6 +189,16 @@ const animations = {
 
 	pulsateIntroEmoBtn() {
 		let wave = document.querySelector('.js-pulse-wave');
+
+		window.sceneInterface = new SceneInterface('canvas__bubble');
+		window.bubble = new Bubble(window.sceneInterface.scene);
+
+		function animate(time) {
+			window.sceneInterface.raf = requestAnimationFrame(animate);
+			window.sceneInterface.renderer.render(window.sceneInterface.scene, window.sceneInterface.camera);
+			window.bubble.update(time)
+		}
+		animate();
 
 		setInterval(() => {
 			if(this.timelineRunning) {

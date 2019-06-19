@@ -13,6 +13,7 @@ window.soundBank = {};
 
 // Libs
 import 'three/examples/js/controls/OrbitControls';
+import CANNONHELPERS from '../../../../core/cannonHelpers';
 
 // Modules
 
@@ -47,6 +48,16 @@ window.helpers = new Helpers();
 window.playerState = new PlayerState();
 
 window.coralMeshIsLoaded = false;
+
+// Global vars
+window.RATIO = 0.1;
+window.grid = [];
+for (let x = 0; x < 9; x++) {
+	window.grid[x] = [];
+	for (let y = 0; y < 5; y++) {
+		window.grid[x][y] = [];
+	}
+}
 
 // collection of objects
 
@@ -428,6 +439,9 @@ export default class Anger {
 
 		// Link physics
 		window.grounds.forEach(ground => {
+			if (ground.elmt.material.uniforms) {
+				ground.elmt.material.uniforms.uTime.value = dt/1000;
+			}
 			ground.elmt.position.copy(ground.elmt.body.position);
 			ground.elmt.quaternion.copy(ground.elmt.body.quaternion);
 			ground.objects.forEach(groundObj => {
@@ -435,7 +449,9 @@ export default class Anger {
 				groundObj.quaternion.copy(groundObj.body.quaternion);
 			});
 			ground.corals.forEach(coralObj => {
-				coralObj.position.copy(coralObj.body.position);
+				coralObj.position.x = coralObj.body.position.x;
+				coralObj.position.y = coralObj.body.position.y - 1.5;
+				coralObj.position.z = coralObj.body.position.z + 1;
 				coralObj.quaternion.copy(coralObj.body.quaternion);
 			})
 		});
@@ -527,7 +543,7 @@ export default class Anger {
 			// --- TEST ANIMATION D'INTRODUCTION ---//
 
 			this.test = [];
-			for (let i = 0; i < 25; i++) {
+			for (let i = 0; i < 0; i++) {
 				let shapes = Math.round(Math.random()),
 					geom;
 
@@ -640,6 +656,7 @@ export default class Anger {
 			restitution: .55
 		});
 		this.world.addContactMaterial(this.ground);
+		this.helper = new THREE.CannonDebugRenderer(this.scene, this.world)
 	}
 
 	addPhysics() {
@@ -652,26 +669,77 @@ export default class Anger {
 			this.world.add(body);
 			ground.elmt.body = body;
 			ground.objects.forEach(groundObj => {
-				let sphere = new CANNON.Sphere(1);
-				let body = new CANNON.Body({mass: 1});
-				body.position.set(groundObj.position.x, groundObj.position.y, groundObj.position.z);
-				body.addShape(sphere);
-				this.world.add(body);
-				groundObj.body = body;
+				let shape, body;
+				switch (groundObj.name) {
+					case 'stalagmite':
+						shape = new CANNON.Box(
+							new CANNON.Vec3(1, 3, 1)
+						);
+						body = new CANNON.Body({
+							mass: 5
+						});
+						body.addShape(shape);
+						body.position.set(groundObj.position.x, 4, groundObj.position.z);
+						body.quaternion.setFromAxisAngle(
+							new CANNON.Vec3(0, 1, 0),
+							-Math.PI / 2
+						);
+						this.world.add(body);
+						groundObj.body = body;
+						break;
+					case 'stone':
+						shape = new CANNON.Sphere(this.radius);
+						body = new CANNON.Body({
+							mass: 5
+						});
+						body.addShape(shape);
+						body.position.set(groundObj.position.x, groundObj.position.y, groundObj.position.z);
+						body.quaternion.setFromAxisAngle(
+							new CANNON.Vec3(0, 1, 0),
+							-Math.PI / 2
+						);
+						this.world.add(body);
+						groundObj.body = body;
+						break;
+					default:
+						shape = new CANNON.Sphere(this.radius);
+						body = new CANNON.Body({
+							mass: 5
+						});
+						body.addShape(shape);
+						body.position.set(groundObj.position.x, groundObj.position.y, groundObj.position.z);
+						body.quaternion.setFromAxisAngle(
+							new CANNON.Vec3(0, 1, 0),
+							-Math.PI / 2
+						);
+						this.world.add(body);
+						groundObj.body = body;
+						break;
+				}
 			});
 			ground.corals.forEach(coral => {
-				let sphere = new CANNON.Sphere(1);
-				let body = new CANNON.Body({mass: 1});
+				let shape, body;
+				shape = new CANNON.Box(
+					new CANNON.Vec3(0.5, 1.5, 1)
+				);
+				body = new CANNON.Body({
+					mass: 4
+				});
+				body.addShape(shape);
 				body.position.set(coral.position.x, coral.position.y, coral.position.z);
-				body.addShape(sphere);
 				this.world.add(body);
 				coral.body = body;
 			});
 			ground.unusedCorals.forEach(coral => {
-				let sphere = new CANNON.Sphere(1);
-				let body = new CANNON.Body({mass: 1});
+				let shape, body;
+				shape = new CANNON.Box(
+					new CANNON.Vec3(0.5, 1.5, 1)
+				);
+				body = new CANNON.Body({
+					mass: 4
+				});
+				body.addShape(shape);
 				body.position.set(coral.position.x, coral.position.y, coral.position.z);
-				body.addShape(sphere);
 				this.world.add(body);
 				coral.body = body;
 			});
@@ -689,6 +757,7 @@ export default class Anger {
 	updateTemplate(elmt, color = false, templateType) {
 		let usedObjectNumber = elmt.corals.length;
 		elmt.objects.forEach(obj => {
+			this.world.remove(obj.body);
 			this.scene.remove(obj);
 			obj.geometry.dispose();
 			obj.geometry = undefined;
@@ -730,9 +799,9 @@ export default class Anger {
 			this.scene.add(e);
 		});
 
-		if (color) {
-			elmt.elmt.material.color.set(color);
-		}
+		// if (color) {
+		// 	elmt.elmt.material.color.set(color);
+		// }
 	}
 
 	groundUpdate() {
@@ -913,6 +982,7 @@ export default class Anger {
 
 	physicsUpdate() {
 		this.world.step(1 / 60);
+		this.helper.update();
 	}
 
 	guiHandler() {
@@ -987,10 +1057,11 @@ export default class Anger {
 					this.intersects.splice(i, 1);
 
 					obj.object.body.addEventListener("collide", () => {
-						if(!obj.hasCollide) {
+						if (!obj.hasCollide) {
 							obj.hasCollide = true;
 							obj.object.add(soundBank.stone_break.play());
 							setTimeout(() => {
+								this.world.remove(obj.object.body);
 								window.scene.remove(obj.object);
 								obj.object.geometry.dispose();
 								obj.object.geometry = undefined;
@@ -1001,9 +1072,7 @@ export default class Anger {
 						}
 					});
 
-
 					// Score handler
-
 					switch (name) {
 						case 'stone':
 							scoreToAdd = statesScore.stone;
@@ -1034,12 +1103,59 @@ export default class Anger {
 	}
 
 	addPhysicsObject(groundObj) {
-		let sphere = new CANNON.Sphere(1);
-		let body = new CANNON.Body({mass: 1});
-		body.position.set(groundObj.position.x, groundObj.position.y, groundObj.position.z);
-		body.addShape(sphere);
-		this.world.add(body);
-		groundObj.body = body;
+		let shape, body;
+			switch (groundObj.name) {
+				case 'stalagmite':
+					shape = new CANNON.Box(
+						new CANNON.Vec3(1, 3, 1)
+					);
+					body = new CANNON.Body({
+						mass: 5
+					});
+					body.addShape(shape);
+					body.position.set(groundObj.position.x, 4, groundObj.position.z);
+					body.quaternion.setFromAxisAngle(
+						new CANNON.Vec3(0, 1, 0),
+						-Math.PI / 2
+					);
+					this.world.add(body);
+					groundObj.body = body;
+					break;
+				case 'stone':
+					shape = new CANNON.Sphere(this.radius);
+					body = new CANNON.Body({
+						mass: 5
+					});
+					body.addShape(shape);
+					body.position.set(groundObj.position.x, groundObj.position.y, groundObj.position.z);
+					body.quaternion.setFromAxisAngle(
+						new CANNON.Vec3(0, 1, 0),
+						-Math.PI / 2
+					);
+					this.world.add(body);
+					groundObj.body = body;
+					break;
+				default:
+					shape = new CANNON.Sphere(this.radius);
+					body = new CANNON.Body({
+						mass: 5
+					});
+					body.addShape(shape);
+					body.position.set(groundObj.position.x, groundObj.position.y, groundObj.position.z);
+					body.quaternion.setFromAxisAngle(
+						new CANNON.Vec3(0, 1, 0),
+						-Math.PI / 2
+					);
+					this.world.add(body);
+					groundObj.body = body;
+					break;
+			}
+		// let sphere = new CANNON.Sphere(1);
+		// let body = new CANNON.Body({mass: 1});
+		// body.position.set(groundObj.position.x, groundObj.position.y, groundObj.position.z);
+		// body.addShape(sphere);
+		// this.world.add(body);
+		// groundObj.body = body;
 	}
 
 	loadNormalTemplate(piecesNumber, posChunkX, posChunkZ, isInit) {

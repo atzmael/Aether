@@ -1,3 +1,5 @@
+
+
 export default class Bubble {
 	constructor(groundID, coord, radius = 1, bubbleNumber = 0, zPos = 1) {
 		this.radius = window.helpers.randFloat(radius.min, radius.max);
