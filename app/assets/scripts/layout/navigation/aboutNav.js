@@ -37,7 +37,7 @@ const aboutNav = {
 		let titleHeight = title.offsetHeight;
 		let titleText = nextElmt.getAttribute('data-title');
 
-		console.log(titleHeight);
+		// console.log(titleHeight);
 
 		if(nextIndex > this.current) {
 			new TimelineMax().fromTo(currentElmt, 0.3, {opacity: 1, y: 0}, {opacity: 0, y: -50})

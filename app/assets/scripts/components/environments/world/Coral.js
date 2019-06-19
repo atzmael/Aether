@@ -36,52 +36,48 @@ class Coral {
 	createFieldOfCoral() {
 		return new Promise(async resolve => {
 			let x, y, coral, posX, posY;
-
-			for (let i = 0; i < this.coralMaxNumber; i++) {
-				x = Math.round(Math.random() * (4 - 1) + 1);
-				y = Math.round(Math.random() * (4 - 1) + 1);
-				if (window.grid[this.groundID][x][y] == undefined) {
-					coral = this.createCoral();
-					posX = (x - (window.grid.length / 2)) * 30 + (Math.cos(Math.random() * Math.PI) * 2) + this.coord.x;
-					posY = (y - (window.grid.length / 2)) * 30 + (Math.sin(Math.random() * Math.PI) * 2) + this.coord.y;
-					coral.position.set(posX, 0, posY);
-					window.grid[this.groundID][x][y] = coral;
-					if (this.unused || i > this.coralCurrentNumber) {
-						window.grounds[this.groundID].unusedCorals.push(coral);
-					} else {
-						window.grounds[this.groundID].corals.push(coral);
-					}
-				} else {
-					let origin = x;
-					do {
-
-						x += 1;
-
-						if (x == origin) {
-							y += 1;
-							if (y > window.grid[0][0].length - 1) {
-								y = 0;
+				for (let i = 0; i < this.coralMaxNumber; i++) {
+					x = Math.round(Math.random() * (4 - 1) + 1);
+					y = Math.round(Math.random() * (4 - 1) + 1);
+					if (window.grid[this.groundID][x][y] == undefined) {
+						coral = this.createCoral();
+						if (coral != undefined) {
+							posX = (x - (window.grid.length / 2)) * 30 + (Math.cos(Math.random() * Math.PI) * 2) + this.coord.x;
+							posY = (y - (window.grid.length / 2)) * 30 + (Math.sin(Math.random() * Math.PI) * 2) + this.coord.y;
+							coral.position.set(posX, 0, posY);
+							window.grid[this.groundID][x][y] = coral;
+							if (this.unused || i > this.coralCurrentNumber) {
+								window.grounds[this.groundID].unusedCorals.push(coral);
+							} else {
+								window.grounds[this.groundID].corals.push(coral);
 							}
 						}
-
-						if (x > window.grid[0].length - 1) {
-							x = 0;
-						}
-
-					} while (window.grid[this.groundID][x][y] != undefined);
-
-					coral = this.createCoral();
-					posX = (x - (window.grid.length / 2)) * 30 + (Math.cos(Math.random() * Math.PI) * 2) + this.coord.x;
-					posY = (y - (window.grid.length / 2)) * 30 + (Math.sin(Math.random() * Math.PI) * 2) + this.coord.y;
-					coral.position.set(posX, 0, posY);
-					window.grid[this.groundID][x][y] = coral;
-					if (this.unused || i > this.coralCurrentNumber) {
-						window.grounds[this.groundID].unusedCorals.push(coral);
 					} else {
-						window.grounds[this.groundID].corals.push(coral);
+						let origin = x;
+
+						for (let i = 0; i < 5; i++) {
+							x = Math.round(Math.random() * (4 - 1) + 1);
+							y = Math.round(Math.random() * (4 - 1) + 1);
+							if (window.grid[this.groundID][x][y] == undefined) {
+								coral = this.createCoral();
+								if (coral != undefined) {
+									posX = (x - (window.grid.length / 2)) * 30 + (Math.cos(Math.random() * Math.PI) * 2) + this.coord.x;
+									posY = (y - (window.grid.length / 2)) * 30 + (Math.sin(Math.random() * Math.PI) * 2) + this.coord.y;
+									coral.position.set(posX, 0, posY);
+									window.grid[this.groundID][x][y] = coral;
+									if (this.unused || i > this.coralCurrentNumber) {
+										window.grounds[this.groundID].unusedCorals.push(coral);
+									} else {
+										window.grounds[this.groundID].corals.push(coral);
+									}
+								}
+								break;
+							}
+						}
 					}
 				}
-			}
+				// console.log(coral)
+
 			resolve();
 		});
 

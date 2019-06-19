@@ -283,7 +283,7 @@ export default class Character {
 				if (!this.hasBreath) {
 					this.hasBreath = true;
 					window.playerState.removeScore(reduce.breath);
-					console.log('breathing...');
+					// console.log('breathing...');
 					clearTimeout(this.breathInterval);
 				}
 			}, 1000);

@@ -469,7 +469,7 @@ export default class Anger {
 		this.intersects = this.raycaster.intersectObjects(objectToInteractCollection);
 
 		// DEBUG ONLY //
-		console.log(this.renderer.info.memory);
+		// console.log(this.renderer.info.memory);
 
 		this.render();
 
@@ -679,7 +679,7 @@ export default class Anger {
 							mass: 5
 						});
 						body.addShape(shape);
-						body.position.set(groundObj.position.x, 4, groundObj.position.z);
+						body.position.set(groundObj.position.x, 2, groundObj.position.z);
 						body.quaternion.setFromAxisAngle(
 							new CANNON.Vec3(0, 1, 0),
 							-Math.PI / 2
@@ -756,6 +756,10 @@ export default class Anger {
 
 	updateTemplate(elmt, color = false, templateType) {
 		let usedObjectNumber = elmt.corals.length;
+		window.grid[elmt.id] = [];
+		for (let y = 0; y < 5; y++) {
+			window.grid[elmt.id][y] = [];
+		}
 		elmt.objects.forEach(obj => {
 			this.world.remove(obj.body);
 			this.scene.remove(obj);
@@ -773,26 +777,36 @@ export default class Anger {
 
 					for (let i = 0; i <= usedObjectNumber - window.rules.normal[window.playerState.playerStateNumber].corals.current; i++) {
 						elmt.unusedCorals.push(elmt.corals[i]);
-						this.scene.remove(elmt.corals[i]);
-						elmt.corals[i].geometry.dispose();
-						elmt.corals[i].geometry = undefined;
-						elmt.corals[i].material.dispose();
-						elmt.corals[i].material = undefined;
-						elmt.corals[i] = undefined;
-						elmt.corals.splice(i, 1);
+						if (elmt.corals[i] != undefined) {
+							this.scene.remove(elmt.corals[i]);
+							for (let j = 0; j < elmt.corals[i].children.length; j++) {
+								const mesh = elmt.corals[i].children[j];
+								mesh.geometry.dispose();
+								mesh.geometry = undefined;
+								mesh.material.dispose();
+								mesh.material = undefined;
+							}
+							elmt.corals[i] = undefined;
+							elmt.corals.splice(i, 1);
+						}
 					}
 				} else if (usedObjectNumber < window.rules.normal[window.playerState.playerStateNumber].corals.current) {
 					for (let i = 0; i < window.rules.normal[window.playerState.playerStateNumber].corals.current - usedObjectNumber; i++) {
-						elmt.corals.push(elmt.unusedCorals[i]);
-						this.scene.add(elmt.unusedCorals[i]);
-						elmt.unusedCorals.splice(i, 1);
+						if (elmt.unusedCorals[i] != undefined) {
+							elmt.corals.push(elmt.unusedCorals[i]);
+							this.scene.add(elmt.unusedCorals[i]);
+							elmt.unusedCorals.splice(i, 1);
+						}
 					}
 				}
 				break;
 		}
+		// console.log(elmt.corals)
 		elmt.corals.forEach(coral => {
-			coral.body.position.x = elmt.elmt.body.position.x + helpers.rand(-chunkSize / 2, chunkSize / 2);
-			coral.body.position.z = elmt.elmt.body.position.z + helpers.rand(-chunkSize / 2, chunkSize / 2);
+			if (coral != undefined) {
+				coral.body.position.x = elmt.elmt.body.position.x + helpers.rand(-chunkSize / 2, chunkSize / 2);
+				coral.body.position.z = elmt.elmt.body.position.z + helpers.rand(-chunkSize / 2, chunkSize / 2);
+			}
 		});
 		elmt.objects.forEach(e => {
 			this.addPhysicsObject(e);
@@ -1113,7 +1127,7 @@ export default class Anger {
 						mass: 5
 					});
 					body.addShape(shape);
-					body.position.set(groundObj.position.x, 4, groundObj.position.z);
+					body.position.set(groundObj.position.x, 2, groundObj.position.z);
 					body.quaternion.setFromAxisAngle(
 						new CANNON.Vec3(0, 1, 0),
 						-Math.PI / 2
