@@ -2,7 +2,7 @@
  * General import
  **/
 
-const DIR = '/projects/aether';
+const DIR = '/app';
 
 window.listener = new THREE.AudioListener();
 import Sound from '../../world/Sound';
