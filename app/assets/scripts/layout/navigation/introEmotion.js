@@ -45,7 +45,9 @@ const introEmotion = {
 					.to(this.ui.section, 0, {onComplete: () => {this.ui.section.classList.add('v-center')}})
 					.to(this.ui.emotionLoader, 0.3, {opacity: 1});
 
-				new Anger();
+				setTimeout(() => {
+					new Anger();
+				}, 1500);
 
 				this.dragged = false;
 			}

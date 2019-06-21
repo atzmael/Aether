@@ -2,7 +2,7 @@
  * General import
  **/
 
-const DIR = '/app';
+const DIR = '/projects/aether';
 
 window.listener = new THREE.AudioListener();
 import Sound from '../../world/Sound';
@@ -1352,10 +1352,14 @@ export default class Anger {
 									setTimeout(() => {
 										this.world.remove(obj.object.body);
 										window.scene.remove(obj.object);
-										obj.object.geometry.dispose();
-										obj.object.geometry = undefined;
-										obj.object.material.dispose();
-										obj.object.material = undefined;
+										if (obj.geometry != undefined) {
+											obj.object.geometry.dispose();
+											obj.object.geometry = undefined;
+										}
+										if (obj.material != undefined) {
+											obj.object.material.dispose();
+											obj.object.material = undefined;
+										}
 										obj.object = undefined;
 									}, 500);
 								}

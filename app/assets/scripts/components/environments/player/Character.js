@@ -271,7 +271,6 @@ export default class Character {
 
 			window.playerState.removeScore(reduce.breath);
 			window.soundBank.respiration.stop();
-			console.log('end breath');
 			clearTimeout(this.breathInterval);
 		}, 3000);
 	}
